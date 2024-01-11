@@ -44,8 +44,8 @@ Feito com 💜 e com ☕ por:
     </td>
 
 <td align="center">
-      <a href="https://github.com/sandrocunha">
-        <img src="https://github.com/sandrocunha.png" width="100px;" alt="Foto do Sandro Cunha no GitHub"/><br>
+      <a href="https://github.com/SandroCunha8200785">
+        <img src="https://github.com/SandroCunha8200785.png" width="100px;" alt="Foto do Sandro Cunha no GitHub"/><br>
         <sub>
           <b>Sandro Cunha</b>
         </sub>
