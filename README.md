@@ -2,7 +2,7 @@
  
 ## Resumo
 ### Em cada partida
-  - gera-se um novo mapa random (cria ou importa ficheiro, e depois exporta ficheiro), onde os 2 jogadores acordam:
+  - gera um novo mapa random (cria ou importa ficheiro, e depois exporta ficheiro), onde os 2 jogadores acordam:
     - quantidade de localizações existentes no mapa (nodes; ex: áreas onde os jogadores podem movimentarem-se)
     - tipo de caminho que serão gerados (ex: bidirecional ou direcionado)
     - densidade das arestas (ex: 50% (num grafo direcionado indica que N*(N-1)**0.5 arestas devem estar presentes; num grafo bidirecionado indica que (N*(N-1)*0.5)/2))
