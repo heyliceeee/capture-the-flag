@@ -133,7 +133,7 @@ public class Graph<T> implements GraphADT<T>
      * @param vertex a ser procurado
      * @return o indice do vertice
      */
-    private int getIndex(T vertex)
+    public int getIndex(T vertex)
     {
         for (int i = 0; i < numVertices; i++)
         {

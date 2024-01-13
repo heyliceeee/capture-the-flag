@@ -1,6 +1,5 @@
 package org.example.api.implementation;
 
-import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ILocalizacao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -8,16 +7,16 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.Iterator;
 
-public class Bandeira extends Local implements IBandeira
+public class Localizacao extends Local implements ILocalizacao
 {
     /**
-     * nome da bandeira
+     * nome da localizacao
      */
     private String nome;
 
 
     /**
-     * coordenadas da bandeira
+     * coordenadas da localizacao
      */
     private ICoordenadas coordenadas;
 
@@ -29,7 +28,7 @@ public class Bandeira extends Local implements IBandeira
 
 
 
-    public Bandeira(int id, String type, String nome, ICoordenadas coordenadas)
+    public Localizacao(int id, String type, String nome, ICoordenadas coordenadas)
     {
         super(id, type, coordenadas);
         this.nome = nome;
@@ -64,7 +63,7 @@ public class Bandeira extends Local implements IBandeira
 
 
     @Override
-    public JSONObject bandeiraParaObjetoJSON()
+    public JSONObject localizacaoParaObjetoJSON()
     {
         JSONObject raiz = new JSONObject();
 
@@ -93,7 +92,7 @@ public class Bandeira extends Local implements IBandeira
     @Override
     public String toString()
     {
-        return "Bandeira{" +
+        return "Localizacao{" +
                 "nome='" + nome + '\'' +
                 ", coordenadas=" + coordenadas +
                 ", " + super.toString() +
@@ -128,14 +127,6 @@ public class Bandeira extends Local implements IBandeira
      */
     @Override
     public void setInteracaoJogador(int id, String nomeJogador)
-    {}
-
-    /**
-     * @param id     identificador único da interação
-     * @param pontos os pontos de interação
-     */
-    @Override
-    public void setPontosInteracao(int id, int pontos)
     {}
 
     //endregion
