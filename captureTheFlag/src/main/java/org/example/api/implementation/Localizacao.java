@@ -120,5 +120,17 @@ public class Localizacao extends Local implements ILocalizacao
         this.nome = nome;
     }
 
+    /**
+     * define o nome do bot do jogador de interação com a localizacao
+     *
+     * @param id      identificador único da interação
+     * @param nomeBot novo nome do bot do jogador de interação
+     */
+    @Override
+    public void setInteracaoBot(int id, String nomeBot)
+    {
+
+    }
+
     //endregion
 }

@@ -98,4 +98,14 @@ public class Rota<T> implements IRota<T>
     {
         return (Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
     }
+
+
+    @Override
+    public String toString() {
+        return "Rota{" +
+                "de=" + de +
+                ", para=" + para +
+                ", peso=" + peso +
+                '}';
+    }
 }

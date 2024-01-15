@@ -4,6 +4,7 @@ import org.example.api.exceptions.ElementAlreadyExistsException;
 import org.example.api.exceptions.ElementNotFoundException;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Coordenada;
+import org.example.api.implementation.Interacao;
 import org.example.collections.exceptions.EmptyCollectionException;
 
 import java.io.IOException;
