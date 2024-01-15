@@ -20,12 +20,6 @@ public class Jogador implements IJogador
 
 
     /**
-     * coordenadas do jogador
-     */
-    private ICoordenada coordenadas;
-
-
-    /**
      * total de bandeiras conquistados pelo jogador
      */
     private int bandeirasConquistadas;
@@ -42,7 +36,6 @@ public class Jogador implements IJogador
     {
         this.nome = nome;
         this.bots = bots;
-        this.coordenadas = coordenadas;
         this.bandeirasConquistadas = bandeirasConquistadas;
     }
 
@@ -97,30 +90,6 @@ public class Jogador implements IJogador
 
 
     /**
-     * retorna as coordenadas do jogador
-     *
-     * @return as coordenadas do jogador
-     */
-    @Override
-    public Coordenada getCoordenadas()
-    {
-        return (Coordenada) coordenadas;
-    }
-
-
-    /**
-     * define as coordenadas do jogador
-     *
-     * @param coordenadas
-     */
-    @Override
-    public void setCoordenadas(Coordenada coordenadas)
-    {
-        this.coordenadas = coordenadas;
-    }
-
-
-    /**
      * retorna o numero de bandeiras conquistados pelo jogador
      *
      * @return o numero de bandeiras conquistados pelo jogador
@@ -152,27 +121,13 @@ public class Jogador implements IJogador
     @Override
     public JSONObject jogadorParaObjetoJson()
     {
-        JSONObject coordenadas = new JSONObject();
+        JSONObject raiz = new JSONObject();
 
-        try
-        {
-            coordenadas.put("longitude", this.coordenadas.getLongitude());
+        raiz.put("nome", this.nome);
+        raiz.put("numeroBots", this.bots);
+        raiz.put("bandeirasConquistadas", this.bandeirasConquistadas);
 
-        } catch (Exception e)
-        {
-            coordenadas.put("longitude", 0);
-        }
-
-        try
-        {
-            coordenadas.put("latitude", this.coordenadas.getLatitude());
-
-        } catch (Exception e)
-        {
-            coordenadas.put("latitude", 0);
-        }
-
-        return coordenadas;
+        return raiz;
     }
 
 
@@ -181,7 +136,6 @@ public class Jogador implements IJogador
         return "Jogador{" +
                 "nome='" + nome + '\'' +
                 ", bots=" + bots +
-                ", coordenadas=" + coordenadas +
                 ", bandeirasConquistadas=" + bandeirasConquistadas +
                 '}';
     }

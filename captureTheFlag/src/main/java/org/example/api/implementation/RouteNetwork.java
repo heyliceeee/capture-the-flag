@@ -157,7 +157,7 @@ public class RouteNetwork<T> extends Network<T> implements RouteNetworkADT<T>
      * @throws NotLocalInstanceException se o ponto de partida não for uma instância {@link ILocal local}
      */
     @Override
-    public Iterator<ILocal> caminhoMaisCurtoABandeira(IRaiz raiz, T pontoDePartida) throws ParseException
+    public Iterator<ILocal> caminhoMaisCurtoABandeira(IRaiz raiz, T pontoDePartida) throws ParseException, NotLocalInstanceException
     {
         DijkstraSupport ds = this.caminhoMaisCurtoDijkstra(pontoDePartida);
 
@@ -175,7 +175,7 @@ public class RouteNetwork<T> extends Network<T> implements RouteNetworkADT<T>
      * @param pontoDePartida local de ponto de partida
      * @return iterador com a localização da rota
      */
-    private Iterator<ILocal> caminhoMaisCurtoPara(IRaiz raiz, SEARCH_TYPE searchType, int[] prev, double[] distance, boolean[] visited, T pontoDePartida) {
+    private Iterator<ILocal> caminhoMaisCurtoPara(IRaiz raiz, SEARCH_TYPE searchType, int[] prev, double[] distance, boolean[] visited, T pontoDePartida) throws NotLocalInstanceException {
         if (!(pontoDePartida instanceof ILocal)) {
             throw new NotLocalInstanceException("vertice precisa de ser instancia ILocal");
         }

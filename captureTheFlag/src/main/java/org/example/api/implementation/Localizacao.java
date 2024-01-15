@@ -1,11 +1,13 @@
 package org.example.api.implementation;
 
 import org.example.api.interfaces.ICoordenada;
+import org.example.api.interfaces.IInteracao;
 import org.example.api.interfaces.ILocalizacao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 public class Localizacao extends Local implements ILocalizacao
 {

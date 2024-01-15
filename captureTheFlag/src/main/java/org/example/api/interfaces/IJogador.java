@@ -38,20 +38,6 @@ public interface IJogador
 
 
     /**
-     * retorna as coordenadas do jogador
-     * @return as coordenadas do jogador
-     */
-    Coordenada getCoordenadas();
-
-
-    /**
-     * define as coordenadas do jogador
-     * @param coordenadas
-     */
-    void setCoordenadas(Coordenada coordenadas);
-
-
-    /**
      * retorna o numero de bandeiras conquistados pelo jogador
      * @return o numero de bandeiras conquistados pelo jogador
      */

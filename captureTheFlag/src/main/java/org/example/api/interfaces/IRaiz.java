@@ -5,6 +5,7 @@ import org.example.api.exceptions.ElementNotFoundException;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Coordenada;
 import org.example.api.implementation.Interacao;
+import org.example.api.implementation.TipoOrdenacao;
 import org.example.collections.exceptions.EmptyCollectionException;
 
 import java.io.IOException;
@@ -287,7 +288,7 @@ public interface IRaiz
      * @param tipoOrdenacao tipo de ordenação a ser aplicado
      * @return iterador com os dados ordenados
      */
-    Iterator<ILocalizacao> getLocalizacoesOrdenadosPor(tipoOrdenacao tipoOrdenacao);
+    Iterator<ILocalizacao> getLocalizacoesOrdenadosPor(TipoOrdenacao tipoOrdenacao);
 
 
     /**
@@ -295,7 +296,7 @@ public interface IRaiz
      * @param tipoOrdenacao tipo de ordenação a ser aplicado
      * @return iterador com os dados ordenados
      */
-    Iterator<IBandeira> getBandeirasOrdenadosPor(tipoOrdenacao tipoOrdenacao);
+    Iterator<IBandeira> getBandeirasOrdenadosPor(TipoOrdenacao tipoOrdenacao);
 
 
     /**
@@ -303,7 +304,7 @@ public interface IRaiz
      * @param tipoOrdenacao tipo de ordenação a ser aplicado
      * @return iterador com os dados ordenados
      */
-    Iterator<IJogador> getJogadoresOrdenadosPor(tipoOrdenacao tipoOrdenacao);
+    Iterator<IJogador> getJogadoresOrdenadosPor(TipoOrdenacao tipoOrdenacao);
 
 
     /**
@@ -311,7 +312,7 @@ public interface IRaiz
      * @param tipoOrdenacao tipo de ordenação a ser aplicado
      * @return iterador com os dados ordenados
      */
-    Iterator<IBot> getBotsOrdenadosPor(tipoOrdenacao tipoOrdenacao);
+    Iterator<IBot> getBotsOrdenadosPor(TipoOrdenacao tipoOrdenacao);
 
 
     /**
@@ -319,5 +320,5 @@ public interface IRaiz
      * @param tipoOrdenacao tipo de ordenação a ser aplicado
      * @return iterador com os dados ordenados
      */
-    Iterator<IRota<ILocal>> getRotasOrdenadosPor(tipoOrdenacao tipoOrdenacao);
+    Iterator<IRota<ILocal>> getRotasOrdenadosPor(TipoOrdenacao tipoOrdenacao);
 }

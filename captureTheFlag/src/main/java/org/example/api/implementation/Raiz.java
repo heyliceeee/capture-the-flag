@@ -7,6 +7,7 @@ import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.implementation.ArrayUnorderedList;
+import org.example.collections.interfaces.UnorderedListADT;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -142,7 +143,7 @@ public class Raiz implements IRaiz
 
         String s = "Falhou";
 
-        if(this.bots.isEmpty() || this.jogadores.contains(bot)) //se a lista de bots estiver vazia ou não conter o bot a ser adicionado, adiciona-o á lista
+        if(this.bots.isEmpty() || this.bots.contains(bot)) //se a lista de bots estiver vazia ou não conter o bot a ser adicionado, adiciona-o á lista
         {
             this.bots.remove(bot); //remove o bot no fim da lista
             s = "Sucesso";
@@ -479,7 +480,7 @@ public class Raiz implements IRaiz
 
         while (iteratorJogador.hasNext())
         {
-            jogadoresArray.add(iteratorPlayer.next().jogadorParaObjetoJson());
+            jogadoresArray.add(iteratorJogador.next().jogadorParaObjetoJson());
         }
 
         return jogadoresArray;
@@ -741,7 +742,7 @@ public class Raiz implements IRaiz
      * @return iterador com os dados ordenados
      */
     @Override
-    public Iterator<ILocalizacao> getLocalizacoesOrdenadosPor(tipoOrdenacao tipoOrdenacao) {
+    public Iterator<ILocalizacao> getLocalizacoesOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
         return null;
     }
 
@@ -752,7 +753,7 @@ public class Raiz implements IRaiz
      * @return iterador com os dados ordenados
      */
     @Override
-    public Iterator<IBandeira> getBandeirasOrdenadosPor(tipoOrdenacao tipoOrdenacao) {
+    public Iterator<IBandeira> getBandeirasOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
         return null;
     }
 
@@ -763,7 +764,7 @@ public class Raiz implements IRaiz
      * @return iterador com os dados ordenados
      */
     @Override
-    public Iterator<IJogador> getJogadoresOrdenadosPor(tipoOrdenacao tipoOrdenacao) {
+    public Iterator<IJogador> getJogadoresOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
         return null;
     }
 
@@ -774,7 +775,7 @@ public class Raiz implements IRaiz
      * @return iterador com os dados ordenados
      */
     @Override
-    public Iterator<IBot> getBotsOrdenadosPor(tipoOrdenacao tipoOrdenacao) {
+    public Iterator<IBot> getBotsOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
         return null;
     }
 
@@ -785,7 +786,7 @@ public class Raiz implements IRaiz
      * @return iterador com os dados ordenados
      */
     @Override
-    public Iterator<IRota<ILocal>> getRotasOrdenadosPor(tipoOrdenacao tipoOrdenacao) {
+    public Iterator<IRota<ILocal>> getRotasOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
         return null;
     }
 }
