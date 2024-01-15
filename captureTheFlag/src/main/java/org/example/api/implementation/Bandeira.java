@@ -1,6 +1,7 @@
 package org.example.api.implementation;
 
 import org.example.api.interfaces.IBandeira;
+import org.example.api.interfaces.ICoordenada;
 import org.example.api.interfaces.ILocalizacao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,7 +20,7 @@ public class Bandeira extends Local implements IBandeira
     /**
      * coordenadas da bandeira
      */
-    private ICoordenadas coordenadas;
+    private ICoordenada coordenada;
 
 
     /**
@@ -29,11 +30,11 @@ public class Bandeira extends Local implements IBandeira
 
 
 
-    public Bandeira(int id, String type, String nome, ICoordenadas coordenadas)
+    public Bandeira(int id, String type, String nome, ICoordenada coordenada)
     {
-        super(id, type, coordenadas);
+        super(id, type, coordenada);
         this.nome = nome;
-        this.coordenadas = coordenadas;
+        this.coordenada = coordenada;
     }
 
 
@@ -82,8 +83,8 @@ public class Bandeira extends Local implements IBandeira
     {
         JSONObject coordenadas = new JSONObject();
 
-        coordenadas.put("longitude", this.coordenadas.getLongitude());
-        coordenadas.put("latitude", this.coordenadas.getLatitude());
+        coordenadas.put("longitude", this.coordenada.getLongitude());
+        coordenadas.put("latitude", this.coordenada.getLatitude());
 
         return coordenadas;
     }
@@ -119,6 +120,18 @@ public class Bandeira extends Local implements IBandeira
         }
 
         this.nome = nome;
+    }
+
+    /**
+     * define o nome do bot do jogador de interação com a bandeira
+     *
+     * @param id      identificador único da interação
+     * @param nomeBot novo nome do bot do jogador de interação
+     */
+    @Override
+    public void setInteracaoBot(int id, String nomeBot)
+    {
+
     }
 
 

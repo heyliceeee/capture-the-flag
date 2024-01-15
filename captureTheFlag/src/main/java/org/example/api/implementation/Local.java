@@ -41,7 +41,7 @@ public class Local implements ILocal
     /**
      * coordenadas do localizacao/bandeira
      */
-    private ICoordenadas coordenadas;
+    private ICoordenada coordenadas;
 
 
     /**
