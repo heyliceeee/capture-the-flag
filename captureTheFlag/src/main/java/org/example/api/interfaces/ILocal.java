@@ -1,6 +1,8 @@
 package org.example.api.interfaces;
 
 
+import org.example.api.implementation.Coordenada;
+
 /**
  * Interface da bandeira/localizacao
  */

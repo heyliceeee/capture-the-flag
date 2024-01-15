@@ -2,10 +2,7 @@ package org.example.api.implementation;
 
 
 import org.example.api.exceptions.NotLocalInstanceException;
-import org.example.api.interfaces.IBandeira;
-import org.example.api.interfaces.ILocal;
-import org.example.api.interfaces.ILocalizacao;
-import org.example.api.interfaces.RouteNetworkADT;
+import org.example.api.interfaces.*;
 import org.example.collections.implementation.ArrayUnorderedList;
 import org.example.collections.implementation.DoubleLinkedUnorderedList;
 import org.example.collections.implementation.Network;
@@ -151,6 +148,14 @@ public class RouteNetwork<T> extends Network<T> implements RouteNetworkADT<T>
     }
 
 
+    /**
+     * Rota mais curta do ponto de partida até a bandeira do inimigo do grafo
+     *
+     * @param raiz
+     * @param pontoDePartida ponto de partida
+     * @return interador com a rota
+     * @throws NotLocalInstanceException se o ponto de partida não for uma instância {@link ILocal local}
+     */
     @Override
     public Iterator<ILocal> caminhoMaisCurtoABandeira(IRaiz raiz, T pontoDePartida) throws ParseException
     {

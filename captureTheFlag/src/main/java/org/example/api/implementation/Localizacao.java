@@ -1,11 +1,11 @@
 package org.example.api.implementation;
 
+import org.example.api.interfaces.ICoordenada;
 import org.example.api.interfaces.ILocalizacao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 public class Localizacao extends Local implements ILocalizacao
 {
@@ -18,7 +18,7 @@ public class Localizacao extends Local implements ILocalizacao
     /**
      * coordenadas da localizacao
      */
-    private ICoordenadas coordenadas;
+    private ICoordenada coordenada;
 
 
     /**
@@ -28,11 +28,11 @@ public class Localizacao extends Local implements ILocalizacao
 
 
 
-    public Localizacao(int id, String type, String nome, ICoordenadas coordenadas)
+    public Localizacao(int id, String type, String nome, ICoordenada coordenada)
     {
-        super(id, type, coordenadas);
+        super(id, type, coordenada);
         this.nome = nome;
-        this.coordenadas = coordenadas;
+        this.coordenada = coordenada;
     }
 
 
@@ -79,12 +79,12 @@ public class Localizacao extends Local implements ILocalizacao
 
     private JSONObject getCoordenadasObjetoJSON()
     {
-        JSONObject coordenadas = new JSONObject();
+        JSONObject coordenada = new JSONObject();
 
-        coordenadas.put("longitude", this.coordenadas.getLongitude());
-        coordenadas.put("latitude", this.coordenadas.getLatitude());
+        coordenada.put("longitude", this.coordenada.getLongitude());
+        coordenada.put("latitude", this.coordenada.getLatitude());
 
-        return coordenadas;
+        return coordenada;
     }
 
 
@@ -94,7 +94,7 @@ public class Localizacao extends Local implements ILocalizacao
     {
         return "Localizacao{" +
                 "nome='" + nome + '\'' +
-                ", coordenadas=" + coordenadas +
+                ", coordenada=" + coordenada +
                 ", " + super.toString() +
                 '}';
     }
@@ -119,15 +119,6 @@ public class Localizacao extends Local implements ILocalizacao
 
         this.nome = nome;
     }
-
-
-    /**
-     * @param id identificador único da interação
-     * @param nomeJogador novo nome do jogador de interação
-     */
-    @Override
-    public void setInteracaoJogador(int id, String nomeJogador)
-    {}
 
     //endregion
 }

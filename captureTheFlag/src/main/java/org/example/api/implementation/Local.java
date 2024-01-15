@@ -3,6 +3,7 @@ package org.example.api.implementation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.example.api.interfaces.ICoordenada;
 import org.example.api.interfaces.ILocal;
 import org.example.collections.implementation.ArrayUnorderedList;
 
@@ -51,15 +52,16 @@ public class Local implements ILocal
 
     /**
      * constructor
+     *
      * @param id
      * @param tipo
-     * @param coordenadas
+     * @param coordenada
      */
-    public Local(int id, String tipo, ICoordenadas coordenadas)
+    public Local(int id, String tipo, ICoordenada coordenada)
     {
         this.id = id;
         this.tipo = tipo;
-        this.coordenadas = coordenadas;
+        this.coordenadas = coordenada;
     }
 
 
@@ -209,10 +211,17 @@ public class Local implements ILocal
     public void setTipoInteracao(int id, String tipo)
     {}
 
-
+    /**
+     * define o bot do jogador que fez a interacao
+     *
+     * @param id      da (bandeira/localizacao)
+     * @param nomeBot bot (jogador1 ou jogador2)
+     */
     @Override
-    public void setJogadorInteracao(int id, String nomeJogador)
-    {}
+    public void setBotInteracao(int id, String nomeBot)
+    {
+
+    }
 
     //endregion
 }
