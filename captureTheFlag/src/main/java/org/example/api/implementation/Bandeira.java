@@ -97,7 +97,7 @@ public class Bandeira extends Local implements IBandeira
     {
         return "Bandeira{" +
                 "nome='" + nome + '\'' +
-                ", coordenadas=" + coordenadas +
+                ", coordenadas=" + coordenada +
                 ", " + super.toString() +
                 '}';
     }
@@ -134,15 +134,6 @@ public class Bandeira extends Local implements IBandeira
     {
 
     }
-
-
-    /**
-     * @param id identificador único da interação
-     * @param nomeJogador novo nome do jogador de interação
-     */
-    @Override
-    public void setInteracaoJogador(int id, String nomeJogador)
-    {}
 
     /**
      * @param id     identificador único da interação
