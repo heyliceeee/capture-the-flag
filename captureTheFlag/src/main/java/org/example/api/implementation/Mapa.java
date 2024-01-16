@@ -6,7 +6,36 @@ import java.util.Random;
 
 public class Mapa implements IMapa
 {
+    /**
+     * quantidade de localizacoes existentes no mapa
+     */
+    private int qttLocExistentes;
 
+
+    /**
+     * tipo de caminho no mapa (bidirecional ou direcional)
+     */
+    private String tipoCaminho;
+
+
+    /**
+     * densidade das arestas do mapa (10% - 100%)
+     */
+    private int densidadeArestas;
+
+
+    /**
+     * constructor
+     * @param qttLocExistentes
+     * @param tipoCaminho
+     * @param densidadeArestas
+     */
+    public Mapa(int qttLocExistentes, String tipoCaminho, int densidadeArestas)
+    {
+        this.qttLocExistentes = qttLocExistentes;
+        this.tipoCaminho = tipoCaminho;
+        this.densidadeArestas = densidadeArestas;
+    }
 
     public static void gerarMapa(int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
     {

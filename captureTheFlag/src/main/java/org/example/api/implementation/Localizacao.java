@@ -26,7 +26,7 @@ public class Localizacao extends Local implements ILocalizacao
     /**
      * instancia da classe de importar e exportar JSON
      */
-    static ImportaExportaJson iEJson = new ImportaExportaJson();
+    static ImportarExportarJson iEJson = new ImportarExportarJson();
 
 
 

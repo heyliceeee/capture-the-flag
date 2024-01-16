@@ -29,10 +29,9 @@ public class Jogador implements IJogador
      * construtor
      * @param nome
      * @param bots
-     * @param coordenadas
      * @param bandeirasConquistadas
      */
-    public Jogador(String nome, int bots, ICoordenada coordenadas, int bandeirasConquistadas)
+    public Jogador(String nome, int bots, int bandeirasConquistadas)
     {
         this.nome = nome;
         this.bots = bots;

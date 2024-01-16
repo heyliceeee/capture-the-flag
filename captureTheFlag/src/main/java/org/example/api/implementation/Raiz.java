@@ -37,17 +37,21 @@ public class Raiz implements IRaiz
     public static UnorderedListADT<IBot> bots = new ArrayUnorderedList<>();
 
 
+    /**
+     * Lista de mapas associados ao jogo
+     */
+    public static UnorderedListADT<IMapa> mapas = new ArrayUnorderedList<>();
 
 
     /**
-     * retorna "Successful" se foi adicionado uma localizacao/bandeira ao grafo
+     * retorna "sucesso" se foi adicionado uma localizacao/bandeira ao grafo
      *
      * @param local a ser adicionado
-     * @return "Successful" se foi adicionado uma localizacao/bandeira ao grafo
+     * @return "sucesso" se foi adicionado uma localizacao/bandeira ao grafo
      * @throws ElementAlreadyExistsException
      */
     @Override
-    public boolean addLocal(ILocal local)
+    public boolean adicionarLocal(ILocal local)
     {
         return this.routeNetwork.addVertex(local);
     }
@@ -151,6 +155,32 @@ public class Raiz implements IRaiz
 
         return s;
     }
+
+    /**
+     * retorna "sucesso" se foi adicionado um mapa á lista de mapas
+     *
+     * @param mapa a ser adicionado
+     * @return "sucesso" se foi adicionado um mapa á lista de mapas
+     */
+    @Override
+    public String adicionarMapa(IMapa mapa)
+    {
+        if(mapa == null)
+        {
+            throw new IllegalArgumentException("mapa nao pode ser nulo");
+        }
+
+        String s = "falhou";
+
+        if(this.mapas.isEmpty() || !this.mapas.contains(mapa)) //se a lista de mapas estiver vazia ou não conter o mapa a ser adicionado, adiciona-o á lista
+        {
+            this.mapas.addToRear(mapa); //adiciona o mapa no fim da lista
+            s = "sucesso";
+        }
+
+        return s;
+    }
+
 
     /**
      * retorna "Successful" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
@@ -412,6 +442,23 @@ public class Raiz implements IRaiz
         }
 
         return rotasArray;
+    }
+
+
+    /**
+     * transforma a rota (entre 2 locais do grafo) enviados por parametro em JSONObject
+     * @param rota
+     * @return o JSONObject da rota
+     */
+    private JSONObject rotaParaObjetoJSON(IRota<ILocal> rota)
+    {
+        JSONObject rotaObject = new JSONObject();
+
+        rotaObject.put("de", rota.getDe().getId());
+        rotaObject.put("para", rota.getPara().getId());
+        rotaObject.put("distancia", rota.getPeso());
+
+        return rotaObject;
     }
 
 

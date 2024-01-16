@@ -7,6 +7,7 @@ import org.example.api.interfaces.ICoordenada;
 import org.example.api.interfaces.IInteracao;
 import org.example.api.interfaces.ILocal;
 import org.example.collections.implementation.ArrayUnorderedList;
+import org.example.collections.interfaces.UnorderedListADT;
 
 import java.util.Iterator;
 

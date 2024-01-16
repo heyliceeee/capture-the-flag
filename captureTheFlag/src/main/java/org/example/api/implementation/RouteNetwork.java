@@ -80,14 +80,14 @@ public class RouteNetwork<T> extends Network<T> implements RouteNetworkADT<T>
     @Override
     public int getNumeroDeLocalizacoes()
     {
-        return this.getNumeroDe(new Localizacao(0, "", null));
+        return this.getNumeroDe(new Localizacao(0, "", "", null));
     }
 
 
     @Override
     public int getNumeroDeBandeiras()
     {
-        return this.getNumeroDe(new Bandeira(0, "", null));
+        return this.getNumeroDe(new Bandeira(0, "", "", null));
     }
 
 

@@ -27,13 +27,13 @@ public class Bandeira extends Local implements IBandeira
     /**
      * instancia da classe de importar e exportar JSON
      */
-    static ImportaExportaJson iEJson = new ImportaExportaJson();
+    static ImportarExportarJson iEJson = new ImportarExportarJson();
 
 
 
-    public Bandeira(int id, String type, String nome, ICoordenada coordenada)
+    public Bandeira(int id, String tipo, String nome, ICoordenada coordenada)
     {
-        super(id, type, coordenada);
+        super(id, tipo, coordenada);
         this.nome = nome;
         this.coordenada = coordenada;
     }

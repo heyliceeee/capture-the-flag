@@ -19,18 +19,18 @@ import java.util.List;
 public interface IRaiz
 {
     /**
-     * retorna "Successful" se foi adicionado uma localizacao/bandeira ao grafo
+     * retorna "sucesso" se foi adicionado uma localizacao/bandeira ao grafo
      * @param local a ser adicionado
-     * @return "Successful" se foi adicionado uma localizacao/bandeira ao grafo
+     * @return "sucesso" se foi adicionado uma localizacao/bandeira ao grafo
      * @throws org.example.api.exceptions.ElementAlreadyExistsException
      */
-    boolean addLocal(ILocal local);
+    boolean adicionarLocal(ILocal local);
 
 
     /**
-     * retorna "Successful" se foi adicionado um jogador á lista dos jogadores
+     * retorna "sucesso" se foi adicionado um jogador á lista dos jogadores
      * @param jogador a ser adicionado
-     * @return "Successful" se foi adicionado um jogador á lista dos jogadores
+     * @return "sucesso" se foi adicionado um jogador á lista dos jogadores
      */
     String adicionarJogador(IJogador jogador);
 
@@ -44,9 +44,9 @@ public interface IRaiz
 
 
     /**
-     * retorna "Successful" se foi adicionado um bot á lista dos bots
+     * retorna "sucesso" se foi adicionado um bot á lista dos bots
      * @param bot a ser adicionado
-     * @return "Successful" se foi adicionado um bot á lista dos bots
+     * @return "sucesso" se foi adicionado um bot á lista dos bots
      */
     String adicionarBot(IBot bot);
 
@@ -60,11 +60,19 @@ public interface IRaiz
 
 
     /**
-     * retorna "Successful" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
+     * retorna "sucesso" se foi adicionado um mapa á lista de mapas
+     * @param mapa a ser adicionado
+     * @return "sucesso" se foi adicionado um mapa á lista de mapas
+     */
+    String adicionarMapa(IMapa mapa);
+
+
+    /**
+     * retorna "sucesso" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
      * @param local1 uma localizacao/bandeira
      * @param local2 outra localizacao/bandeira
      * @param weight peso do vértice entre o local1 e local2
-     * @return "Successful" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
+     * @return "sucesso" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
      */
     String adicionarRota(ILocal local1, ILocal local2, double weight) throws EmptyCollectionException;
 

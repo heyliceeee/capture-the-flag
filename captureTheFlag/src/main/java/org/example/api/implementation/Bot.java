@@ -30,6 +30,13 @@ public class Bot implements IBot
     private String algoritmoMovimento;
 
 
+    public Bot(String nome, String nomeJogador, ICoordenada coordenadas, String algoritmoMovimento)
+    {
+        this.nome = nome;
+        this.nomeJogador = nomeJogador;
+        this.coordenadas = coordenadas;
+        this.algoritmoMovimento = algoritmoMovimento;
+    }
 
     /**
      * retorna o nome do bot
