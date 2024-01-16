@@ -10,8 +10,9 @@ public interface NetworkADT<T> extends GraphADT<T>
      * @param vertex1 primeira aresta
      * @param vertex2 segunda aresta
      * @param weight o peso/custo da aresta
+     * @param tipoCaminho bidirecional ou direcional
      */
-    public void addEdge(T vertex1, T vertex2, double weight);
+    public void addEdge(T vertex1, T vertex2, double weight, String tipoCaminho);
 
 
     /**

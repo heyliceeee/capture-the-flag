@@ -191,9 +191,9 @@ public class Raiz implements IRaiz
      * @return "Successful" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
      */
     @Override
-    public String adicionarRota(ILocal local1, ILocal local2, double weight) throws EmptyCollectionException
+    public String adicionarRota(ILocal local1, ILocal local2, double weight, String tipoCaminho) throws EmptyCollectionException
     {
-        this.routeNetwork.addEdge(local1, local2, weight);
+        this.routeNetwork.addEdge(local1, local2, weight, tipoCaminho);
 
         return "Successful";
     }
@@ -207,7 +207,7 @@ public class Raiz implements IRaiz
     @Override
     public void exportarGrafo() throws EmptyCollectionException, InterruptedException
     {
-        Demo.exportar.exportarGrafo(this.routeNetwork, "rota");
+        Demo.exportar.exportGraph(this.routeNetwork, "rota");
     }
 
     /**

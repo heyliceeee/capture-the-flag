@@ -21,7 +21,7 @@ public interface GraphADT<T>
      * @param vertex1 o primeiro vertice
      * @param vertex2 o segundo vertice
      */
-    public void addEdge(T vertex1, T vertex2);
+    public void addEdge(T vertex1, T vertex2, String tipoCaminho);
 
     /**
      * remove uma aresta entre 2 vertices do grafo

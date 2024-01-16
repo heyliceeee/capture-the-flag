@@ -34,12 +34,13 @@ public class Network<T> extends Graph<T> implements NetworkADT<T>
 
 
     /**
+     * adicionar aresta bidirecional
      * @param vertex1 primeira aresta
      * @param vertex2 segunda aresta
      * @param weight  o peso/custo da aresta
      */
     @Override
-    public void addEdge(T vertex1, T vertex2, double weight) throws EmptyCollectionException
+    public void addEdge(T vertex1, T vertex2, double weight, String tipoCaminho) throws EmptyCollectionException
     {
         if (weight < 0.0D)
         {
@@ -47,7 +48,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T>
         }
         else
         {
-            super.addEdge(vertex1, vertex2);
+            super.addEdge(vertex1, vertex2, tipoCaminho);
             this.setEdgeWeight(vertex1, vertex2, weight);
         }
     }

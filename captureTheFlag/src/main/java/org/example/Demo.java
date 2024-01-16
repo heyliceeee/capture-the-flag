@@ -1,14 +1,39 @@
 package org.example;
 
-import org.example.api.implementation.Mapa;
-import org.example.api.interfaces.IMapa;
+import org.example.api.implementation.*;
+import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
+import org.example.collections.implementation.ExporterGraph;
+import org.example.collections.interfaces.IExporter;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Demo
 {
-    public static void main(String[] args)
+    public static ImportarExportarJson iEJson = new ImportarExportarJson();
+
+    /**
+     * Instância do exportar que transforma o grafo em uma imagem
+     */
+    public static final IExporter exportar = new ExporterGraph("docs/export");
+
+
+    /**
+     * grafo que tem informação acerca dos locais e das rotas entre eles
+     */
+    public static RouteNetwork<ILocal> grafo = new RouteNetwork<>();
+
+
+    public static IRaiz raiz = new Raiz();
+    public static ILocal local = new Local(0, "", null);
+    public static IJogador jogador1 = new Jogador("Jogador1", 0, 0);
+    public static IJogador jogador2 = new Jogador("Jogador2", 0, 0);
+    public static IBot bot = new Bot("", "", null, "");
+
+
+    public static void main(String[] args) throws IOException, ParseException, InterruptedException
     {
         mostrarMenuInicial();
     }
@@ -20,7 +45,7 @@ public class Demo
      * mostrar o menu incial
      * @throws EmptyCollectionException
      */
-    public static void mostrarMenuInicial() throws EmptyCollectionException
+    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException, InterruptedException
     {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -67,7 +92,7 @@ public class Demo
     /**
      * mostrar o menu do jogo {criar mapa, importar mapa}
      */
-    private static void mostrarMenuJogo()
+    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException
     {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -100,7 +125,7 @@ public class Demo
                     break;
 
                 case 2:
-                    //Mapa.importarMapa("captureTheFlag/docs/import/map.json");
+                    iEJson.importarDoFicheiroJSON(raiz, local, "docs/import/import.json");
                     break;
 
                 case 99:
@@ -117,8 +142,7 @@ public class Demo
 
 
 
-    private static void mostrarMenuCriarMapa()
-    {
+    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -135,21 +159,21 @@ public class Demo
             System.out.println("+--------------------------------------+");
             System.out.println("introduza os seguintes dados: *         ");
             System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:|\n");
+            System.out.println("| Quantidade localizacoes existentes:  |\n");
 
             locExistentesJogador1 = scanner.nextInt();
 
-            System.out.println("| Tipo de caminhos que são gerados:  |");
-            System.out.println("| 1. direcionado                     |");
-            System.out.println("| 2. bidirecional                    |\n");
+            System.out.println("| Tipo de caminhos que são gerados:    |");
+            System.out.println("| 1. direcionado                       |");
+            System.out.println("| 2. bidirecional                      |\n");
 
             tipoCaminhoJogador1 = scanner.nextInt();
 
-            System.out.println("| Densidade das arestas (%):         |\n");
+            System.out.println("| Densidade das arestas (%):           |\n");
 
             densidadeArestasJogador1 = scanner.nextInt();
 
-            System.out.println("+--------------------------------------+");
+            System.out.println("+-------------------------------------+");
 
         } while (locExistentesJogador1 == 0 || tipoCaminhoJogador1 == 0 || densidadeArestasJogador1 == 0.0);
 
@@ -161,28 +185,31 @@ public class Demo
             System.out.println("+--------------------------------------+");
             System.out.println("introduza os seguintes dados: *         ");
             System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:|\n");
+            System.out.println("| Quantidade localizacoes existentes:  |\n");
 
             locExistentesJogador2 = scanner.nextInt();
 
-            System.out.println("| Tipo de caminhos que são gerados:  |");
-            System.out.println("| 1. direcionado                     |");
-            System.out.println("| 2. bidirecional                    |\n");
+            System.out.println("| Tipo de caminhos que são gerados:    |");
+            System.out.println("| 1. direcionado                       |");
+            System.out.println("| 2. bidirecional                      |\n");
 
-            tipoCaminhoJogador1 = scanner.nextInt();
+            tipoCaminhoJogador2 = scanner.nextInt();
 
-            System.out.println("| Densidade das arestas (%):         |\n");
+            System.out.println("| Densidade das arestas (%):           |\n");
 
             densidadeArestasJogador2 = scanner.nextInt();
 
-            System.out.println("+--------------------------------------+");
+            System.out.println("+---------------------------------------+");
 
         } while (locExistentesJogador2 == 0 || tipoCaminhoJogador2 == 0 || densidadeArestasJogador2 == 0.0);
 
 
         //criar mapa
-        Mapa.gerarMapa(locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
 
+
+        Mapa.gerarMapa(grafo, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
+
+        raiz.exportarRaizParaJson();
 
         do
         {
@@ -192,7 +219,7 @@ public class Demo
             System.out.println("+--------------------------------------+");
             System.out.println("selecione uma das opcoes: *             ");
             System.out.println("+--------------------------------------+");
-            System.out.println("| Localizacao da Bandeira:           |\n");
+            System.out.println("| Localizacao da Bandeira:             |\n");
 
             //ciclo para mostrar todas os nodes
 

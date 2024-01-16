@@ -135,6 +135,7 @@ public class ImportarExportarJson
 
                 long de = (long) rotas.get("de");
                 long para = (long) rotas.get("para");
+                String tipoCaminho = (String) rotas.get("tipoCaminho");
 
                 try
                 {
@@ -147,8 +148,9 @@ public class ImportarExportarJson
                     double y2 = paraLocal.getCoordenadas().getLatitude();
 
                     double distancia = Math.round(rota.calcularPesoDasCoordenadas(x1, y1, x2, y2) * 1000000); //arredondar
+                    
 
-                    raiz.adicionarRota(deLocal, paraLocal, distancia);
+                    raiz.adicionarRota(deLocal, paraLocal, distancia, tipoCaminho);
                 }
                 catch (IllegalArgumentException | EmptyCollectionException e)
                 {

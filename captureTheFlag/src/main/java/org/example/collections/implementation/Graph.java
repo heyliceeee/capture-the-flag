@@ -123,9 +123,9 @@ public class Graph<T> implements GraphADT<T>
     }
 
     @Override
-    public void addEdge(T vertex1, T vertex2)
+    public void addEdge(T vertex1, T vertex2, String tipoCaminho)
     {
-        this.addEdge(getIndex(vertex1), getIndex(vertex2));
+        this.addEdge(getIndex(vertex1), getIndex(vertex2), tipoCaminho);
     }
 
     /**
@@ -151,12 +151,19 @@ public class Graph<T> implements GraphADT<T>
      * @param index1 o primeiro indice
      * @param index2 o segundo indice
      */
-    public void addEdge(int index1, int index2)
+    public void addEdge(int index1, int index2, String tipoCaminho)
     {
         if (indexIsValid(index1) && indexIsValid(index2))
         {
-            adjMatrix[index1][index2] = 1;
-            adjMatrix[index2][index1] = 1;
+            if(tipoCaminho.equals("direcionado"))
+            {
+                adjMatrix[index1][index2] = 1;
+            }
+            else
+            {
+                adjMatrix[index1][index2] = 1;
+                adjMatrix[index2][index1] = 1;
+            }
         }
         else
         {
