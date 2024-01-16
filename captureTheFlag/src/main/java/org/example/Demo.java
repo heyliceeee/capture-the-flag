@@ -160,7 +160,7 @@ public class Demo {
             System.out.println("+-------------------------------------+");
 
         } while (locExistentesJogador1 <= 0 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2
-                || densidadeArestasJogador1 <= 0.1);
+                || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
 
         do {
             System.out.println("\n");
@@ -186,7 +186,7 @@ public class Demo {
             System.out.println("+---------------------------------------+");
 
         } while (locExistentesJogador2 <= 0 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
-                || densidadeArestasJogador2 <= 0.1);
+                || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         // criar mapa
 
