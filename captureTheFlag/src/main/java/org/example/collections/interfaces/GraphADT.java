@@ -14,7 +14,7 @@ public interface GraphADT<T>
      * remove uma vertice, com o valor dado, no grafo
      * @param vertex o vertice que vai ser removido no grafo
      */
-    public void removeVertex(T vertex);
+    public boolean removeVertex(T vertex);
 
     /**
      * adiciona uma aresta entre 2 vertices no grafo

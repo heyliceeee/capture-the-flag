@@ -20,7 +20,7 @@ public class Mapa implements IMapa
     /**
      * tipo de caminho no mapa (bidirecional ou direcional)
      */
-    private String tipoCaminho;
+    public static String tipoCaminhoString;
 
 
     /**
@@ -32,20 +32,20 @@ public class Mapa implements IMapa
     /**
      * constructor
      * @param qttLocExistentes
-     * @param tipoCaminho
+     * @param tipoCaminhoString
      * @param densidadeArestas
      */
-    public Mapa(int qttLocExistentes, String tipoCaminho, int densidadeArestas)
+    public Mapa(int qttLocExistentes, String tipoCaminhoString, int densidadeArestas)
     {
         this.qttLocExistentes = qttLocExistentes;
-        this.tipoCaminho = tipoCaminho;
+        this.tipoCaminhoString = tipoCaminhoString;
         this.densidadeArestas = densidadeArestas;
     }
 
-    public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
+    public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
     {
-        String tipoCaminhoString = "";
-        int arestas = 0, locExistentes = 0, densidadeArestas = 0, tipoCaminho = 0;
+        double arestas = 0.0;
+        int locExistentes = 0, densidadeArestas = 0, tipoCaminho = 0;
 
         //region validacoes dos argumentos
 
@@ -53,9 +53,13 @@ public class Mapa implements IMapa
         {
             locExistentes = fazerMedia(locExistentesJogador2, locExistentesJogador1); //decidir entre as 2 opcoes dos jogadores, quantas localizacoes existentes vai ter o mapa
         }
-        else
+        else if(locExistentesJogador2 > locExistentesJogador1)
         {
             locExistentes = fazerMedia(locExistentesJogador1, locExistentesJogador2); //decidir entre as 2 opcoes dos jogadores, quantas localizacoes existentes vai ter o mapa
+        }
+        else
+        {
+            locExistentes = locExistentesJogador1;
         }
 
 
@@ -63,9 +67,13 @@ public class Mapa implements IMapa
         {
             densidadeArestas = gerarNumeroRandom(densidadeArestasJogador2, densidadeArestasJogador1); //decidir entre as 2 opcoes dos jogadores, qual é a densidade de restas que vai ter o mapa
         }
-        else
+        else if(densidadeArestasJogador2 > densidadeArestasJogador1)
         {
             densidadeArestas = gerarNumeroRandom(densidadeArestasJogador1, densidadeArestasJogador2); //decidir entre as 2 opcoes dos jogadores, qual é a densidade de restas que vai ter o mapa
+        }
+        else
+        {
+            densidadeArestas = densidadeArestasJogador1;
         }
 
 
@@ -73,9 +81,13 @@ public class Mapa implements IMapa
         {
             tipoCaminho = gerarNumeroRandom(tipoCaminhoJogador2, tipoCaminhoJogador1); //decidir entre as 2 opcoes dos jogadores, qual é o tipo de caminho vai ter o mapa
         }
-        else
+        else if(tipoCaminhoJogador2 > tipoCaminhoJogador1)
         {
             tipoCaminho = gerarNumeroRandom(tipoCaminhoJogador1, tipoCaminhoJogador2); //decidir entre as 2 opcoes dos jogadores, qual é o tipo de caminho vai ter o mapa
+        }
+        else
+        {
+            tipoCaminho = tipoCaminhoJogador1;
         }
 
 
@@ -92,11 +104,11 @@ public class Mapa implements IMapa
         //densidade das arestas
         if(tipoCaminhoString.equals("direcionado"))
         {
-            arestas = Math.round((locExistentes * (locExistentes - 1) * ((float) densidadeArestas / 100)));
+            arestas = Math.round((locExistentes * (locExistentes - 1) * (densidadeArestas / 100)) /2);
         }
         else
         {
-            arestas = Math.round(((float) (locExistentes * (locExistentes - 1) * (densidadeArestas / 100)) /2));
+            arestas = Math.round(locExistentes * (locExistentes - 1) * (densidadeArestas / 100));
         }
 
         //endregion
@@ -122,33 +134,44 @@ public class Mapa implements IMapa
 
         for (int j = 0; j < arestas; j++) //percorrer todas arestas
         {
-            int x = gerarNumeroRandom(0, locExistentes); //gerar um ponto random entre 0 e o locExistentes
-            int y = gerarNumeroRandom(0, locExistentes); //gerar um ponto random entre 0 e o locExistentes
-            int peso = gerarNumeroRandom(1, 15); //gerar um peso random em cada ponto
-
-            grafo.addEdge(x, y, peso, tipoCaminhoString); //adiciona uma nova aresta
+            int de = gerarNumeroRandom(0, locExistentes); //gerar um ponto random entre 0 e o locExistentes
+            int para = de;
 
 
-            Coordenada coordenadas = new Coordenada(x, y);
+            do //nao deixar que os pontos randoms sejam iguais
+            {
+                de = gerarNumeroRandom(0, locExistentes); //gerar um ponto random entre 0 e o locExistentes
 
-            ILocalizacao localizacao = raiz.getLocalizacaoPorID(x);//procurar a localizacao por id
-            localizacao.setCoordenadas(coordenadas); //adicionar coordenadas da localizacao
+            } while (de == para);
 
-            raiz.removerLocal(localizacao); //eliminar o local existente
-            raiz.adicionarLocal(localizacao); //adiciona um novo local
-        }
 
-        //endregion
+            Coordenada coordenadasDe = new Coordenada(de*100, para*100); //definir coordenadas
+            Coordenada coordenadasPara = (tipoCaminhoString.equals("bidirecionado")) ? (new Coordenada(para*100, de*100)) : (new Coordenada(0, 0)); //definir coordenadas
 
-        //region adicionar rotas criadas pelo grafo
+            ILocalizacao localizacaoDe = raiz.getLocalizacaoPorID(de);//procurar a localizacao por id
+            ILocalizacao localizacaoPara = raiz.getLocalizacaoPorID(para);//procurar a localizacao por id
 
-        for(int i=0; i < arestas; i++)
-        {
-            adicionarRota(raiz);
+            raiz.removerLocal(localizacaoDe); //eliminar o local existente
+            raiz.removerLocal(localizacaoPara); //eliminar o local existente
+
+            ILocalizacao localizacaoDeNova = new Localizacao(localizacaoDe.getId(), localizacaoDe.getTipo(), localizacaoDe.getNome(), coordenadasDe); //localizacao com as coordenadas atualizadas
+            ILocalizacao localizacaoParaNova = new Localizacao(localizacaoPara.getId(), localizacaoPara.getTipo(), localizacaoPara.getNome(), coordenadasPara); //localizacao com as coordenadas atualizadas
+
+            raiz.adicionarLocal(localizacaoDeNova); //adiciona um novo local
+            raiz.adicionarLocal(localizacaoParaNova); //adiciona um novo local
+
+            double distancia = gerarNumeroRandom(1, 15);
+
+            ILocal localDe = raiz.getLocalByID(de); //procurar a local por id
+            ILocal localPara = raiz.getLocalByID(para); //procurar a local por id
+
+
+            raiz.adicionarRota(localDe, localPara, distancia, tipoCaminhoString); //adicionar aresta com peso
         }
 
         //endregion
     }
+
 
 
     /**
@@ -175,18 +198,6 @@ public class Mapa implements IMapa
     {
         return (int) Math.round((value1 + value2)/2);
     }
-
-
-    /**
-     * adicionar rota criada no grafo
-     * @param raiz
-     */
-    public static void adicionarRota(IRaiz raiz)
-    {
-        //ILocal deLocal = raiz.getLocalByID();
-    }
-
-
 
 
     /**

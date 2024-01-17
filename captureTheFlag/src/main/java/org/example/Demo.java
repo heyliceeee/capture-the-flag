@@ -29,6 +29,9 @@ public class Demo
     public static IJogador jogador1 = new Jogador("Jogador1", 0, 0);
     public static IJogador jogador2 = new Jogador("Jogador2", 0, 0);
     public static IBot bot = new Bot("", "", null, "");
+    public static IRota rota = new Rota(null, null, 0);
+
+
 
     public static void main(String[] args) throws IOException, ParseException, InterruptedException
     {
@@ -199,17 +202,12 @@ public class Demo
         while (locExistentesJogador2 <= 0 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         // criar mapa
-        Mapa.gerarMapa(grafo, raiz, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
-
-        System.out.println("\n\n" + grafo + "\n\n");
+        Mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
 
         String localizacao = raiz.getListaLocalizacoes();
 
-        System.out.println("\n\n" + localizacao + "\n\n");
 
-
-        // PROBLEMA: nao estou a conseguir atualizar "numVertices" da routenetwork (esta
-        // sempre a 0)
+        // PROBLEMA: coordenadas estao a null aqui
         // |
         // v
 

@@ -34,7 +34,6 @@ public class Localizacao extends Local implements ILocalizacao
     {
         super(id, type, coordenadas);
         this.nome = nome;
-        this.coordenadas = coordenadas;
     }
 
 
@@ -71,9 +70,9 @@ public class Localizacao extends Local implements ILocalizacao
 
         raiz.put("id", getId());
         raiz.put("tipo", getTipo());
-        raiz.put("name", this.nome);
-        raiz.put("coordenadas", getCoordenadasObjetoJSON());
-        raiz.put("interacao", getInteracoesArrayJson());
+        raiz.put("name", getNome());
+        raiz.put("coordenadas", getCoordenadas());
+        raiz.put("interacao", getListaInteracoes());
 
         return raiz;
     }
@@ -83,8 +82,23 @@ public class Localizacao extends Local implements ILocalizacao
     {
         JSONObject coordenadas = new JSONObject();
 
-        coordenadas.put("longitude", this.coordenadas.getLongitude());
-        coordenadas.put("latitude", this.coordenadas.getLatitude());
+        try
+        {
+            coordenadas.put("longitude", this.coordenadas.getLongitude());
+
+        } catch (Exception e)
+        {
+            coordenadas.put("longitude", 0);
+        }
+
+        try
+        {
+            coordenadas.put("latitude", this.coordenadas.getLatitude());
+
+        } catch (Exception e)
+        {
+            coordenadas.put("latitude", 0);
+        }
 
         return coordenadas;
     }

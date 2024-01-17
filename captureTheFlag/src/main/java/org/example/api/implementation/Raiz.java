@@ -57,6 +57,19 @@ public class Raiz implements IRaiz
     }
 
     /**
+     * retorna "sucesso" se foi removido uma localizacao/bandeira ao grafo
+     *
+     * @param local a ser removido
+     * @return "sucesso" se foi removido uma localizacao/bandeira ao grafo
+     * @throws ElementAlreadyExistsException
+     */
+    @Override
+    public boolean removerLocal(ILocal local)
+    {
+        return this.routeNetwork.removeVertex(local);
+    }
+
+    /**
      * retorna "Successful" se foi adicionado um jogador á lista dos jogadores
      *
      * @param jogador a ser adicionado

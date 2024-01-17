@@ -28,9 +28,9 @@ public interface IRaiz
 
 
     /**
-     * retorna "sucesso" se foi adicionado uma localizacao/bandeira ao grafo
-     * @param local a ser adicionado
-     * @return "sucesso" se foi adicionado uma localizacao/bandeira ao grafo
+     * retorna "sucesso" se foi removido uma localizacao/bandeira ao grafo
+     * @param local a ser removido
+     * @return "sucesso" se foi removido uma localizacao/bandeira ao grafo
      * @throws org.example.api.exceptions.ElementAlreadyExistsException
      */
     boolean removerLocal(ILocal local);
