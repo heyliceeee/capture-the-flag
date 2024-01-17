@@ -143,7 +143,7 @@ public class Demo {
             System.out.println("+--------------------------------------+");
             System.out.println("introduza os seguintes dados: *         ");
             System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:  |\n");
+            System.out.println("| Quantidade localizacoes existentes:(Min 4)|\n");
 
             locExistentesJogador1 = scanner.nextInt();
 
@@ -159,7 +159,7 @@ public class Demo {
 
             System.out.println("+-------------------------------------+");
 
-        } while (locExistentesJogador1 <= 0 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2
+        } while (locExistentesJogador1 < 4 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2
                 || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
 
         do {
@@ -169,7 +169,7 @@ public class Demo {
             System.out.println("+--------------------------------------+");
             System.out.println("introduza os seguintes dados: *         ");
             System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:  |\n");
+            System.out.println("| Quantidade localizacoes existentes:(Min 4)|\n");
 
             locExistentesJogador2 = scanner.nextInt();
 
@@ -185,7 +185,7 @@ public class Demo {
 
             System.out.println("+---------------------------------------+");
 
-        } while (locExistentesJogador2 <= 0 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
+        } while (locExistentesJogador2 < 4 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
                 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         // criar mapa
