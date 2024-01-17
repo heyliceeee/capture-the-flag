@@ -302,9 +302,9 @@ public class Raiz implements IRaiz
     {
         String s = "Localizacoes: {\n";
 
-        if (this.routeNetwork.getNumeroDeLocalizacoes() != 0)
+        if (routeNetwork.getNumeroDeLocalizacoes() != 0)
         {
-            Iterator<ILocalizacao> iteratorLocalizacao = this.routeNetwork.getLocalizacoes();
+            Iterator<ILocalizacao> iteratorLocalizacao = routeNetwork.getLocalizacoes();
 
             while (iteratorLocalizacao.hasNext())
             {
@@ -487,7 +487,7 @@ public class Raiz implements IRaiz
     private JSONArray getLocalizacoesArrayJSON()
     {
         JSONArray localizacoesArray = new JSONArray();
-        Iterator<ILocalizacao> iteratorLocalizacao = this.routeNetwork.getLocalizacoes();
+        Iterator<ILocalizacao> iteratorLocalizacao = routeNetwork.getLocalizacoes();
 
         while (iteratorLocalizacao.hasNext())
         {
@@ -614,11 +614,11 @@ public class Raiz implements IRaiz
      * atualiza as coordenadas do localizacao
      *
      * @param id         ID do localizacao
-     * @param coordenada novas coordenadas do localizacao
+     * @param coordenadas novas coordenadas do localizacao
      * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
      */
     @Override
-    public void setLocalizacaoCoordenadas(int id, Coordenada coordenada) throws ElementNotFoundException {
+    public void setLocalizacaoCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException {
 
     }
 
@@ -693,7 +693,7 @@ public class Raiz implements IRaiz
      * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
      */
     @Override
-    public void setBandeiraCoordenadas(int id, Coordenada coordenada) throws ElementNotFoundException {
+    public void setBandeiraCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException {
 
     }
 

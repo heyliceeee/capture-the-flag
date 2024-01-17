@@ -20,7 +20,7 @@ public class Localizacao extends Local implements ILocalizacao
     /**
      * coordenadas da localizacao
      */
-    private ICoordenada coordenada;
+    private ICoordenada coordenadas;
 
 
     /**
@@ -30,11 +30,11 @@ public class Localizacao extends Local implements ILocalizacao
 
 
 
-    public Localizacao(int id, String type, String nome, ICoordenada coordenada)
+    public Localizacao(int id, String type, String nome, ICoordenada coordenadas)
     {
-        super(id, type, coordenada);
+        super(id, type, coordenadas);
         this.nome = nome;
-        this.coordenada = coordenada;
+        this.coordenadas = coordenadas;
     }
 
 
@@ -81,12 +81,12 @@ public class Localizacao extends Local implements ILocalizacao
 
     private JSONObject getCoordenadasObjetoJSON()
     {
-        JSONObject coordenada = new JSONObject();
+        JSONObject coordenadas = new JSONObject();
 
-        coordenada.put("longitude", this.coordenada.getLongitude());
-        coordenada.put("latitude", this.coordenada.getLatitude());
+        coordenadas.put("longitude", this.coordenadas.getLongitude());
+        coordenadas.put("latitude", this.coordenadas.getLatitude());
 
-        return coordenada;
+        return coordenadas;
     }
 
 
@@ -96,7 +96,7 @@ public class Localizacao extends Local implements ILocalizacao
     {
         return "Localizacao{" +
                 "nome='" + nome + '\'' +
-                ", coordenada=" + coordenada +
+                ", coordenadas=" + coordenadas +
                 ", " + super.toString() +
                 '}';
     }
