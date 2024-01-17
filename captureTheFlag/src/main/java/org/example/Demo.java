@@ -190,10 +190,18 @@ public class Demo {
 
         // criar mapa
 
+        // criar mapa
         Mapa.gerarMapa(grafo, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2,
                 densidadeArestasJogador1, densidadeArestasJogador2);
 
-        raiz.exportarRaizParaJson();
+        System.out.println("\n\n" + grafo + "\n\n");
+
+        // PROBLEMA: nao estou a conseguir atualizar "numVertices" da routenetwork (esta
+        // sempre a 0)
+        // |
+        // v
+
+        raiz.exportarLocalizacoesParaJson();
 
         do {
             System.out.println("\n");
