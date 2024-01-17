@@ -402,7 +402,7 @@ public class Raiz implements IRaiz
     @Override
     public void exportarRotasParaJson() throws IOException
     {
-        Demo.iEJson.exportarParaFicheiroJSON(getRotasArrayJSON().toJSONString(), "Rotas");
+        ImportarExportarJson.exportarParaFicheiroJSON(getRotasArrayJSON().toJSONString(), "Rotas");
     }
 
     /**
