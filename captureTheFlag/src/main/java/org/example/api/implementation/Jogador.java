@@ -1,5 +1,6 @@
 package org.example.api.implementation;
 
+import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ICoordenada;
 import org.example.api.interfaces.IJogador;
 import org.json.simple.JSONObject;
@@ -17,6 +18,13 @@ public class Jogador implements IJogador
      * numero de bots do jogador
      */
     private int bots;
+
+
+    /**
+     * bandeira do jogador
+     */
+    private IBandeira bandeira;
+
 
 
     /**
@@ -89,6 +97,30 @@ public class Jogador implements IJogador
 
 
     /**
+     * retorna a bandeira do jogador
+     *
+     * @return a bandeira do jogador
+     */
+    @Override
+    public IBandeira getBandeira()
+    {
+        return bandeira;
+    }
+
+
+    /**
+     * define a bandeira do jogador
+     *
+     * @param bandeira
+     */
+    @Override
+    public void setBandeira(IBandeira bandeira)
+    {
+        this.bandeira = bandeira;
+    }
+
+
+    /**
      * retorna o numero de bandeiras conquistados pelo jogador
      *
      * @return o numero de bandeiras conquistados pelo jogador
@@ -135,6 +167,7 @@ public class Jogador implements IJogador
         return "Jogador{" +
                 "nome='" + nome + '\'' +
                 ", bots=" + bots +
+                ", bandeira=" + bandeira +
                 ", bandeirasConquistadas=" + bandeirasConquistadas +
                 '}';
     }

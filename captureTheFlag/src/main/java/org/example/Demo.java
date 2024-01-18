@@ -191,8 +191,7 @@ public class Demo {
                 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         // criar mapa
-        Mapa.gerarMapa(grafo, raiz, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1,
-                tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
+        Mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
 
         ArrayOrderedList<ILocalizacao> localizacaoList = raiz.getListaLocalizacoes();
 
@@ -202,7 +201,6 @@ public class Demo {
 
         // raiz.exportarLocalizacoesParaJson();
 
-        // do {
         System.out.println("\n");
         System.out.println("+--------------------------------------+");
         System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
@@ -212,7 +210,8 @@ public class Demo {
         System.out.println("| Localizacao da Bandeira:             |\n");
 
         // ciclo para mostrar todas os nodes
-        for (ILocalizacao localizacaoObj : localizacaoList) {
+        for (ILocalizacao localizacaoObj : localizacaoList)
+        {
             System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
         }
 
@@ -220,14 +219,15 @@ public class Demo {
 
         System.out.println("+--------------------------------------+");
 
-        // } while (locBandeiraJogador1 == 0);
+        ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); //localizacao selecionada
+        raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
+        IBandeira bandeiraJogador1 = new Bandeira(0, "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); //criar bandeira
 
-        raiz.re// remover localizacao selecionada
-        // criar bandeira
+        jogador1.setBandeira(bandeiraJogador1);
 
         localizacaoList = raiz.getListaLocalizacoes();
 
-        // do {
+
         System.out.println("\n");
         System.out.println("+--------------------------------------+");
         System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
@@ -237,7 +237,8 @@ public class Demo {
         System.out.println("| Localizacao da Bandeira:           |\n");
 
         // ciclo para mostrar todas os nodes sem ser aquela selecionada pelo jogador1
-        for (ILocalizacao localizacaoObj : localizacaoList) {
+        for (ILocalizacao localizacaoObj : localizacaoList)
+        {
             System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
         }
 
@@ -245,8 +246,13 @@ public class Demo {
 
         System.out.println("+--------------------------------------+");
 
-        // } while (locBandeiraJogador2 == 0);
+        ILocalizacao localJogador2Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador2); //localizacao selecionada
+        raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
+        IBandeira bandeiraJogador2 = new Bandeira(1, "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); //criar bandeira
 
+        jogador2.setBandeira(bandeiraJogador2);
+
+        localizacaoList = raiz.getListaLocalizacoes();
     }
 
     // endregion

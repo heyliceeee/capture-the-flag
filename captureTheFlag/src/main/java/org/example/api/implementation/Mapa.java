@@ -10,21 +10,50 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Mapa implements IMapa {
+public class Mapa implements IMapa
+{
     /**
      * quantidade de localizacoes existentes no mapa
      */
     private int qttLocExistentes;
+
 
     /**
      * tipo de caminho no mapa (bidirecional ou direcional)
      */
     public static String tipoCaminhoString;
 
+
     /**
      * densidade das arestas do mapa (10% - 100%)
      */
-    private int densidadeArestas;
+    private static int densidadeArestas;
+
+
+    /**
+     * localizacoes existentes do mapa
+     */
+    private static int locExistentes;
+
+
+    /**
+     * tipo de caminho no mapa (1 ou 2)
+     */
+    private static int tipoCaminho;
+
+
+    /**
+     * arestas no mapa
+     */
+    private static int arestas;
+
+
+    /**
+     * numero arestas no mapa
+     */
+    private static int calculoDensidadeArestas;
+
+
 
     /**
      * constructor
@@ -39,78 +68,30 @@ public class Mapa implements IMapa {
         this.densidadeArestas = densidadeArestas;
     }
 
-    public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1,
-            int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1,
-            int densidadeArestasJogador2) {
-        double arestas = 0.0;
-        int locExistentes = 0, densidadeArestas = 0, tipoCaminho = 0;
+    public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
+    {
+        validarArgumentos(locExistentesJogador1, locExistentesJogador2, densidadeArestasJogador1, densidadeArestasJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, tipoCaminho); // region validacoes dos argumentos
 
-        // region validacoes dos argumentos
+        //region densidade das arestas
+        if (tipoCaminhoString.equals("direcionado"))
+        {
+            double direcionado = (locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100)) / 2;
 
-        if (locExistentesJogador1 > locExistentesJogador2) {
-            locExistentes = fazerMedia(locExistentesJogador2, locExistentesJogador1); // decidir entre as 2 opcoes dos
-                                                                                      // jogadores, quantas localizacoes
-                                                                                      // existentes vai ter o mapa
-        } else if (locExistentesJogador2 > locExistentesJogador1) {
-            locExistentes = fazerMedia(locExistentesJogador1, locExistentesJogador2); // decidir entre as 2 opcoes dos
-                                                                                      // jogadores, quantas localizacoes
-                                                                                      // existentes vai ter o mapa
-        } else if (locExistentesJogador2 > locExistentesJogador1) {
-            locExistentes = locExistentesJogador1;
-        } else {
-            locExistentes = locExistentesJogador1;
+            calculoDensidadeArestas = (int) Math.round(direcionado);
+        }
+        else
+        {
+            double bidirecionado = locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100);
+
+            calculoDensidadeArestas = (int) Math.round(bidirecionado);
         }
 
-        if (densidadeArestasJogador1 > densidadeArestasJogador2) {
-            densidadeArestas = gerarNumeroRandom(densidadeArestasJogador2, densidadeArestasJogador1); // decidir entre
-                                                                                                      // as 2 opcoes dos
-                                                                                                      // jogadores, qual
-                                                                                                      // é a densidade
-                                                                                                      // de restas que
-                                                                                                      // vai ter o mapa
-        } else if (densidadeArestasJogador2 > densidadeArestasJogador1) {
-            densidadeArestas = gerarNumeroRandom(densidadeArestasJogador1, densidadeArestasJogador2); // decidir entre
-                                                                                                      // as 2 opcoes dos
-                                                                                                      // jogadores, qual
-                                                                                                      // é a densidade
-                                                                                                      // de restas que
-                                                                                                      // vai ter o mapa
-        } else if (densidadeArestasJogador2 > densidadeArestasJogador1) {
-            densidadeArestas = densidadeArestasJogador1;
-        } else {
-            densidadeArestas = densidadeArestasJogador1;
-        }
+        arestas = calculoDensidadeArestas;
 
-        if (tipoCaminhoJogador1 > tipoCaminhoJogador2) {
-            tipoCaminho = gerarNumeroRandom(tipoCaminhoJogador2, tipoCaminhoJogador1); // decidir entre as 2 opcoes dos
-                                                                                       // jogadores, qual é o tipo de
-                                                                                       // caminho vai ter o mapa
-        } else if (tipoCaminhoJogador2 > tipoCaminhoJogador1) {
-            tipoCaminho = gerarNumeroRandom(tipoCaminhoJogador1, tipoCaminhoJogador2); // decidir entre as 2 opcoes dos
-                                                                                       // jogadores, qual é o tipo de
-                                                                                       // caminho vai ter o mapa
-        } else if (tipoCaminhoJogador2 > tipoCaminhoJogador1) {
-            tipoCaminho = tipoCaminhoJogador1;
-        } else {
-            tipoCaminho = tipoCaminhoJogador1;
-        }
-
-        if (tipoCaminho == 1) {
-            tipoCaminhoString = "direcionado";
-        } else {
-            tipoCaminhoString = "bidirecionado";
-        }
-
-        // densidade das arestas
-        if (tipoCaminhoString.equals("direcionado")) {
-            arestas = Math.round((locExistentes * (locExistentes - 1) * (densidadeArestas / 100)) / 2);
-        } else {
-            arestas = Math.round(locExistentes * (locExistentes - 1) * (densidadeArestas / 100));
-        }
-
-        // endregion
+        //endregion
 
         // region criar o grafo && adicionar os dados ás classes
+
         ArrayOrderedList<String> nomeSpots = new ArrayOrderedList<>();
         nomeSpots.add("CT Stairs");
         nomeSpots.add("Ticket");
@@ -138,23 +119,21 @@ public class Mapa implements IMapa {
             nomeSpots.removeFirst();
         }
 
-        // region criar o grafo && adicionar os dados ás classes
+        int k=0;
+        ArrayOrderedList<Integer> valoresAnterioresDe = new ArrayOrderedList<>();
+        ArrayOrderedList<Integer> valoresAnterioresPara = new ArrayOrderedList<>();
 
-        for (int j = 0; j < arestas; j++) // percorrer todas arestas
+        for (int j=0; j < arestas; j++) // percorrer todas arestas
         {
-            int de = gerarNumeroRandom(0, locExistentes); // gerar um ponto random entre 0 e o locExistentes
-            int para = de;
+            //region garantir que todos os vertices tem uma aresta
 
-            do // nao deixar que os pontos randoms sejam iguais
-            {
-                de = gerarNumeroRandom(0, locExistentes); // gerar um ponto random entre 0 e o locExistentes
+            int de = gerarVerticeUnico(valoresAnterioresDe, locExistentes);
+            int para = gerarVerticeUnico(valoresAnterioresPara, locExistentes);
 
-            } while (de == para);
+            //endregion
 
             Coordenada coordenadasDe = new Coordenada(de * 100, para * 100); // definir coordenadas
-            Coordenada coordenadasPara = (tipoCaminhoString.equals("bidirecionado"))
-                    ? (new Coordenada(para * 100, de * 100))
-                    : (new Coordenada(0, 0)); // definir coordenadas
+            Coordenada coordenadasPara = new Coordenada(para * 100, de * 100); // definir coordenadas
 
             ILocalizacao localizacaoDe = raiz.getLocalizacaoPorID(de);// procurar a localizacao por id
             ILocalizacao localizacaoPara = raiz.getLocalizacaoPorID(para);// procurar a localizacao por id
@@ -162,10 +141,8 @@ public class Mapa implements IMapa {
             raiz.removerLocal(localizacaoDe); // eliminar o local existente
             raiz.removerLocal(localizacaoPara); // eliminar o local existente
 
-            ILocalizacao localizacaoDeNova = new Localizacao(localizacaoDe.getId(), localizacaoDe.getTipo(),
-                    localizacaoDe.getNome(), coordenadasDe); // localizacao com as coordenadas atualizadas
-            ILocalizacao localizacaoParaNova = new Localizacao(localizacaoPara.getId(), localizacaoPara.getTipo(),
-                    localizacaoPara.getNome(), coordenadasPara); // localizacao com as coordenadas atualizadas
+            ILocalizacao localizacaoDeNova = new Localizacao(localizacaoDe.getId(), localizacaoDe.getTipo(), localizacaoDe.getNome(), coordenadasDe); // localizacao com as coordenadas atualizadas
+            ILocalizacao localizacaoParaNova = new Localizacao(localizacaoPara.getId(), localizacaoPara.getTipo(), localizacaoPara.getNome(), coordenadasPara); // localizacao com as coordenadas atualizadas
 
             raiz.adicionarLocal(localizacaoDeNova); // adiciona um novo local
             raiz.adicionarLocal(localizacaoParaNova); // adiciona um novo local
@@ -179,6 +156,105 @@ public class Mapa implements IMapa {
         }
 
         // endregion
+    }
+
+
+    private static int gerarVerticeUnico(ArrayOrderedList<Integer> valoresAnteriores, int locExistentes)
+    {
+        int tentativas = 0;
+        int maxTentativas = 100;
+
+        int vertice;
+        do
+        {
+            vertice = gerarNumeroRandom(0, locExistentes);  //gerar um ponto random entre 0 e o locExistentes
+            tentativas++;
+
+            if (tentativas > maxTentativas) //Se o número máximo de tentativas for atingido, faça algo (como lançar uma exceção)
+            {
+                throw new RuntimeException("Não foi possível gerar um número único após várias tentativas.");
+            }
+        }
+        while (contemElemento(valoresAnteriores, vertice));
+
+        valoresAnteriores.add(vertice);
+        return vertice;
+    }
+
+
+    /**
+     * verificar se um elemento está presenta na lista
+     * @param lista
+     * @param elemento
+     * @return
+     */
+    private static boolean contemElemento(ArrayOrderedList<Integer> lista, int elemento)
+    {
+        return lista.contains(elemento);
+    }
+
+    /**
+     * validar argumentos que cada jogador inseriu para gerar o mapa
+     * @param locExistentesJogador1
+     * @param locExistentesJogador2
+     * @param densidadeArestasJogador1
+     * @param densidadeArestasJogador2
+     * @param tipoCaminhoJogador1
+     * @param tipoCaminhoJogador2
+     * @param tipoCaminho
+     */
+    private static void validarArgumentos(int locExistentesJogador1, int locExistentesJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int tipoCaminho)
+    {
+        if (locExistentesJogador1 > locExistentesJogador2)
+        {
+            locExistentes = fazerMedia(locExistentesJogador2, locExistentesJogador1); // decidir entre as 2 opcoes dos jogadores, quantas localizacoes existentes vai ter o mapa
+        }
+        else if (locExistentesJogador2 > locExistentesJogador1)
+        {
+            locExistentes = fazerMedia(locExistentesJogador1, locExistentesJogador2); // decidir entre as 2 opcoes dos jogadores, quantas localizacoes existentes vai ter o mapa
+        }
+        else
+        {
+            locExistentes = locExistentesJogador1;
+        }
+
+
+        if (densidadeArestasJogador1 > densidadeArestasJogador2)
+        {
+            densidadeArestas = gerarNumeroRandom(densidadeArestasJogador2, densidadeArestasJogador1); // decidir entre as 2 opcoes dos jogadores, qual é a densidade de restas que vai ter o mapa
+        }
+        else if (densidadeArestasJogador2 > densidadeArestasJogador1)
+        {
+            densidadeArestas = gerarNumeroRandom(densidadeArestasJogador1, densidadeArestasJogador2); // decidir entre as 2 opcoes dos jogadores, qual é a densidade de restas que vai ter o mapa
+        }
+        else
+        {
+            densidadeArestas = densidadeArestasJogador1;
+        }
+
+
+        if (tipoCaminhoJogador1 > tipoCaminhoJogador2)
+        {
+            tipoCaminho = gerarNumeroRandom(tipoCaminhoJogador2, tipoCaminhoJogador1); // decidir entre as 2 opcoes dos jogadores, qual é o tipo de caminho vai ter o mapa
+        }
+        else if (tipoCaminhoJogador2 > tipoCaminhoJogador1)
+        {
+            tipoCaminho = gerarNumeroRandom(tipoCaminhoJogador1, tipoCaminhoJogador2); // decidir entre as 2 opcoes dos jogadores, qual é o tipo de caminho vai ter o mapa
+        }
+        else
+        {
+            tipoCaminho = tipoCaminhoJogador1;
+        }
+
+
+        if (tipoCaminho == 1)
+        {
+            tipoCaminhoString = "direcionado";
+        }
+        else
+        {
+            tipoCaminhoString = "bidirecionado";
+        }
     }
 
     /**

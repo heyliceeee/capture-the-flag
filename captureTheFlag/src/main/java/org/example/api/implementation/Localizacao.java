@@ -18,21 +18,15 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
 
 
     /**
-     * coordenadas da localizacao
-     */
-    private ICoordenada coordenadas;
-
-
-    /**
      * instancia da classe de importar e exportar JSON
      */
     static ImportarExportarJson iEJson = new ImportarExportarJson();
 
 
 
-    public Localizacao(int id, String type, String nome, ICoordenada coordenadas)
+    public Localizacao(int id, String tipo, String nome, ICoordenada coordenadas)
     {
-        super(id, type, coordenadas);
+        super(id, tipo, coordenadas);
         this.nome = nome;
     }
 
@@ -76,7 +70,7 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
 
         return raiz;
     }
-
+/*
 
     private JSONObject getCoordenadasObjetoJSON()
     {
@@ -101,7 +95,7 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
         }
 
         return coordenadas;
-    }
+    }*/
 
 
 
@@ -110,7 +104,6 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
     {
         return "Localizacao{" +
                 "nome='" + nome + '\'' +
-                ", coordenadas=" + coordenadas +
                 ", " + super.toString() +
                 '}';
     }

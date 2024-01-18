@@ -36,6 +36,19 @@ public interface IJogador
      */
     void setNome(String nome);
 
+    /**
+     * retorna a bandeira do jogador
+     * @return a bandeira do jogador
+     */
+    IBandeira getBandeira();
+
+
+    /**
+     * define a bandeira do jogador
+     * @param bandeira
+     */
+    void setBandeira(IBandeira bandeira);
+
 
     /**
      * retorna o numero de bandeiras conquistados pelo jogador

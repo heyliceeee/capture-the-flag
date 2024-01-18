@@ -19,12 +19,6 @@ public class Bandeira extends Local implements IBandeira
 
 
     /**
-     * coordenadas da bandeira
-     */
-    private ICoordenada coordenadas;
-
-
-    /**
      * instancia da classe de importar e exportar JSON
      */
     static ImportarExportarJson iEJson = new ImportarExportarJson();
@@ -35,7 +29,6 @@ public class Bandeira extends Local implements IBandeira
     {
         super(id, tipo, coordenadas);
         this.nome = nome;
-        this.coordenadas = coordenadas;
     }
 
 
@@ -72,15 +65,15 @@ public class Bandeira extends Local implements IBandeira
 
         raiz.put("id", getId());
         raiz.put("tipo", getTipo());
-        raiz.put("name", this.nome);
-        raiz.put("coordenadas", getCoordenadasObjetoJSON());
+        raiz.put("nome", this.nome);
+        raiz.put("coordenadas", getCoordenadas());
         raiz.put("interacao", getInteracoesArrayJson());
 
         return raiz;
     }
 
 
-    private JSONObject getCoordenadasObjetoJSON()
+    /*private JSONObject getCoordenadasObjetoJSON()
     {
         JSONObject coordenadas = new JSONObject();
 
@@ -88,7 +81,7 @@ public class Bandeira extends Local implements IBandeira
         coordenadas.put("latitude", this.coordenadas.getLatitude());
 
         return coordenadas;
-    }
+    }*/
 
 
 
@@ -97,7 +90,6 @@ public class Bandeira extends Local implements IBandeira
     {
         return "Bandeira{" +
                 "nome='" + nome + '\'' +
-                ", coordenadas=" + coordenadas +
                 ", " + super.toString() +
                 '}';
     }

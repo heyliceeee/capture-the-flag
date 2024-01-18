@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 public class Graph<T> implements GraphADT<T>
 {
-    protected final int DEFAULT_CAPACITY = 10;
+    protected final int DEFAULT_CAPACITY = 50;
     protected int numVertices; //numero de vertices no grafo
     protected double[][] adjMatrix; //matriz de adjacencia
     protected T[] vertices; //valores dos vertices
