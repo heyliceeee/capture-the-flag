@@ -59,6 +59,19 @@ public class Raiz implements IRaiz
     }
 
     /**
+     * retorna "sucesso" se foi removido uma localizacao/bandeira ao grafo
+     *
+     * @param local a ser removido
+     * @return "sucesso" se foi removido uma localizacao/bandeira ao grafo
+     * @throws ElementAlreadyExistsException
+     */
+    @Override
+    public boolean removerLocal(ILocal local)
+    {
+        return this.routeNetwork.removeVertex(local);
+    }
+
+    /**
      * retorna "Successful" se foi adicionado um jogador á lista dos jogadores
      *
      * @param jogador a ser adicionado
@@ -327,9 +340,9 @@ public class Raiz implements IRaiz
 
         /*String s = "Localizacoes: {\n";
 
-        if (this.routeNetwork.getNumeroDeLocalizacoes() != 0)
+        if (routeNetwork.getNumeroDeLocalizacoes() != 0)
         {
-            Iterator<ILocalizacao> iteratorLocalizacao = this.routeNetwork.getLocalizacoes();
+            Iterator<ILocalizacao> iteratorLocalizacao = routeNetwork.getLocalizacoes();
 
             while (iteratorLocalizacao.hasNext())
             {
@@ -512,7 +525,7 @@ public class Raiz implements IRaiz
     private JSONArray getLocalizacoesArrayJSON()
     {
         JSONArray localizacoesArray = new JSONArray();
-        Iterator<ILocalizacao> iteratorLocalizacao = this.routeNetwork.getLocalizacoes();
+        Iterator<ILocalizacao> iteratorLocalizacao = routeNetwork.getLocalizacoes();
 
         while (iteratorLocalizacao.hasNext())
         {
@@ -639,11 +652,11 @@ public class Raiz implements IRaiz
      * atualiza as coordenadas do localizacao
      *
      * @param id         ID do localizacao
-     * @param coordenada novas coordenadas do localizacao
+     * @param coordenadas novas coordenadas do localizacao
      * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
      */
     @Override
-    public void setLocalizacaoCoordenadas(int id, Coordenada coordenada) throws ElementNotFoundException {
+    public void setLocalizacaoCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException {
 
     }
 

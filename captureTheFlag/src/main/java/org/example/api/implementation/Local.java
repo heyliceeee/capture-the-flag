@@ -57,13 +57,13 @@ public class Local implements ILocal
      *
      * @param id
      * @param tipo
-     * @param coordenada
+     * @param coordenadas
      */
-    public Local(int id, String tipo, ICoordenada coordenada)
+    public Local(int id, String tipo, ICoordenada coordenadas)
     {
         this.id = id;
         this.tipo = tipo;
-        this.coordenadas = coordenada;
+        this.coordenadas = coordenadas;
     }
 
 

@@ -31,6 +31,7 @@ public class Demo {
     public static IJogador jogador1 = new Jogador("Jogador1", 0, 0);
     public static IJogador jogador2 = new Jogador("Jogador2", 0, 0);
     public static IBot bot = new Bot("", "", null, "");
+    public static IRota rota = new Rota(null, null, 0);
 
     public static void main(String[] args) throws IOException, ParseException, InterruptedException {
         mostrarMenuInicial();
@@ -56,9 +57,8 @@ public class Demo {
             System.out.println("+--------------------------------------+");
             System.out.println("seleciona uma opcao: *                  ");
             System.out.println("+--------------------------------------+");
-            System.out.println(
-                    "| 01. Jogar                            |\n" +
-                            "| 99. Sair                             |");
+            System.out.println("| 01. Jogar                            |\n" +
+                    "| 99. Sair                             |");
             System.out.println("+--------------------------------------+");
 
             option = scanner.nextInt();
@@ -98,10 +98,9 @@ public class Demo {
             System.out.println("+--------------------------------------+");
             System.out.println("seleciona uma opcao: *                  ");
             System.out.println("+--------------------------------------+");
-            System.out.println(
-                    "| 01. Criar mapa                       |\n" +
-                            "| 02. Importar mapa                    |\n" +
-                            "| 99. Sair                             |");
+            System.out.println("| 01. Criar mapa                       |\n" +
+                    "| 02. Importar mapa                    |\n" +
+                    "| 99. Sair                             |");
             System.out.println("+--------------------------------------+");
 
             option = scanner.nextInt();
@@ -192,63 +191,61 @@ public class Demo {
                 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         // criar mapa
-        Mapa.gerarMapa(grafo, raiz, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
+        Mapa.gerarMapa(grafo, raiz, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1,
+                tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
 
         ArrayOrderedList<ILocalizacao> localizacaoList = raiz.getListaLocalizacoes();
 
-        // PROBLEMA: nao estou a conseguir atualizar "numVertices" da routenetwork (esta
-        // sempre a 0)
+        // PROBLEMA: coordenadas estao a null aqui
         // |
         // v
 
-        //raiz.exportarLocalizacoesParaJson();
+        // raiz.exportarLocalizacoesParaJson();
 
-        //do {
-            System.out.println("\n");
-            System.out.println("+--------------------------------------+");
-            System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
-            System.out.println("+--------------------------------------+");
-            System.out.println("selecione uma das opcoes: *             ");
-            System.out.println("+--------------------------------------+");
-            System.out.println("| Localizacao da Bandeira:             |\n");
+        // do {
+        System.out.println("\n");
+        System.out.println("+--------------------------------------+");
+        System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
+        System.out.println("+--------------------------------------+");
+        System.out.println("selecione uma das opcoes: *             ");
+        System.out.println("+--------------------------------------+");
+        System.out.println("| Localizacao da Bandeira:             |\n");
 
-            // ciclo para mostrar todas os nodes
-            for (ILocalizacao localizacaoObj : localizacaoList)
-            {
-                System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
-            }
+        // ciclo para mostrar todas os nodes
+        for (ILocalizacao localizacaoObj : localizacaoList) {
+            System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
+        }
 
-            locBandeiraJogador1 = scanner.nextInt();
+        locBandeiraJogador1 = scanner.nextInt();
 
-            System.out.println("+--------------------------------------+");
+        System.out.println("+--------------------------------------+");
 
-        //} while (locBandeiraJogador1 == 0);
+        // } while (locBandeiraJogador1 == 0);
 
-        raiz.re//remover localizacao selecionada
-        //criar bandeira
+        raiz.re// remover localizacao selecionada
+        // criar bandeira
 
         localizacaoList = raiz.getListaLocalizacoes();
 
-        //do {
-            System.out.println("\n");
-            System.out.println("+--------------------------------------+");
-            System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
-            System.out.println("+--------------------------------------+");
-            System.out.println("selecione uma das opcoes: *             ");
-            System.out.println("+--------------------------------------+");
-            System.out.println("| Localizacao da Bandeira:           |\n");
+        // do {
+        System.out.println("\n");
+        System.out.println("+--------------------------------------+");
+        System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
+        System.out.println("+--------------------------------------+");
+        System.out.println("selecione uma das opcoes: *             ");
+        System.out.println("+--------------------------------------+");
+        System.out.println("| Localizacao da Bandeira:           |\n");
 
-            // ciclo para mostrar todas os nodes sem ser aquela selecionada pelo jogador1
-            for (ILocalizacao localizacaoObj : localizacaoList)
-            {
-                System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
-            }
+        // ciclo para mostrar todas os nodes sem ser aquela selecionada pelo jogador1
+        for (ILocalizacao localizacaoObj : localizacaoList) {
+            System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
+        }
 
-            locBandeiraJogador2 = scanner.nextInt();
+        locBandeiraJogador2 = scanner.nextInt();
 
-            System.out.println("+--------------------------------------+");
+        System.out.println("+--------------------------------------+");
 
-        //} while (locBandeiraJogador2 == 0);
+        // } while (locBandeiraJogador2 == 0);
 
     }
 
