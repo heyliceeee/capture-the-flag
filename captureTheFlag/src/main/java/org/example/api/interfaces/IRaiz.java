@@ -7,6 +7,8 @@ import org.example.api.implementation.Coordenada;
 import org.example.api.implementation.Interacao;
 import org.example.api.implementation.TipoOrdenacao;
 import org.example.collections.exceptions.EmptyCollectionException;
+import org.example.collections.implementation.ArrayOrderedList;
+import org.example.collections.implementation.LinkedList;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -108,10 +110,10 @@ public interface IRaiz
     String getListaBots();
 
     /**
-     * retorna em string uma listagem dos localizacoes
-     * @return em string uma listagem dos localizacoes
+     * retorna a listagem dos localizacoes
+     * @return a listagem dos localizacoes
      */
-    String getListaLocalizacoes();
+    ArrayOrderedList<ILocalizacao> getListaLocalizacoes();
 
     /**
      * retorna em string uma listagem das bandeiras

@@ -6,7 +6,9 @@ import org.example.api.exceptions.ElementNotFoundException;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
+import org.example.collections.implementation.ArrayOrderedList;
 import org.example.collections.implementation.ArrayUnorderedList;
+import org.example.collections.implementation.LinkedList;
 import org.example.collections.interfaces.UnorderedListADT;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -292,15 +294,38 @@ public class Raiz implements IRaiz
         return s;
     }
 
+
     /**
-     * retorna em string uma listagem dos localizacoes
+     * retorna a listagem dos localizacoes
      *
-     * @return em string uma listagem dos localizacoes
+     * @return a listagem dos localizacoes
      */
     @Override
-    public String getListaLocalizacoes()
+    public ArrayOrderedList<ILocalizacao> getListaLocalizacoes()
     {
-        String s = "Localizacoes: {\n";
+        ArrayOrderedList<ILocalizacao> lista = new ArrayOrderedList<>();
+
+        if(routeNetwork.getNumeroDeLocalizacoes() != 0)
+        {
+            Iterator<ILocalizacao> iterator = routeNetwork.getLocalizacoes();
+
+            if (iterator != null)
+            {
+                while (iterator.hasNext())
+                {
+                    ILocalizacao localizacao = iterator.next();
+
+                    if (localizacao != null)
+                    {
+                        lista.add(localizacao);
+                    }
+                }
+            }
+        }
+
+        return lista;
+
+        /*String s = "Localizacoes: {\n";
 
         if (this.routeNetwork.getNumeroDeLocalizacoes() != 0)
         {
@@ -318,7 +343,7 @@ public class Raiz implements IRaiz
 
         s += "}";
 
-        return s;
+        return s;*/
     }
 
     /**
@@ -689,11 +714,11 @@ public class Raiz implements IRaiz
      * atualiza as coordenadas do bandeira
      *
      * @param id         ID do bandeira
-     * @param coordenada novas coordenadas do bandeira
+     * @param coordenadas novas coordenadas do bandeira
      * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
      */
     @Override
-    public void setBandeiraCoordenadas(int id, Coordenada coordenada) throws ElementNotFoundException {
+    public void setBandeiraCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException {
 
     }
 

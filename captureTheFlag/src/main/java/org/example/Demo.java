@@ -3,8 +3,11 @@ package org.example;
 import org.example.api.implementation.*;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
+import org.example.collections.implementation.ArrayOrderedList;
 import org.example.collections.implementation.ExporterGraph;
+import org.example.collections.implementation.LinkedList;
 import org.example.collections.interfaces.IExporter;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -189,21 +192,18 @@ public class Demo {
                 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         // criar mapa
+        Mapa.gerarMapa(grafo, raiz, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
 
-        // criar mapa
-        Mapa.gerarMapa(grafo, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2,
-                densidadeArestasJogador1, densidadeArestasJogador2);
-
-        System.out.println("\n\n" + grafo + "\n\n");
+        ArrayOrderedList<ILocalizacao> localizacaoList = raiz.getListaLocalizacoes();
 
         // PROBLEMA: nao estou a conseguir atualizar "numVertices" da routenetwork (esta
         // sempre a 0)
         // |
         // v
 
-        raiz.exportarLocalizacoesParaJson();
+        //raiz.exportarLocalizacoesParaJson();
 
-        do {
+        //do {
             System.out.println("\n");
             System.out.println("+--------------------------------------+");
             System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
@@ -213,14 +213,23 @@ public class Demo {
             System.out.println("| Localizacao da Bandeira:             |\n");
 
             // ciclo para mostrar todas os nodes
+            for (ILocalizacao localizacaoObj : localizacaoList)
+            {
+                System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
+            }
 
             locBandeiraJogador1 = scanner.nextInt();
 
             System.out.println("+--------------------------------------+");
 
-        } while (locBandeiraJogador1 == 0);
+        //} while (locBandeiraJogador1 == 0);
 
-        do {
+        raiz.re//remover localizacao selecionada
+        //criar bandeira
+
+        localizacaoList = raiz.getListaLocalizacoes();
+
+        //do {
             System.out.println("\n");
             System.out.println("+--------------------------------------+");
             System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
@@ -230,12 +239,16 @@ public class Demo {
             System.out.println("| Localizacao da Bandeira:           |\n");
 
             // ciclo para mostrar todas os nodes sem ser aquela selecionada pelo jogador1
+            for (ILocalizacao localizacaoObj : localizacaoList)
+            {
+                System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
+            }
 
             locBandeiraJogador2 = scanner.nextInt();
 
             System.out.println("+--------------------------------------+");
 
-        } while (locBandeiraJogador2 == 0);
+        //} while (locBandeiraJogador2 == 0);
 
     }
 
