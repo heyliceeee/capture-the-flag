@@ -28,6 +28,15 @@ public interface IRaiz
 
 
     /**
+     * retorna "sucesso" se foi removido uma localizacao/bandeira ao grafo
+     * @param local a ser removido
+     * @return "sucesso" se foi removido uma localizacao/bandeira ao grafo
+     * @throws org.example.api.exceptions.ElementAlreadyExistsException
+     */
+    boolean removerLocal(ILocal local);
+
+
+    /**
      * retorna "sucesso" se foi adicionado um jogador á lista dos jogadores
      * @param jogador a ser adicionado
      * @return "sucesso" se foi adicionado um jogador á lista dos jogadores
@@ -202,7 +211,7 @@ public interface IRaiz
      * @param coordenada novas coordenadas do localizacao
      * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
      */
-    void setLocalizacaoCoordenadas(int id, Coordenada coordenada) throws ElementNotFoundException;
+    void setLocalizacaoCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException;
 
 
     /**
@@ -247,7 +256,7 @@ public interface IRaiz
      * @param coordenada novas coordenadas do bandeira
      * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
      */
-    void setBandeiraCoordenadas(int id, Coordenada coordenada) throws ElementNotFoundException;
+    void setBandeiraCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException;
 
 
     /**

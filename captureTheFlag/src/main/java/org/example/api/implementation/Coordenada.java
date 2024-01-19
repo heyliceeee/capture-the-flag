@@ -26,7 +26,7 @@ public class Coordenada implements ICoordenada
 
     @Override
     public String toString() {
-        return "Coordenada{" +
+        return "Coordenadas{" +
                 "longitude=" + longitude +
                 ", latitude=" + latitude +
                 '}';

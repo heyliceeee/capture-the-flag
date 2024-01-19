@@ -21,7 +21,7 @@ public class Bandeira extends Local implements IBandeira
     /**
      * coordenadas da bandeira
      */
-    private ICoordenada coordenada;
+    private ICoordenada coordenadas;
 
 
     /**
@@ -31,11 +31,11 @@ public class Bandeira extends Local implements IBandeira
 
 
 
-    public Bandeira(int id, String tipo, String nome, ICoordenada coordenada)
+    public Bandeira(int id, String tipo, String nome, ICoordenada coordenadas)
     {
-        super(id, tipo, coordenada);
+        super(id, tipo, coordenadas);
         this.nome = nome;
-        this.coordenada = coordenada;
+        this.coordenadas = coordenadas;
     }
 
 
@@ -84,8 +84,8 @@ public class Bandeira extends Local implements IBandeira
     {
         JSONObject coordenadas = new JSONObject();
 
-        coordenadas.put("longitude", this.coordenada.getLongitude());
-        coordenadas.put("latitude", this.coordenada.getLatitude());
+        coordenadas.put("longitude", this.coordenadas.getLongitude());
+        coordenadas.put("latitude", this.coordenadas.getLatitude());
 
         return coordenadas;
     }
@@ -97,7 +97,7 @@ public class Bandeira extends Local implements IBandeira
     {
         return "Bandeira{" +
                 "nome='" + nome + '\'' +
-                ", coordenadas=" + coordenada +
+                ", coordenadas=" + coordenadas +
                 ", " + super.toString() +
                 '}';
     }

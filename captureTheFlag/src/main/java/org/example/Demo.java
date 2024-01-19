@@ -10,7 +10,8 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Demo {
+public class Demo
+{
     public static ImportarExportarJson iEJson = new ImportarExportarJson();
 
     /**
@@ -28,8 +29,12 @@ public class Demo {
     public static IJogador jogador1 = new Jogador("Jogador1", 0, 0);
     public static IJogador jogador2 = new Jogador("Jogador2", 0, 0);
     public static IBot bot = new Bot("", "", null, "");
+    public static IRota rota = new Rota(null, null, 0);
 
-    public static void main(String[] args) throws IOException, ParseException, InterruptedException {
+
+
+    public static void main(String[] args) throws IOException, ParseException, InterruptedException
+    {
         mostrarMenuInicial();
     }
 
@@ -40,22 +45,22 @@ public class Demo {
      * 
      * @throws EmptyCollectionException
      */
-    public static void mostrarMenuInicial()
-            throws EmptyCollectionException, IOException, ParseException, InterruptedException {
+    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException, InterruptedException
+    {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
 
-        do {
+        do
+        {
             System.out.println("\n");
             System.out.println("+--------------------------------------+");
             System.out.println("|         CAPTURAR A BANDEIRA          |");
             System.out.println("+--------------------------------------+");
             System.out.println("seleciona uma opcao: *                  ");
             System.out.println("+--------------------------------------+");
-            System.out.println(
-                    "| 01. Jogar                            |\n" +
-                            "| 99. Sair                             |");
+            System.out.println("| 01. Jogar                            |\n" +
+                               "| 99. Sair                             |");
             System.out.println("+--------------------------------------+");
 
             option = scanner.nextInt();
@@ -63,7 +68,8 @@ public class Demo {
             /**
              * Depois de selecionar a opcao do menu, faz o que pretende
              */
-            switch (option) {
+            switch (option)
+            {
                 case 1:
                     mostrarMenuJogo();
                     break;
@@ -77,28 +83,30 @@ public class Demo {
                     System.out.println("opcao invalida, opcao selecionada entre 1 ou 99 para sair.");
                     break;
             }
-        } while (!exit);
+        }
+        while (!exit);
     }
 
     /**
      * mostrar o menu do jogo {criar mapa, importar mapa}
      */
-    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException {
+    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException
+    {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
 
-        do {
+        do
+        {
             System.out.println("\n");
             System.out.println("+--------------------------------------+");
             System.out.println("|                  MAPA                |");
             System.out.println("+--------------------------------------+");
             System.out.println("seleciona uma opcao: *                  ");
             System.out.println("+--------------------------------------+");
-            System.out.println(
-                    "| 01. Criar mapa                       |\n" +
-                            "| 02. Importar mapa                    |\n" +
-                            "| 99. Sair                             |");
+            System.out.println("| 01. Criar mapa                       |\n" +
+                               "| 02. Importar mapa                    |\n" +
+                               "| 99. Sair                             |");
             System.out.println("+--------------------------------------+");
 
             option = scanner.nextInt();
@@ -106,7 +114,8 @@ public class Demo {
             /**
              * Depois de selecionar a opcao do menu, faz o que pretende
              */
-            switch (option) {
+            switch (option)
+            {
                 case 1:
                     mostrarMenuCriarMapa();
                     break;
@@ -124,10 +133,12 @@ public class Demo {
                     System.out.println("opcao invalida, opcao selecionada entre 1 e 2 ou 99 para sair.");
                     break;
             }
-        } while (!exit);
+        }
+        while (!exit);
     }
 
-    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException {
+    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException
+    {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -136,14 +147,15 @@ public class Demo {
 
         int locExistentesJogador2 = 0, tipoCaminhoJogador2 = 0, densidadeArestasJogador2 = 0, locBandeiraJogador2 = 0;
 
-        do {
+        do
+        {
             System.out.println("\n");
             System.out.println("+--------------------------------------+");
             System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
             System.out.println("+--------------------------------------+");
             System.out.println("introduza os seguintes dados: *         ");
             System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:(Min 4)|\n");
+            System.out.println("| Quantidade localizacoes existentes:  |\n");
 
             locExistentesJogador1 = scanner.nextInt();
 
@@ -159,17 +171,18 @@ public class Demo {
 
             System.out.println("+-------------------------------------+");
 
-        } while (locExistentesJogador1 < 4 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2
-                || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
+        }
+        while (locExistentesJogador1 <= 0 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2 || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
 
-        do {
+        do
+        {
             System.out.println("\n");
             System.out.println("+--------------------------------------+");
             System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
             System.out.println("+--------------------------------------+");
             System.out.println("introduza os seguintes dados: *         ");
             System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:(Min 4)|\n");
+            System.out.println("| Quantidade localizacoes existentes:  |\n");
 
             locExistentesJogador2 = scanner.nextInt();
 
@@ -185,19 +198,16 @@ public class Demo {
 
             System.out.println("+---------------------------------------+");
 
-        } while (locExistentesJogador2 < 4 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
-                || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
+        }
+        while (locExistentesJogador2 <= 0 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         // criar mapa
+        Mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
 
-        // criar mapa
-        Mapa.gerarMapa(grafo, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2,
-                densidadeArestasJogador1, densidadeArestasJogador2);
+        String localizacao = raiz.getListaLocalizacoes();
 
-        System.out.println("\n\n" + grafo + "\n\n");
 
-        // PROBLEMA: nao estou a conseguir atualizar "numVertices" da routenetwork (esta
-        // sempre a 0)
+        // PROBLEMA: coordenadas estao a null aqui
         // |
         // v
 
@@ -218,9 +228,11 @@ public class Demo {
 
             System.out.println("+--------------------------------------+");
 
-        } while (locBandeiraJogador1 == 0);
+        }
+        while (locBandeiraJogador1 == 0);
 
-        do {
+        do
+        {
             System.out.println("\n");
             System.out.println("+--------------------------------------+");
             System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
@@ -235,7 +247,8 @@ public class Demo {
 
             System.out.println("+--------------------------------------+");
 
-        } while (locBandeiraJogador2 == 0);
+        }
+        while (locBandeiraJogador2 == 0);
 
     }
 

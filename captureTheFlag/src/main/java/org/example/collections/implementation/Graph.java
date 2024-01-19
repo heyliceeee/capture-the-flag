@@ -72,7 +72,7 @@ public class Graph<T> implements GraphADT<T>
     }
 
     @Override
-    public void removeVertex(T vertex)
+    public boolean removeVertex(T vertex)
     {
         if (vertex == null)
         {
@@ -86,6 +86,8 @@ public class Graph<T> implements GraphADT<T>
                 removeVertex(i);
             }
         }
+
+        return true;
     }
 
     /**

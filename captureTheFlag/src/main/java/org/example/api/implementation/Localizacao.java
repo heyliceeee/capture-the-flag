@@ -20,7 +20,7 @@ public class Localizacao extends Local implements ILocalizacao
     /**
      * coordenadas da localizacao
      */
-    private ICoordenada coordenada;
+    private ICoordenada coordenadas;
 
 
     /**
@@ -30,11 +30,10 @@ public class Localizacao extends Local implements ILocalizacao
 
 
 
-    public Localizacao(int id, String type, String nome, ICoordenada coordenada)
+    public Localizacao(int id, String type, String nome, ICoordenada coordenadas)
     {
-        super(id, type, coordenada);
+        super(id, type, coordenadas);
         this.nome = nome;
-        this.coordenada = coordenada;
     }
 
 
@@ -71,9 +70,9 @@ public class Localizacao extends Local implements ILocalizacao
 
         raiz.put("id", getId());
         raiz.put("tipo", getTipo());
-        raiz.put("name", this.nome);
-        raiz.put("coordenadas", getCoordenadasObjetoJSON());
-        raiz.put("interacao", getInteracoesArrayJson());
+        raiz.put("name", getNome());
+        raiz.put("coordenadas", getCoordenadas());
+        raiz.put("interacao", getListaInteracoes());
 
         return raiz;
     }
@@ -81,12 +80,27 @@ public class Localizacao extends Local implements ILocalizacao
 
     private JSONObject getCoordenadasObjetoJSON()
     {
-        JSONObject coordenada = new JSONObject();
+        JSONObject coordenadas = new JSONObject();
 
-        coordenada.put("longitude", this.coordenada.getLongitude());
-        coordenada.put("latitude", this.coordenada.getLatitude());
+        try
+        {
+            coordenadas.put("longitude", this.coordenadas.getLongitude());
 
-        return coordenada;
+        } catch (Exception e)
+        {
+            coordenadas.put("longitude", 0);
+        }
+
+        try
+        {
+            coordenadas.put("latitude", this.coordenadas.getLatitude());
+
+        } catch (Exception e)
+        {
+            coordenadas.put("latitude", 0);
+        }
+
+        return coordenadas;
     }
 
 
@@ -96,7 +110,7 @@ public class Localizacao extends Local implements ILocalizacao
     {
         return "Localizacao{" +
                 "nome='" + nome + '\'' +
-                ", coordenada=" + coordenada +
+                ", coordenadas=" + coordenadas +
                 ", " + super.toString() +
                 '}';
     }

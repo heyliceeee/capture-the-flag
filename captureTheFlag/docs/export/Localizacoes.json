@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "tipo": "localizacao",
+    "name": "CT Stairs",
+    "id": 0,
+    "coordenadas": null,
+    "interacao": "Interacoes: {\nnao existe interacoes na lista!\n}"
+  },
+  {
+    "tipo": "localizacao",
+    "name": "Ticket",
+    "id": 1,
+    "coordenadas": null,
+    "interacao": "Interacoes: {\nnao existe interacoes na lista!\n}"
+  },
+  {
+    "tipo": "localizacao",
+    "name": "Jungle",
+    "id": 2,
+    "coordenadas": null,
+    "interacao": "Interacoes: {\nnao existe interacoes na lista!\n}"
+  },
+  {
+    "tipo": "localizacao",
+    "name": "Market",
+    "id": 3,
+    "coordenadas": null,
+    "interacao": "Interacoes: {\nnao existe interacoes na lista!\n}"
+  },
+  {
+    "tipo": "localizacao",
+    "name": "B Apartments",
+    "id": 4,
+    "coordenadas": null,
+    "interacao": "Interacoes: {\nnao existe interacoes na lista!\n}"
+  }
+]
