@@ -149,6 +149,8 @@ public class Mapa implements IMapa
             ILocal localDe = raiz.getLocalByID(de); // procurar a local por id
             ILocal localPara = raiz.getLocalByID(para); // procurar a local por id
 
+
+            //grafo.addEdge(localDe, localPara, distancia, tipoCaminhoString);
             raiz.adicionarRota(localDe, localPara, distancia, tipoCaminhoString); // adicionar aresta com peso
         }
 

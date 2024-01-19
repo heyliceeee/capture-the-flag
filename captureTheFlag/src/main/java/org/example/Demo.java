@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.*;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
@@ -35,7 +36,8 @@ public class Demo {
     static Scanner scanner = new Scanner(System.in);
 
 
-    public static void main(String[] args) throws IOException, ParseException, InterruptedException {
+    public static void main(String[] args) throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
+    {
         mostrarMenuInicial();
     }
 
@@ -47,7 +49,8 @@ public class Demo {
      * 
      * @throws EmptyCollectionException
      */
-    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException, InterruptedException {
+    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
+    {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -89,7 +92,8 @@ public class Demo {
     /**
      * mostrar o menu do jogo {criar mapa, importar mapa}
      */
-    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException {
+    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
+    {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -138,7 +142,7 @@ public class Demo {
      * @throws IOException
      * @throws InterruptedException
      */
-    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException
+    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException, NotLocalInstanceException, java.text.ParseException
     {
         boolean exit = false;
         int option = 0;
@@ -440,7 +444,7 @@ public class Demo {
     /**
      * mostrar o menu de iniciar a partida
      */
-    private static void iniciarPartida()
+    private static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException
     {
         int quemComeca = Mapa.gerarNumeroRandom(1, 2);
 
