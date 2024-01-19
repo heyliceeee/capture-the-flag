@@ -1,6 +1,7 @@
 package org.example.api.interfaces;
 
 import org.example.api.implementation.Coordenada;
+import org.example.collections.implementation.ArrayOrderedList;
 import org.json.simple.JSONObject;
 
 /**
@@ -8,6 +9,13 @@ import org.json.simple.JSONObject;
  */
 public interface IJogador
 {
+    /**
+     * retorna os bots do jogador
+     * @return os bots do jogador
+     */
+    ArrayOrderedList<IBot> getBotsJogador();
+
+
     /**
      * retorna o numero de bots
      * @return o numero de bots

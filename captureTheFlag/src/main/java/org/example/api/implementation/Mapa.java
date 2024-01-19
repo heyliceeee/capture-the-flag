@@ -68,6 +68,7 @@ public class Mapa implements IMapa
         this.densidadeArestas = densidadeArestas;
     }
 
+
     public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
     {
         validarArgumentos(locExistentesJogador1, locExistentesJogador2, densidadeArestasJogador1, densidadeArestasJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, tipoCaminho); // region validacoes dos argumentos
@@ -219,6 +220,7 @@ public class Mapa implements IMapa
         }
     }
 
+
     /**
      * retorna um valor aleatorio entre o min e o max
      * 
@@ -226,11 +228,12 @@ public class Mapa implements IMapa
      * @param max valor maximo
      * @return um valor aleatorio entre o min e o max
      */
-    private static int gerarNumeroRandom(int min, int max) {
+    public static int gerarNumeroRandom(int min, int max) {
         Random random = new Random();
 
         return random.nextInt(max - min) + min;
     }
+
 
     /**
      * retorna a media entre 2 valores
@@ -239,7 +242,8 @@ public class Mapa implements IMapa
      * @param value2
      * @return a media entre 2 valores
      */
-    public static int fazerMedia(double value1, double value2) {
+    public static int fazerMedia(double value1, double value2)
+    {
         return (int) Math.round((value1 + value2) / 2);
     }
 
@@ -253,6 +257,7 @@ public class Mapa implements IMapa
         return locExistentes;
     }
 
+
     /**
      * @param bidirecional     true se o grafo for bidirecionado, caso contrário
      *                         false
@@ -264,6 +269,7 @@ public class Mapa implements IMapa
 
     }
 
+
     /**
      * @param localizacaoA ponto/vertice A
      * @param localizacaoB ponto/vertice B
@@ -274,6 +280,7 @@ public class Mapa implements IMapa
         return 0;
     }
 
+
     /**
      *
      */
@@ -281,6 +288,7 @@ public class Mapa implements IMapa
     public void exportarMapa() {
 
     }
+
 
     /**
      *
