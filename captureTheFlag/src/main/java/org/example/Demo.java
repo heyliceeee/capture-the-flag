@@ -141,53 +141,53 @@ public class Demo {
 
         do {
             System.out.println("\n");
-            System.out.println("+--------------------------------------+");
-            System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
-            System.out.println("+--------------------------------------+");
-            System.out.println("introduza os seguintes dados: *         ");
-            System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:  |\n");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("|        CRIAR MAPA - JOGADOR 1             |");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("introduza os seguintes dados: *              ");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("| Quantidade localizacoes existentes: (>=6) |\n");
 
             locExistentesJogador1 = scanner.nextInt();
 
-            System.out.println("| Tipo de caminhos que são gerados:    |");
-            System.out.println("| 1. direcionado                       |");
-            System.out.println("| 2. bidirecional                      |\n");
+            System.out.println("| Tipo de caminhos que são gerados:         |");
+            System.out.println("| 1. direcionado                            |");
+            System.out.println("| 2. bidirecional                           |\n");
 
             tipoCaminhoJogador1 = scanner.nextInt();
 
-            System.out.println("| Densidade das arestas (%):           |\n");
+            System.out.println("| Densidade das arestas (%):                |\n");
 
             densidadeArestasJogador1 = scanner.nextInt();
 
-            System.out.println("+-------------------------------------+");
+            System.out.println("+-------------------------------------------+");
 
-        } while (locExistentesJogador1 <= 0 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2 || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
+        } while (locExistentesJogador1 < 6 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2 || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
 
         do {
             System.out.println("\n");
-            System.out.println("+--------------------------------------+");
-            System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
-            System.out.println("+--------------------------------------+");
-            System.out.println("introduza os seguintes dados: *         ");
-            System.out.println("+--------------------------------------+");
-            System.out.println("| Quantidade localizacoes existentes:  |\n");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("|        CRIAR MAPA - JOGADOR 2             |");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("introduza os seguintes dados: *              ");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("| Quantidade localizacoes existentes: (>=6) |\n");
 
             locExistentesJogador2 = scanner.nextInt();
 
-            System.out.println("| Tipo de caminhos que são gerados:    |");
-            System.out.println("| 1. direcionado                       |");
-            System.out.println("| 2. bidirecional                      |\n");
+            System.out.println("| Tipo de caminhos que são gerados:         |");
+            System.out.println("| 1. direcionado                            |");
+            System.out.println("| 2. bidirecional                           |\n");
 
             tipoCaminhoJogador2 = scanner.nextInt();
 
-            System.out.println("| Densidade das arestas (%):           |\n");
+            System.out.println("| Densidade das arestas (%):                |\n");
 
             densidadeArestasJogador2 = scanner.nextInt();
 
-            System.out.println("+---------------------------------------+");
+            System.out.println("+-------------------------------------------+");
 
-        } while (locExistentesJogador2 <= 0 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
+        } while (locExistentesJogador2 < 6 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
                 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         //region criar mapa
@@ -198,12 +198,12 @@ public class Demo {
         ArrayOrderedList<ILocalizacao> localizacaoList = raiz.getListaLocalizacoes();
 
         System.out.println("\n");
-        System.out.println("+--------------------------------------+");
-        System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
-        System.out.println("+--------------------------------------+");
-        System.out.println("selecione uma das opcoes: *             ");
-        System.out.println("+--------------------------------------+");
-        System.out.println("| Localizacao da Bandeira:             |\n");
+        System.out.println("+-------------------------------------------+");
+        System.out.println("|        CRIAR MAPA - JOGADOR 1             |");
+        System.out.println("+-------------------------------------------+");
+        System.out.println("selecione uma das opcoes: *                  ");
+        System.out.println("+-------------------------------------------+");
+        System.out.println("| Localizacao da Bandeira:                  |\n");
 
         //region ciclo para mostrar todas os nodes
         for (ILocalizacao localizacaoObj : localizacaoList)
@@ -215,7 +215,7 @@ public class Demo {
 
         locBandeiraJogador1 = scanner.nextInt();
 
-        System.out.println("+--------------------------------------+");
+        System.out.println("+-------------------------------------------+");
 
         ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); //localizacao selecionada
         raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
@@ -227,12 +227,12 @@ public class Demo {
 
 
         System.out.println("\n");
-        System.out.println("+--------------------------------------+");
-        System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
-        System.out.println("+--------------------------------------+");
-        System.out.println("selecione uma das opcoes: *             ");
-        System.out.println("+--------------------------------------+");
-        System.out.println("| Localizacao da Bandeira:           |\n");
+        System.out.println("+-------------------------------------------+");
+        System.out.println("|        CRIAR MAPA - JOGADOR 2             |");
+        System.out.println("+-------------------------------------------+");
+        System.out.println("selecione uma das opcoes: *                  ");
+        System.out.println("+-------------------------------------------+");
+        System.out.println("| Localizacao da Bandeira:                  |\n");
 
         //region ciclo para mostrar todas os nodes sem ser aquela selecionada pelo jogador1
         for (ILocalizacao localizacaoObj : localizacaoList)
@@ -243,7 +243,7 @@ public class Demo {
 
         locBandeiraJogador2 = scanner.nextInt();
 
-        System.out.println("+--------------------------------------+");
+        System.out.println("+-------------------------------------------+");
 
         ILocalizacao localJogador2Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador2); //localizacao selecionada
         raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
@@ -260,35 +260,37 @@ public class Demo {
     private static void mostrarMenuSelecionarBots()
     {
         int botsJogador1 = 0, botsJogador2 = 0;
+        int maxBots = Mapa.obterMaxBots();
+
 
         do
         {
             System.out.println("\n");
-            System.out.println("+--------------------------------------+");
-            System.out.println("|        CRIAR MAPA - JOGADOR 1        |");
-            System.out.println("+--------------------------------------+");
-            System.out.println("introduza os seguintes dados: *         ");
-            System.out.println("+--------------------------------------+");
-            System.out.println("| Numero de bots (3 - 5):            |\n");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("|        CRIAR MAPA - JOGADOR 1             |");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("introduza os seguintes dados: *              ");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("| Numero de bots (3 - "+maxBots+"):                  |\n");
 
             botsJogador1 = scanner.nextInt();
         }
-        while (botsJogador1 < 3 || botsJogador1 > 5);
+        while (botsJogador1 < 3 || botsJogador1 > maxBots);
 
 
         do
         {
             System.out.println("\n");
-            System.out.println("+--------------------------------------+");
-            System.out.println("|        CRIAR MAPA - JOGADOR 2        |");
-            System.out.println("+--------------------------------------+");
-            System.out.println("introduza os seguintes dados: *         ");
-            System.out.println("+--------------------------------------+");
-            System.out.println("| Numero de bots (3 - 5):            |\n");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("|        CRIAR MAPA - JOGADOR 2             |");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("introduza os seguintes dados: *              ");
+            System.out.println("+-------------------------------------------+");
+            System.out.println("| Numero de bots (3 - "+maxBots+"):                  |\n");
 
             botsJogador2 = scanner.nextInt();
         }
-        while (botsJogador2 < 3 || botsJogador2 > 5);
+        while (botsJogador2 < 3 || botsJogador2 > maxBots);
 
 
         int nBots = 0;
@@ -297,20 +299,41 @@ public class Demo {
         if(botsJogador1 > botsJogador2)
         {
             nBots = Mapa.fazerMedia(botsJogador2, botsJogador1);
+
+            // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
+            if (nBots % 2 != 0)
+            {
+                nBots--;
+            }
         }
         else if(botsJogador2 > botsJogador1)
         {
             nBots = Mapa.fazerMedia(botsJogador1, botsJogador2);
+
+            // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
+            if (nBots % 2 != 0)
+            {
+                nBots--;
+            }
         }
         else
         {
             nBots = botsJogador1;
+
+            // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
+            if (nBots % 2 != 0)
+            {
+                nBots--;
+            }
         }
         //endregion
+
 
         //region selecionar algoritmo
         int algoritmoBotJogador1 = 0, algoritmoBotJogador2 = 0, i=-1;
         String stringAlgortimoBotJogador1 = "", stringAlgortimoBotJogador2 = "";
+
+        System.out.println("| há "+(nBots/2)+" bots disponíveis                       \n|");
 
         do
         {
@@ -345,10 +368,12 @@ public class Demo {
 
             IBot bot = new Bot(nomeBot, "Jogador 1", jogador1.getBandeira().getCoordenadas(), stringAlgortimoBotJogador1); //adicionar bot ao jogador
 
-            jogador1.setNumeroBots(nBots);
+            jogador1.setNumeroBots(nBots/2);
 
         }
-        while (algoritmoBotJogador1 < 1 || algoritmoBotJogador1 > 3 ||  i < (nBots-1));
+        while (algoritmoBotJogador1 < 1 || algoritmoBotJogador1 > 3 ||  i < ((nBots/2)-1));
+
+        System.out.println("| há "+(nBots/2)+" bots disponíveis                         \n|");
 
 
         i=-1;
@@ -385,9 +410,9 @@ public class Demo {
 
             IBot bot = new Bot(nomeBot, "Jogador 2", jogador2.getBandeira().getCoordenadas(), stringAlgortimoBotJogador2); //adicionar bot ao jogador
 
-            jogador2.setNumeroBots(nBots);
+            jogador2.setNumeroBots(nBots/2);
         }
-        while (algoritmoBotJogador2 < 1 || algoritmoBotJogador2 > 3 ||  i < (nBots-1));
+        while (algoritmoBotJogador2 < 1 || algoritmoBotJogador2 > 3 ||  i < ((nBots/2)-1));
         //endregion
     }
 

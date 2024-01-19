@@ -243,6 +243,16 @@ public class Mapa implements IMapa
         return (int) Math.round((value1 + value2) / 2);
     }
 
+
+    /**
+     * retorna o numero maximo de bots que cada jogador pode ter, dependendo do tamanho do mapa
+     * @return o numero maximo de bots que cada jogador pode ter
+     */
+    public static int obterMaxBots()
+    {
+        return locExistentes;
+    }
+
     /**
      * @param bidirecional     true se o grafo for bidirecionado, caso contrário
      *                         false
