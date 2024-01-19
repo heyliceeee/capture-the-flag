@@ -73,18 +73,9 @@ public class Mapa implements IMapa
         validarArgumentos(locExistentesJogador1, locExistentesJogador2, densidadeArestasJogador1, densidadeArestasJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, tipoCaminho); // region validacoes dos argumentos
 
         //region densidade das arestas
-        if (tipoCaminhoString.equals("direcionado"))
-        {
-            double direcionado = (locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100)) / 2;
+        double direcionado = (locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100));
 
-            calculoDensidadeArestas = (int) Math.round(direcionado);
-        }
-        else
-        {
-            double bidirecionado = locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100);
-
-            calculoDensidadeArestas = (int) Math.round(bidirecionado);
-        }
+        calculoDensidadeArestas = (int) Math.round(direcionado);
 
         arestas = calculoDensidadeArestas;
 
@@ -109,6 +100,7 @@ public class Mapa implements IMapa
         nomeSpots.add("Stairs");
         nomeSpots.add("Sandwich");
 
+
         for (int i = 0; i < locExistentes; i++) // criar todos os vertices
         {
             grafo.addVertex(i); // adiciona um novo vertice ao grafo
@@ -119,16 +111,20 @@ public class Mapa implements IMapa
             nomeSpots.removeFirst();
         }
 
-        int k=0;
-        ArrayOrderedList<Integer> valoresAnterioresDe = new ArrayOrderedList<>();
-        ArrayOrderedList<Integer> valoresAnterioresPara = new ArrayOrderedList<>();
 
         for (int j=0; j < arestas; j++) // percorrer todas arestas
         {
             //region garantir que todos os vertices tem uma aresta
 
-            int de = gerarVerticeUnico(valoresAnterioresDe, locExistentes);
-            int para = gerarVerticeUnico(valoresAnterioresPara, locExistentes);
+            int de = gerarNumeroRandom(0, locExistentes);
+
+            int para;
+
+            do
+            {
+                para = gerarNumeroRandom(0, locExistentes);
+            }
+            while (para == de);
 
             //endregion
 
@@ -158,40 +154,6 @@ public class Mapa implements IMapa
         // endregion
     }
 
-
-    private static int gerarVerticeUnico(ArrayOrderedList<Integer> valoresAnteriores, int locExistentes)
-    {
-        int tentativas = 0;
-        int maxTentativas = 100;
-
-        int vertice;
-        do
-        {
-            vertice = gerarNumeroRandom(0, locExistentes);  //gerar um ponto random entre 0 e o locExistentes
-            tentativas++;
-
-            if (tentativas > maxTentativas) //Se o número máximo de tentativas for atingido, faça algo (como lançar uma exceção)
-            {
-                throw new RuntimeException("Não foi possível gerar um número único após várias tentativas.");
-            }
-        }
-        while (contemElemento(valoresAnteriores, vertice));
-
-        valoresAnteriores.add(vertice);
-        return vertice;
-    }
-
-
-    /**
-     * verificar se um elemento está presenta na lista
-     * @param lista
-     * @param elemento
-     * @return
-     */
-    private static boolean contemElemento(ArrayOrderedList<Integer> lista, int elemento)
-    {
-        return lista.contains(elemento);
-    }
 
     /**
      * validar argumentos que cada jogador inseriu para gerar o mapa
