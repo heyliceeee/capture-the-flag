@@ -63,6 +63,21 @@ public class ArrayOrderedList<T> implements OrderedListADT<T>
     }
 
 
+    /**
+     * retorna o elemento a ser procurado
+     * @param index
+     * @return
+     */
+    public T getElementAt(int index)
+    {
+        if (index < 0 || index >= rear)
+        {
+            throw new IndexOutOfBoundsException("Índice fora dos limites da lista");
+        }
+
+        return list[index];
+    }
+
     @Override
     public T removeFirst()
     {

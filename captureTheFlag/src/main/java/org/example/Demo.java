@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.*;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
@@ -35,9 +36,11 @@ public class Demo {
     static Scanner scanner = new Scanner(System.in);
 
 
-    public static void main(String[] args) throws IOException, ParseException, InterruptedException {
+    public static void main(String[] args) throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
+    {
         mostrarMenuInicial();
     }
+
 
     //region MENUS DO JOGO
 
@@ -46,7 +49,8 @@ public class Demo {
      * 
      * @throws EmptyCollectionException
      */
-    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException, InterruptedException {
+    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
+    {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -84,10 +88,12 @@ public class Demo {
         } while (!exit);
     }
 
+
     /**
      * mostrar o menu do jogo {criar mapa, importar mapa}
      */
-    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException {
+    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
+    {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -130,7 +136,13 @@ public class Demo {
         } while (!exit);
     }
 
-    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException
+
+    /**
+     * mostra o menu de criar o mapa
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException, NotLocalInstanceException, java.text.ParseException
     {
         boolean exit = false;
         int option = 0;
@@ -255,8 +267,14 @@ public class Demo {
         //endregion
 
         mostrarMenuSelecionarBots();
+
+        iniciarPartida();
     }
 
+
+    /**
+     * mostrar o menu de selecionar os bots
+     */
     private static void mostrarMenuSelecionarBots()
     {
         int botsJogador1 = 0, botsJogador2 = 0;
@@ -366,7 +384,10 @@ public class Demo {
 
             String nomeBot = "Bot "+(i+1)+" do Jogador 1";
 
+            ArrayOrderedList<IBot> listaBotsJogador1 = jogador1.getBotsJogador();
             IBot bot = new Bot(nomeBot, "Jogador 1", jogador1.getBandeira().getCoordenadas(), stringAlgortimoBotJogador1); //adicionar bot ao jogador
+
+            listaBotsJogador1.add(bot);// Adicione o bot à lista de bots do jogador 1
 
             jogador1.setNumeroBots(nBots/2);
 
@@ -408,7 +429,10 @@ public class Demo {
 
             String nomeBot = "Bot "+(i+1)+" do Jogador 2";
 
+            ArrayOrderedList<IBot> listaBotsJogador2 = jogador2.getBotsJogador();
             IBot bot = new Bot(nomeBot, "Jogador 2", jogador2.getBandeira().getCoordenadas(), stringAlgortimoBotJogador2); //adicionar bot ao jogador
+
+            listaBotsJogador2.add(bot);// Adicione o bot à lista de bots do jogador 2
 
             jogador2.setNumeroBots(nBots/2);
         }
@@ -416,5 +440,20 @@ public class Demo {
         //endregion
     }
 
+
+    /**
+     * mostrar o menu de iniciar a partida
+     */
+    private static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException
+    {
+        int quemComeca = Mapa.gerarNumeroRandom(1, 2);
+
+        System.out.println("\n");
+        System.out.println("+-------------------------------------------+");
+        System.out.println("|        quem comeca: JOGADOR "+quemComeca+"               |");
+        System.out.println("+---------------------------------------------+");
+
+        Jogo.partida(quemComeca, jogador1, jogador2, grafo, raiz, rota);
+    }
     // endregion
 }

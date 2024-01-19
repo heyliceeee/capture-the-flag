@@ -1,8 +1,10 @@
 package org.example.api.implementation;
 
 import org.example.api.interfaces.IBandeira;
+import org.example.api.interfaces.IBot;
 import org.example.api.interfaces.ICoordenada;
 import org.example.api.interfaces.IJogador;
+import org.example.collections.implementation.ArrayOrderedList;
 import org.json.simple.JSONObject;
 
 
@@ -18,6 +20,12 @@ public class Jogador implements IJogador
      * numero de bots do jogador
      */
     private int bots;
+
+
+    /**
+     * bots do jogador
+     */
+    private ArrayOrderedList<IBot> botsJogador;
 
 
     /**
@@ -44,8 +52,20 @@ public class Jogador implements IJogador
         this.nome = nome;
         this.bots = bots;
         this.bandeirasConquistadas = bandeirasConquistadas;
+        this.botsJogador = new ArrayOrderedList<>();
     }
 
+
+    /**
+     * retorna os bots do jogador
+     *
+     * @return os bots do jogador
+     */
+    @Override
+    public ArrayOrderedList<IBot> getBotsJogador()
+    {
+        return botsJogador;
+    }
 
     /**
      * retorna o numero de bots
