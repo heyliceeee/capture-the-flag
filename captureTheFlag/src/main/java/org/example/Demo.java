@@ -252,7 +252,7 @@ public class Demo {
 
         jogador2.setBandeira(bandeiraJogador2);
 
-        localizacaoList = raiz.getListaLocalizacoes();
+        localizacaoList = raiz.getListaLocalizacoes(); //localizacoes atualizadas apos selecionar a bandeira
     }
 
     // endregion
