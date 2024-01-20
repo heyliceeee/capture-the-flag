@@ -70,24 +70,55 @@ public class Jogo
         String algoritmo = botAtual.getAlgoritmoMovimento(); //algoritmo do bot
         ILocal pontoA = null;
 
+        ArrayOrderedList<ILocalizacao> localizacoesList = raiz.getListaLocalizacoes();
+        ArrayOrderedList<IBandeira> bandeirasList = raiz.getListaBandeiras();
 
-        for (Iterator<ILocalizacao> it = grafo.getLocalizacoes(); it.hasNext(); )
+
+        //region saber qual localizacao/bandeira esta o bot
+        for (ILocalizacao localizacaoObj : localizacoesList)
         {
-            ILocal local = it.next();
-            if (local.getCoordenadas().equals(botAtual.getCoordenada()))
+            if(localizacaoObj.getCoordenadas().equals(botAtual.getCoordenada())) //saber qual localizacao esta o bot
             {
-                pontoA = local; // Encontrou um local com coordenadas iguais às do botAtual
-                break; // Não precisa continuar a procurar, podemos sair do loop
+                pontoA = localizacaoObj; //encontrou uma localizacao com coordenadas iguais às do botAtual
+                break; //não precisa continuar a procurar, podemos sair do loop
             }
         }
 
+
+        for (IBandeira bandeiraObj : bandeirasList)
+        {
+            if(bandeiraObj.getCoordenadas().equals(botAtual.getCoordenada())) //saber qual bandeira esta o bot
+            {
+                pontoA = bandeiraObj; //encontrou uma bandeira com coordenadas iguais às do botAtual
+                break; //não precisa continuar a procurar, podemos sair do loop
+            }
+        }
+        //endregion
 
         ILocal pontoB = (jogadorComeca == jogador1) ? jogador2.getBandeira() : jogador1.getBandeira(); //bandeira inimiga
 
 
         if(algoritmo.equals("Caminho mais curto"))
         {
-            grafo.iteratorShortestPath(pontoA, pontoB);
+            Iterator<ILocal> caminhoMaisCurto = grafo.iteratorShortestPath(pontoA.getId(), pontoB.getId());
+
+            if(caminhoMaisCurto.hasNext()) //existe vertices no caminho
+            {
+                caminhoMaisCurto.next(); //skip do primeiro localizacao/bandeira
+                
+                while (caminhoMaisCurto.hasNext()) //percorre todos os restantes vertices
+                {
+                    if(caminhoMaisCurto.hasNext()) //existe vertices no caminho
+                    {
+                        String localAtualString = ""+caminhoMaisCurto.next();
+                        ILocal localAtual = raiz.getLocalByID(Integer.parseInt(localAtualString)); //descobrir qual a localizacao/bandeira atual
+
+                        botAtual.setCoordenada(localAtual.getCoordenadas()); //coordenadas da localizacao/bandeira para onde se moveu
+                    }
+
+                    break; //porque queremos percorrer um vertice de cada vez
+                }
+            }
         }
         else if(algoritmo.equals("Caminho mais longo"))
         {

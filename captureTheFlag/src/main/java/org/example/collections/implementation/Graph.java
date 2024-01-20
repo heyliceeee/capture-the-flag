@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 public class Graph<T> implements GraphADT<T>
 {
-    protected final int DEFAULT_CAPACITY = 50;
+    protected final int DEFAULT_CAPACITY = 100;
     protected int numVertices; //numero de vertices no grafo
     protected double[][] adjMatrix; //matriz de adjacencia
     protected T[] vertices; //valores dos vertices
@@ -125,9 +125,9 @@ public class Graph<T> implements GraphADT<T>
     }
 
     @Override
-    public void addEdge(T vertex1, T vertex2, String tipoCaminho)
+    public void addEdge(T vertex1, T vertex2)
     {
-        this.addEdge(getIndex(vertex1), getIndex(vertex2), tipoCaminho);
+        this.addEdge(getIndex(vertex1), getIndex(vertex2));
     }
 
     /**
@@ -153,19 +153,11 @@ public class Graph<T> implements GraphADT<T>
      * @param index1 o primeiro indice
      * @param index2 o segundo indice
      */
-    public void addEdge(int index1, int index2, String tipoCaminho)
+    public void addEdge(int index1, int index2)
     {
         if (indexIsValid(index1) && indexIsValid(index2))
         {
-            if(tipoCaminho.equals("direcionado"))
-            {
-                adjMatrix[index1][index2] = 1;
-            }
-            else
-            {
-                adjMatrix[index1][index2] = 1;
-                adjMatrix[index2][index1] = 1;
-            }
+            adjMatrix[index1][index2] = 1;
         }
         else
         {
@@ -340,7 +332,7 @@ public class Graph<T> implements GraphADT<T>
      * @param targetIndex o indice do vértice final
      * @return um iterador que contém o caminho mais curto entre os dois vértices
      */
-    private Iterator<T> iteratorShortestPath(int startIndex, int targetIndex)
+    public Iterator<T> iteratorShortestPath(int startIndex, int targetIndex)
     {
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
 

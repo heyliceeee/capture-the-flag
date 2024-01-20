@@ -85,7 +85,7 @@ public interface IRaiz
      * @param weight peso do vértice entre o local1 e local2
      * @return "sucesso" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
      */
-    String adicionarRota(ILocal local1, ILocal local2, double weight, String tipoCaminho) throws EmptyCollectionException;
+    String adicionarRota(ILocal local1, ILocal local2, double weight) throws EmptyCollectionException;
 
 
     /**
@@ -125,10 +125,10 @@ public interface IRaiz
     ArrayOrderedList<ILocalizacao> getListaLocalizacoes();
 
     /**
-     * retorna em string uma listagem das bandeiras
-     * @return em string uma listagem das bandeiras
+     * retorna a listagem das bandeiras
+     * @return a listagem das bandeiras
      */
-    String getListaBandeiras();
+    ArrayOrderedList<IBandeira> getListaBandeiras();
 
 
     /**

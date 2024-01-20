@@ -12,9 +12,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
-public class Demo {
+public class Demo
+{
+    //region instancias
     public static ImportarExportarJson iEJson = new ImportarExportarJson();
 
     /**
@@ -32,9 +35,9 @@ public class Demo {
     public static IJogador jogador1 = new Jogador("Jogador 1", 0, 0);
     public static IJogador jogador2 = new Jogador("Jogador 2", 0, 0);
     public static IRota rota = new Rota(null, null, 0);
-
     static Scanner scanner = new Scanner(System.in);
 
+    //endregion
 
     public static void main(String[] args) throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
     {
@@ -207,6 +210,8 @@ public class Demo {
         //endregion
 
         //region escolher bandeira
+        Iterator<IRota<ILocal>> rotas = grafo.getRotas();
+
         ArrayOrderedList<ILocalizacao> localizacaoList = raiz.getListaLocalizacoes();
 
         System.out.println("\n");
@@ -231,9 +236,10 @@ public class Demo {
 
         ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); //localizacao selecionada
         raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
-        IBandeira bandeiraJogador1 = new Bandeira(0, "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); //criar bandeira
+        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); //criar bandeira
 
         jogador1.setBandeira(bandeiraJogador1);
+        raiz.adicionarLocal(bandeiraJogador1);
 
         localizacaoList = raiz.getListaLocalizacoes();
 
@@ -259,9 +265,11 @@ public class Demo {
 
         ILocalizacao localJogador2Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador2); //localizacao selecionada
         raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
-        IBandeira bandeiraJogador2 = new Bandeira(1, "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); //criar bandeira
+        IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); //criar bandeira
 
         jogador2.setBandeira(bandeiraJogador2);
+        raiz.adicionarLocal(bandeiraJogador2);
+
 
         localizacaoList = raiz.getListaLocalizacoes(); //localizacoes atualizadas apos selecionar a bandeira
         //endregion

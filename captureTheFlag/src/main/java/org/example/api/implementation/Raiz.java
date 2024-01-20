@@ -206,9 +206,9 @@ public class Raiz implements IRaiz
      * @return "Successful" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
      */
     @Override
-    public String adicionarRota(ILocal local1, ILocal local2, double weight, String tipoCaminho) throws EmptyCollectionException
+    public String adicionarRota(ILocal local1, ILocal local2, double weight) throws EmptyCollectionException
     {
-        this.routeNetwork.addEdge(local1, local2, weight, tipoCaminho);
+        this.routeNetwork.addEdge(local1, local2, weight);
 
         return "Successful";
     }
@@ -360,14 +360,36 @@ public class Raiz implements IRaiz
     }
 
     /**
-     * retorna em string uma listagem das bandeiras
+     * retorna a listagem das bandeiras
      *
-     * @return em string uma listagem das bandeiras
+     * @return a listagem das bandeiras
      */
     @Override
-    public String getListaBandeiras()
+    public ArrayOrderedList<IBandeira> getListaBandeiras()
     {
-        String s = "Bandeiras: {\n";
+        ArrayOrderedList<IBandeira> lista = new ArrayOrderedList<>();
+
+        if(routeNetwork.getNumeroDeBandeiras() != 0)
+        {
+            Iterator<IBandeira> iterator = routeNetwork.getBandeiras();
+
+            if (iterator != null)
+            {
+                while (iterator.hasNext())
+                {
+                    IBandeira bandeira = iterator.next();
+
+                    if (bandeira != null)
+                    {
+                        lista.add(bandeira);
+                    }
+                }
+            }
+        }
+
+        return lista;
+
+        /*String s = "Bandeiras: {\n";
 
         if (this.routeNetwork.getNumeroDeBandeiras() != 0)
         {
@@ -385,7 +407,7 @@ public class Raiz implements IRaiz
 
         s += "}";
 
-        return s;
+        return s;*/
     }
 
     /**

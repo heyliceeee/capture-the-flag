@@ -150,7 +150,7 @@ public class ImportarExportarJson
                     double distancia = Math.round(rota.calcularPesoDasCoordenadas(x1, y1, x2, y2) * 1000000); //arredondar
                     
 
-                    raiz.adicionarRota(deLocal, paraLocal, distancia, tipoCaminho);
+                    raiz.adicionarRota(deLocal, paraLocal, distancia);
                 }
                 catch (IllegalArgumentException | EmptyCollectionException e)
                 {

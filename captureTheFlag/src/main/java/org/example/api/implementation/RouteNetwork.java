@@ -141,6 +141,12 @@ public class RouteNetwork<T> extends Network<T> implements RouteNetworkADT<T>
                     IRota<ILocal> route = new Rota(super.vertices[i], super.vertices[j], super.adjMatrix[i][j]);
                     resultList.addToRear(route);
                 }
+
+                if (super.adjMatrix[j][i] != 0)
+                {
+                    IRota<ILocal> route = new Rota(super.vertices[j], super.vertices[i], super.adjMatrix[j][i]);
+                    resultList.addToRear(route);
+                }
             }
         }
 
