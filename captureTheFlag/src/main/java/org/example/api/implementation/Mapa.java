@@ -57,7 +57,7 @@ public class Mapa implements IMapa
 
     /**
      * constructor
-     * 
+     *
      * @param qttLocExistentes
      * @param tipoCaminhoString
      * @param densidadeArestas
@@ -70,7 +70,15 @@ public class Mapa implements IMapa
     }
 
 
-    public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
+    /**
+     * constructor
+     *
+     */
+    public Mapa()
+    {}
+
+
+    public void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
     {
         validarArgumentos(locExistentesJogador1, locExistentesJogador2, densidadeArestasJogador1, densidadeArestasJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, tipoCaminho); // region validacoes dos argumentos
 
@@ -120,10 +128,7 @@ public class Mapa implements IMapa
 
         //region criar arestas
 
-        for (int i=0; i < arestas; i++)
-        {
-            gerarArestas(raiz, grafo);
-        }
+        gerarArestas(raiz, grafo);
 
         //endregion
     }
@@ -240,22 +245,34 @@ public class Mapa implements IMapa
     public static void gerarArestas(IRaiz raiz, RouteNetwork grafo)
     {
         //region garantir que todos os vertices tem uma aresta
-        int de=0, para=0;
+        int de=0, para=0, countArestas=0;
 
         //cria as rotas
-        for (de = 0; de < locExistentes - 1; de++)
+        for (de = 0; (de < locExistentes-1 && countArestas < arestas); de++)
         {
-            for (para = de + 1; para < locExistentes; para++)
+            for (para = de + 1; (para < locExistentes && countArestas < arestas); para++)
             {
+                // Gerar valores aleatórios para "de" e "para"
+                de = gerarNumeroRandom(0, locExistentes);
+                para = gerarNumeroRandom(0, locExistentes);
+
+                while (de == para)// Garantir que "de" e "para" sejam diferentes
+                {
+                    para = gerarNumeroRandom(0, locExistentes);
+                }
+
                 String aresta = de + ", " + para;
                 String inversa = para + ", " + de;
 
 
                 if(tipoCaminhoString.equals("bidirecionado"))
                 {
-                    if(!arestasList.contains(aresta))
+                    if(!arestasList.contains(aresta) && !arestasList.contains(inversa))
                     {
                         arestasList.add(aresta);
+                        arestasList.add(inversa);
+
+                        countArestas += 2;
                     }
                 }
                 else if (tipoCaminhoString.equals("direcionado"))
@@ -263,6 +280,8 @@ public class Mapa implements IMapa
                     if(!arestasList.contains(aresta) && !arestasList.contains(inversa))
                     {
                         arestasList.add(aresta);
+
+                        countArestas++;
                     }
                 }
             }
@@ -316,10 +335,10 @@ public class Mapa implements IMapa
             else
             {
                 grafo.addEdge(localDe.getId(), localPara.getId(), distancia); //adicionar aresta com peso ao grafo
-                grafo.addEdge(localPara.getId(), localDe.getId(), distancia);
+                //grafo.addEdge(localPara.getId(), localDe.getId(), distancia);
 
                 raiz.adicionarRota(localDe, localPara, distancia); //adicionar aresta com peso á rede
-                raiz.adicionarRota(localPara, localDe, distancia);
+                //raiz.adicionarRota(localPara, localDe, distancia);
             }
         }
     }

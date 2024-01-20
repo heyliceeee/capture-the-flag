@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class Demo
 {
     //region instancias
+    public static Mapa mapa = new Mapa();
     public static ImportarExportarJson iEJson = new ImportarExportarJson();
 
     /**
@@ -206,11 +207,13 @@ public class Demo
                 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         //region criar mapa
-        Mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
+        mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
         //endregion
 
         //region escolher bandeira
         Iterator<IRota<ILocal>> rotas = grafo.getRotas();
+
+        System.out.println(grafo);
 
         ArrayOrderedList<ILocalizacao> localizacaoList = raiz.getListaLocalizacoes();
 
@@ -286,7 +289,7 @@ public class Demo
     private static void mostrarMenuSelecionarBots()
     {
         int botsJogador1 = 0, botsJogador2 = 0;
-        int maxBots = Mapa.obterMaxBots();
+        int maxBots = mapa.obterMaxBots();
 
 
         do
@@ -324,7 +327,7 @@ public class Demo
         //region fazer media de bots
         if(botsJogador1 > botsJogador2)
         {
-            nBots = Mapa.fazerMedia(botsJogador2, botsJogador1);
+            nBots = mapa.fazerMedia(botsJogador2, botsJogador1);
 
             // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
             if (nBots % 2 != 0)
@@ -334,7 +337,7 @@ public class Demo
         }
         else if(botsJogador2 > botsJogador1)
         {
-            nBots = Mapa.fazerMedia(botsJogador1, botsJogador2);
+            nBots = mapa.fazerMedia(botsJogador1, botsJogador2);
 
             // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
             if (nBots % 2 != 0)
@@ -454,7 +457,7 @@ public class Demo
      */
     private static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException
     {
-        int quemComeca = Mapa.gerarNumeroRandom(1, 2);
+        int quemComeca = mapa.gerarNumeroRandom(1, 2);
 
         System.out.println("\n");
         System.out.println("+-------------------------------------------+");
