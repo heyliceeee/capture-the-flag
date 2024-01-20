@@ -15,6 +15,15 @@ public class LinkedList<T>
     }
 
 
+    public int getSize()
+    {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     /**
      * adicionar a lista utilizando node sentinela
      * @param element
@@ -138,6 +147,17 @@ public class LinkedList<T>
         }
 
         System.out.print("]\n");
+    }
+
+
+    @Override
+    public String toString() {
+        return "LinkedList{" +
+                "head=" + head +
+                ", tail=" + tail +
+                ", sentinel=" + sentinel +
+                ", size=" + size +
+                '}';
     }
 }
 

@@ -37,17 +37,17 @@ public interface IBot
 
 
     /**
-     * retorna as coordenadas do bot
-     * @return as coordenadas do bot
+     * retorna as coordenada do bot
+     * @return as coordenada do bot
      */
-    Coordenada getCoordenadas();
+    Coordenada getCoordenada();
 
 
     /**
-     * define as coordenadas do bot
-     * @param coordenadas
+     * define as coordenada do bot
+     * @param coordenada
      */
-    void setCoordenadas(Coordenada coordenadas);
+    void setCoordenada(Coordenada coordenada);
 
 
     /**

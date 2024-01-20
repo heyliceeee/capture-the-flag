@@ -63,6 +63,21 @@ public class ArrayOrderedList<T> implements OrderedListADT<T>
     }
 
 
+    /**
+     * retorna o elemento a ser procurado
+     * @param index
+     * @return
+     */
+    public T getElementAt(int index)
+    {
+        if (index < 0 || index >= rear)
+        {
+            throw new IndexOutOfBoundsException("Índice fora dos limites da lista");
+        }
+
+        return list[index];
+    }
+
     @Override
     public T removeFirst()
     {
@@ -211,10 +226,11 @@ public class ArrayOrderedList<T> implements OrderedListADT<T>
     @Override
     public void add(T element)
     {
-        if(!(element instanceof Comparable))
+        if (!(element instanceof Comparable<?>))
         {
             throw new EmptyCollectionException("O elemento ou classe não é comparável");
         }
+
 
         if(size() == list.length) //a lista está cheia
         {
@@ -229,12 +245,12 @@ public class ArrayOrderedList<T> implements OrderedListADT<T>
             i++;
         }
 
-        for(int j=this.rear; j > i; j--)
+        for(int j = rear; j > i; j--)
         {
             list[j] = list[j-1];
         }
 
-        this.list[i] = element; //na posicao atual vai ficar o elemento adicionado
+        list[i] = element; //na posicao atual vai ficar o elemento adicionado
 
         rear++;
         size++;
