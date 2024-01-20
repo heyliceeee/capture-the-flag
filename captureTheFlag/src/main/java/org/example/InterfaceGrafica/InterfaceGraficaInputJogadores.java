@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import org.example.api.implementation.Mapa;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -45,12 +46,12 @@ public class InterfaceGraficaInputJogadores extends Application {
         Button okButton = new Button("Ok");
 
         nextButton.setOnAction(event -> {
-            this.logicaBotaoNext(root);
-            root.getChildren().add(okButton);
+            this.logicaBotaoNext(root, okButton);
         });
 
         okButton.setOnAction(event -> {
             this.logicaBotaoOk(root);
+            stage.close();
         });
 
         root.getChildren().add(nextButton);
@@ -90,7 +91,7 @@ public class InterfaceGraficaInputJogadores extends Application {
         return form;
     }
 
-    private void logicaBotaoNext(VBox root) {
+    private void logicaBotaoNext(VBox root, Button okButton) {
 
         this.locExistentesJogador1 = Integer.parseInt(locationTextField.getText());
         this.densidadeArestasJogador1 = Integer.parseInt(densidadeTextField.getText());
@@ -99,6 +100,7 @@ public class InterfaceGraficaInputJogadores extends Application {
         if (locExistentesJogador1 > 6 && densidadeArestasJogador1 > 0 && densidadeArestasJogador1 <= 100) {
             root.getChildren().clear();
             root.getChildren().add(formularioInput(2));
+            root.getChildren().add(okButton);
         }
 
         else {
@@ -123,7 +125,8 @@ public class InterfaceGraficaInputJogadores extends Application {
                     locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2,
                     densidadeArestasJogador1, densidadeArestasJogador2);
 
-            // PROOOOOOXIMA JANEEEEELAAAAA
+            Platform.runLater(() -> new InterfaceGraficaSelecionarBandeira(this.dataManager).start(new Stage()));
+
         }
 
         else {

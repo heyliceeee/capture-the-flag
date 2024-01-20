@@ -5,21 +5,23 @@ import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ILocalizacao;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.ListCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class InterfaceGraficaSelecionarBandeira extends Application {
 
-    private ComboBox<String> comboBox;
+    private ComboBox<ILocalizacao> comboBox1;
+    private ComboBox<ILocalizacao> comboBox2;
     private Label playerLabel;
+    private ILocalizacao localJogador1Escolheu;
+    private ILocalizacao localJogador2Escolheu;
 
     protected DataManager dataManager;
 
@@ -31,6 +33,7 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
     public void start(Stage stage) {
 
         VBox root = new VBox(10);
+        root.setAlignment(Pos.CENTER);
 
         root.getChildren().add(formularioInput(1));
 
@@ -39,17 +42,16 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
         Button okButton = new Button("Ok");
 
         nextButton.setOnAction(event -> {
-
-            root.getChildren().add(okButton);
+            this.logicaBotaoNext(root, okButton);
         });
 
         okButton.setOnAction(event -> {
-
+            this.logicaBotaoOk(root);
         });
 
-        root.getChildren().addAll(comboBox, nextButton);
+        root.getChildren().add(nextButton);
 
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 500, 400);
         stage.setTitle("Escolha da Bandeira");
         stage.setScene(scene);
         stage.show();
@@ -58,33 +60,102 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
     private VBox formularioInput(int playerNumber) {
 
         VBox form = new VBox(5); // Espaçamento entre elementos
+        form.setAlignment(Pos.CENTER);
 
         playerLabel = new Label("Jogador " + playerNumber);
-        this.preencherComboBox();
 
-        form.getChildren().addAll(playerLabel, comboBox);
+        if (playerNumber == 1) {
+            comboBox1 = new ComboBox<>();
+            this.preencherComboBox(this.comboBox1);
+            form.getChildren().addAll(playerLabel, comboBox1);
+        }
+
+        else {
+            comboBox2 = new ComboBox<>();
+            this.preencherComboBox(this.comboBox2);
+            form.getChildren().addAll(playerLabel, comboBox2);
+        }
 
         return form;
     }
 
-    private void logicaBotaoNext(VBox root) {
+    private void logicaBotaoNext(VBox root, Button okButton) {
 
-        ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); // localizacao selecionada
-        raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
+        // Guardar a localização selecionada na variável localJogador1Escolheu
+        localJogador1Escolheu = comboBox1.getValue();
+
+        // Verificar se uma localização foi realmente selecionada
+        if (localJogador1Escolheu == null) {
+            // Mostrar um alerta ou lidar com a situação de nenhuma seleção
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Seleção Incompleta");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, selecione uma localização.");
+            alert.showAndWait();
+            return;
+        }
+
+        dataManager.raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
+
         IBandeira bandeiraJogador1 = new Bandeira(0, "Bandeira", localJogador1Escolheu.getNome(),
                 localJogador1Escolheu.getCoordenadas()); // criar bandeira
 
-        jogador1.setBandeira(bandeiraJogador1);
+        dataManager.jogador1.setBandeira(bandeiraJogador1);
 
         root.getChildren().clear();
         root.getChildren().add(formularioInput(2));
+        root.getChildren().add(okButton);
 
     }
 
-    private void preencherComboBox() {
+    private void logicaBotaoOk(VBox root) {
+
+        // Guardar a localização selecionada na variável localJogador1Escolheu
+        localJogador2Escolheu = comboBox2.getValue();
+
+        // Verificar se uma localização foi realmente selecionada
+        if (localJogador2Escolheu == null) {
+            // Mostrar um alerta ou lidar com a situação de nenhuma seleção
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Seleção Incompleta");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, selecione uma localização.");
+            alert.showAndWait();
+            return;
+        }
+
+        dataManager.raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
+
+        IBandeira bandeiraJogador2 = new Bandeira(0, "Bandeira", localJogador2Escolheu.getNome(),
+                localJogador2Escolheu.getCoordenadas()); // criar bandeira
+
+        dataManager.jogador2.setBandeira(bandeiraJogador2);
+
+        root.getChildren().clear();
+
+    }
+
+    private void preencherComboBox(ComboBox<ILocalizacao> comboBox) {
+
+        comboBox.setCellFactory(lv -> new ListCell<ILocalizacao>() {
+            @Override
+            protected void updateItem(ILocalizacao item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item.getNome());
+            }
+        });
+
+        comboBox.setButtonCell(new ListCell<ILocalizacao>() {
+
+            @Override
+            protected void updateItem(ILocalizacao item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item.getNome());
+            }
+        });
 
         for (ILocalizacao localizacaoObj : dataManager.raiz.getListaLocalizacoes()) {
-            comboBox.getItems().add(localizacaoObj.getNome());
+            comboBox.getItems().add(localizacaoObj);
         }
 
     }
