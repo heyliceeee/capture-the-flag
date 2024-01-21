@@ -204,7 +204,7 @@ public class Graph<T> implements GraphADT<T>
     @Override
     public Iterator<T> iteratorBFS(T startVertex)
     {
-        return iteratorBFS(getIndex(startVertex));
+        return iteratorBFS(startVertex);
     }
 
     /**
@@ -212,7 +212,7 @@ public class Graph<T> implements GraphADT<T>
      * @param startIndex o indice para iniciar a pesquisa
      * @return um iterador que executa uma travessia de pesquisa ampla comecando no indice dado
      */
-    private Iterator<T> iteratorBFS(int startIndex)
+    public Iterator<T> iteratorBFS(int startIndex)
     {
         Integer x;
         LinkedQueue<Integer> traversalQueue = new LinkedQueue<>();
@@ -224,6 +224,7 @@ public class Graph<T> implements GraphADT<T>
         }
 
         boolean[] visited = new boolean[numVertices];
+
 
         for (int i = 0; i < numVertices; i++)
         {

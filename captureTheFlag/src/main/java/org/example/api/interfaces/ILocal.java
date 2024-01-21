@@ -8,14 +8,6 @@ import org.example.api.implementation.Coordenada;
  */
 public interface ILocal
 {
-    /**
-     * retorna a adicionacao da iteracao com a (bandeira/localizacao)
-     * @param interacao com a (bandeira/localizacao)
-     * @return a adicionacao da iteracao com a (bandeira/localizacao)
-     */
-    String adicionarInteracao(IInteracao interacao);
-
-    String getListaInteracoes();
 
     /**
      * retorna o identificador unico da bandeira/localizacao
@@ -54,35 +46,4 @@ public interface ILocal
      * @param coordenadas as coordenadas do (bandeira/localizacao)
      */
     public void setCoordenadas(Coordenada coordenadas);
-
-
-    /**
-     * retorna por ID da (bandeira/localizacao) as interacoes
-     * @param id da (bandeira/localizacao)
-     * @return por ID da (bandeira/localizacao) as interacoes
-     */
-    IInteracao getInteracaoPorID(int id);
-
-
-    /**
-     * define o tipo de interacao (passear/capturar)
-     * @param id da (bandeira/localizacao)
-     * @param tipo (passear/capturar)
-     */
-    void setTipoInteracao(int id, String tipo);
-
-
-    /**
-     * define o bot do jogador que fez a interacao
-     * @param id da (bandeira/localizacao)
-     * @param nomeBot bot (jogador1 ou jogador2)
-     */
-    void setBotInteracao(int id, String nomeBot);
-
-
-    /**
-     * retorna o identificador único da última interação inserida
-     * @return o identificador único da última interação
-     */
-    int getIDUltimaInteracao();
 }

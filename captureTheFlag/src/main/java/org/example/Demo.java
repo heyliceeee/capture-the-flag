@@ -375,9 +375,9 @@ public class Demo
             System.out.println("selecione uma das opcoes: *                      ");
             System.out.println("+-----------------------------------------------+");
             System.out.println("| Para o bot "+(i+1)+", seleciona o algoritmo desejado: |");
-            System.out.println("| 1. Caminho mais curto                         |");
-            System.out.println("| 2. Caminho mais longo                         |");
-            System.out.println("| 3. Caminho x                         |");
+            System.out.println("| 1. Dijkstra                                   |");
+            System.out.println("| 2. BFS                                        |");
+            System.out.println("| 3. DFS                                        |");
 
 
             algoritmoBotJogador1 = scanner.nextInt();
@@ -385,11 +385,15 @@ public class Demo
 
             if(algoritmoBotJogador1 == 1)
             {
-                stringAlgortimoBotJogador1 = "Caminho mais curto";
+                stringAlgortimoBotJogador1 = "Dijkstra";
             }
             else if(algoritmoBotJogador1 == 2)
             {
-                stringAlgortimoBotJogador1 = "Caminho mais longo";
+                stringAlgortimoBotJogador1 = "BFS";
+            }
+            else if(algoritmoBotJogador1 == 3)
+            {
+                stringAlgortimoBotJogador1 = "DFS";
             }
 
 
@@ -420,9 +424,9 @@ public class Demo
             System.out.println("selecione uma das opcoes: *                      ");
             System.out.println("+-----------------------------------------------+");
             System.out.println("| Para o bot "+(i+1)+", seleciona o algoritmo desejado: |");
-            System.out.println("| 1. Caminho mais curto                         |");
-            System.out.println("| 2. Caminho mais longo                         |");
-            System.out.println("| 3. Caminho x                         |");
+            System.out.println("| 1. Dijkstra                                   |");
+            System.out.println("| 2. BFS                                        |");
+            System.out.println("| 3. DFS                                        |");
 
 
             algoritmoBotJogador2 = scanner.nextInt();
@@ -430,11 +434,15 @@ public class Demo
 
             if(algoritmoBotJogador2 == 1)
             {
-                stringAlgortimoBotJogador2 = "Caminho mais curto";
+                stringAlgortimoBotJogador2 = "Dijkstra";
             }
             else if(algoritmoBotJogador2 == 2)
             {
-                stringAlgortimoBotJogador2 = "Caminho mais longo";
+                stringAlgortimoBotJogador2 = "BFS";
+            }
+            else if(algoritmoBotJogador2 == 3)
+            {
+                stringAlgortimoBotJogador2 = "DFS";
             }
 
 

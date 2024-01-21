@@ -2,8 +2,6 @@ package org.example.api.implementation;
 
 import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ICoordenada;
-import org.example.api.interfaces.IInteracao;
-import org.example.api.interfaces.ILocalizacao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -32,32 +30,6 @@ public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
     }
 
 
-
-    /**
-     * retorna o array de json das interacoes
-     * @return o array de json das interacoes
-     */
-    private JSONArray getInteracoesArrayJson()
-    {
-        JSONArray interacoesArray = new JSONArray();
-        Iterator<IInteracao> iteratorInteracao = this.interacoes.iterator();
-
-        while (iteratorInteracao.hasNext())
-        {
-            interacoesArray.add(iteratorInteracao.next().interacaoParaObjetoJson());
-        }
-
-        return interacoesArray;
-    }
-
-
-    @Override
-    public void exportInteracoesParaJson() throws IOException
-    {
-        iEJson.exportarParaFicheiroJSON(getInteracoesArrayJson().toJSONString(), "Interacoes");
-    }
-
-
     @Override
     public JSONObject bandeiraParaObjetoJSON()
     {
@@ -67,7 +39,6 @@ public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
         raiz.put("tipo", getTipo());
         raiz.put("nome", this.nome);
         raiz.put("coordenadas", getCoordenadas());
-        raiz.put("interacao", getInteracoesArrayJson());
 
         return raiz;
     }
@@ -115,25 +86,6 @@ public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
         this.nome = nome;
     }
 
-    /**
-     * define o nome do bot do jogador de interação com a bandeira
-     *
-     * @param id      identificador único da interação
-     * @param nomeBot novo nome do bot do jogador de interação
-     */
-    @Override
-    public void setInteracaoBot(int id, String nomeBot)
-    {
-
-    }
-
-    /**
-     * @param id     identificador único da interação
-     * @param pontos os pontos de interação
-     */
-    @Override
-    public void setPontosInteracao(int id, int pontos)
-    {}
 
     /**
      * Compares this object with the specified object for order.  Returns a

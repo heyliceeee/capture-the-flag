@@ -57,30 +57,6 @@ public class ImportarExportarJson
 
                     ILocalizacao localizacao = new Localizacao(id, tipo, nome, coordenadas1);
 
-                    JSONArray interacoesArray = (JSONArray) local1.get("interacao");
-
-
-                    try
-                    {
-                        for(int j=0; j < interacoesArray.size(); j++)
-                        {
-                            JSONObject interacaoObject = (JSONObject) interacoesArray.get(j);
-
-                            int idInteracao = (int) interacaoObject.get("id");
-                            String tipoInteracao = (String) interacaoObject.get("tipo");
-                            String jogadorInteracao = (String) interacaoObject.get("jogador");
-                            String botInteracao = (String) interacaoObject.get("bot");
-
-                            IInteracao interacao = new Interacao(idInteracao, tipoInteracao, jogadorInteracao, botInteracao, 0);
-
-                            localizacao.adicionarInteracao(interacao); //adicionar a interacao á localizacao
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        System.out.println("ERRO: "+e.getMessage());
-                    }
-
                     raiz.adicionarLocal(localizacao); //adicionar a localizacao á raiz
                 }
                 else if(tipo.equals("Bandeira"))
@@ -88,31 +64,6 @@ public class ImportarExportarJson
                     String nome = (String) local1.get("nome");
 
                     IBandeira bandeira = new Bandeira(id, tipo, nome, coordenadas1);
-
-                    JSONArray interacoesArray = (JSONArray) local1.get("interacao");
-
-
-                    try
-                    {
-                        for(int j=0; j < interacoesArray.size(); j++)
-                        {
-                            JSONObject interacaoObject = (JSONObject) interacoesArray.get(j);
-
-                            int idInteracao = (int) interacaoObject.get("id");
-                            String tipoInteracao = (String) interacaoObject.get("tipo");
-                            String jogadorInteracao = (String) interacaoObject.get("jogador");
-                            String botInteracao = (String) interacaoObject.get("bot");
-                            int pontosInteracao = (int) interacaoObject.get("pontos");
-
-                            IInteracao interacao = new Interacao(idInteracao, tipoInteracao, jogadorInteracao, botInteracao, pontosInteracao);
-
-                            bandeira.adicionarInteracao(interacao); //adicionar a interacao á localizacao
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        System.out.println("ERRO: "+e.getMessage());
-                    }
 
                     raiz.adicionarLocal(bandeira); //adicionar a bandeira á raiz
                 }

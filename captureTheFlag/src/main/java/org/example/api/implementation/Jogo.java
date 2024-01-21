@@ -27,7 +27,7 @@ public class Jogo
 
         while (true)//loop infinito até que o jogo termine
         {
-            System.out.println("\nTurno " + turno+"\n");
+            System.out.println("\n\nTurno " + turno+"\n");
 
             IBot botAtual = null;// Determinar qual bot deve jogar neste turno
 
@@ -125,13 +125,60 @@ public class Jogo
         ILocal pontoB = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira() : jogador1.getBandeira(); //bandeira inimiga
 
 
-        if(algoritmo.equals("Caminho mais curto"))
+        if(algoritmo.equals("Dijkstra"))
         {
             CaminhoMaisCurto(grafo, botAtual, raiz, pontoA, pontoB);
         }
-        else if(algoritmo.equals("Caminho mais longo"))
+        else if(algoritmo.equals("BFS"))
         {
+            BuscaPorProfundidade(grafo, botAtual, raiz, pontoA, pontoB);
+        }
+        else if(algoritmo.equals("DFS"))
+        {
+            BuscaPorLargura(grafo, botAtual, raiz, pontoA, pontoB);
+        }
+    }
 
+    private static void BuscaPorLargura(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, ILocal pontoB)
+    {
+    }
+
+
+    /**
+     * busca por profundidade
+     * @param grafo
+     * @param botAtual
+     * @param raiz
+     * @param pontoA
+     * @param pontoB
+     */
+    private static void BuscaPorProfundidade(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, ILocal pontoB)
+    {
+        Iterator<ILocal> bfs = grafo.iteratorBFS(pontoA.getId());
+
+
+        if(bfs.hasNext()) //existe vertices no caminho
+        {
+            System.out.print(botAtual.getNome()+": "+bfs.next()+" => ");
+
+
+            while (bfs.hasNext()) //percorre todos os restantes vertices
+            {
+                if(bfs.hasNext()) //existe vertices no caminho
+                {
+                    Object resultadoObjeto = bfs.next();
+                    System.out.print(resultadoObjeto +" => ");
+
+                    String resultadoString = resultadoObjeto.toString();
+                    int resultadoInt = Integer.parseInt(resultadoString);
+
+                    ILocal localAtual = raiz.getLocalByID(resultadoInt); //descobrir qual a localizacao/bandeira atual
+
+                    botAtual.setCoordenada(localAtual.getCoordenadas()); //coordenadas da localizacao/bandeira para onde se moveu
+                }
+
+                break; //porque queremos percorrer um vertice de cada vez
+            }
         }
     }
 
@@ -142,8 +189,13 @@ public class Jogo
      * @param botAtual
      * @param raiz
      */
-    private static void CaminhoMaisCurto(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, ILocal pontoB)
+    private static void CaminhoMaisCurto(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, ILocal pontoB) throws NotLocalInstanceException, ParseException
     {
+        //CaminhoMaisCurtoMovimento.dijkstra(grafo, pontoA.getId(), pontoB.getId());
+
+        //Iterator<ILocal> caminhoMaisCurtoDijkstra = grafo.caminhoMaisCurtoABandeira(raiz, pontoA.getId(), pontoB.getId());
+
+
         Iterator<ILocal> caminhoMaisCurto = grafo.iteratorShortestPath(pontoA.getId(), pontoB.getId());
 
         if(caminhoMaisCurto.hasNext()) //existe vertices no caminho

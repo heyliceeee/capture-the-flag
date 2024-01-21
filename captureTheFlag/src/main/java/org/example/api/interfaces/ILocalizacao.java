@@ -19,28 +19,6 @@ public interface ILocalizacao extends ILocal
     void setNome(String nome);
 
 
-    /**
-     * define o tipo de interação com a localizacao
-     * @param id identificador único da interação
-     * @param type novo tipo de interação
-     */
-    void setTipoInteracao(int id, String type);
-
-
-    /**
-     * define o nome do bot do jogador de interação com a localizacao
-     * @param id identificador único da interação
-     * @param nomeBot novo nome do bot do jogador de interação
-     */
-    void setInteracaoBot(int id, String nomeBot);
-
-
-    /**
-     * exportar as interacoes para JSON
-     * @throws IOException
-     */
-    void exportInteracoesParaJson() throws IOException;
-
 
     /**
      * converter a localizacao para objeto JSON

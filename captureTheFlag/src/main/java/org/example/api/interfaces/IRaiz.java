@@ -4,11 +4,9 @@ import org.example.api.exceptions.ElementAlreadyExistsException;
 import org.example.api.exceptions.ElementNotFoundException;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Coordenada;
-import org.example.api.implementation.Interacao;
 import org.example.api.implementation.TipoOrdenacao;
 import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.implementation.ArrayOrderedList;
-import org.example.collections.implementation.LinkedList;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -189,101 +187,11 @@ public interface IRaiz
 
 
     /**
-     * atualiza o ID do localizacao
-     * @param id atual ID do localizacao
-     * @param newID novo ID do localizacao
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
-     * @throws ElementAlreadyExistsException se já existe um localizacao com o novo ID
-     */
-    void setLocalizacaoID(int id, int newID) throws ElementNotFoundException, ElementAlreadyExistsException;
-
-
-    /**
-     * atualiza o nome da localizacao
-     * @param id ID da localizacao
-     * @param nome novo nome do localizacao
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
-     */
-    void setLocalizacaoNome(int id, String nome) throws ElementNotFoundException;
-
-
-    /**
-     * atualiza as coordenadas do localizacao
-     * @param id ID do localizacao
-     * @param coordenada novas coordenadas do localizacao
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
-     */
-    void setLocalizacaoCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException;
-
-
-    /**
-     * atualiza as interações do localizacao com o bot do jogador
-     * @param id ID do localizacao
-     * @param interacao novas interações do localizacao
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
-     */
-    void setLocalizacaoInteracao(int id, List<Interacao> interacao) throws ElementNotFoundException;
-
-
-    /**
      * retorna o bandeira com o id dado
      * @param id que vai ser procurado
      * @return o bandeira se foi encontrado, null se não foi encontrado
      */
     IBandeira getBandeiraPorID(int id);
-
-
-    /**
-     * atualiza o ID do bandeira
-     * @param id atual ID do bandeira
-     * @param newID novo ID do bandeira
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
-     * @throws ElementAlreadyExistsException se já existe um bandeira com o novo ID
-     */
-    void setBandeiraID(int id, int newID) throws ElementNotFoundException, ElementAlreadyExistsException;
-
-
-    /**
-     * atualiza o nome da bandeira
-     * @param id ID da bandeira
-     * @param nome novo nome do bandeira
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
-     */
-    void setBandeiraNome(int id, String nome) throws ElementNotFoundException;
-
-
-    /**
-     * atualiza as coordenadas do bandeira
-     * @param id ID do bandeira
-     * @param coordenada novas coordenadas do bandeira
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
-     */
-    void setBandeiraCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException;
-
-
-    /**
-     * atualiza as interações do bandeira com o bot do jogador
-     * @param id ID do bandeira
-     * @param interacao novas interações do bandeira
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
-     */
-    void setBandeiraInteracao(int id, List<Interacao> interacao) throws ElementNotFoundException;
-
-
-    /**
-     * retorna toda a informação do jogador pelo nome
-     * @param nome nome do jogador a ser pesquisado
-     * @return toda a informação do jogador se for encontrado, null caso contrário
-     */
-    IJogador getJogadorPorNome(String nome);
-
-
-    /**
-     * atualiza a quantidade de bandeiras conquistados pelo jogador
-     * @param name nome do jogador
-     * @param bandeirasConquistadas quantidade de bandeiras conquistados
-     */
-    void setJogadorBandeirasConquistadas(String name, int bandeirasConquistadas);
 
 
     /**
@@ -295,49 +203,10 @@ public interface IRaiz
 
 
     /**
-     * atualiza as coordenadas do bot
-     * @param name nome do bot
-     * @param coordenadas coordenadas
+     * retorna toda a informação do jogador pelo nome
+     *
+     * @param nome nome do jogador a ser pesquisado
+     * @return toda a informação do jogador se for encontrado, null caso contrário
      */
-    void setBotCoordenadas(String name, Coordenada coordenadas);
-
-
-    /**
-     * retorna o iterador com os localizacoes ordenados por algum parâmetro
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    Iterator<ILocalizacao> getLocalizacoesOrdenadosPor(TipoOrdenacao tipoOrdenacao);
-
-
-    /**
-     * retorna o iterador com os bandeiras ordenados por algum parâmetro
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    Iterator<IBandeira> getBandeirasOrdenadosPor(TipoOrdenacao tipoOrdenacao);
-
-
-    /**
-     * retorna o iterador com os jogadores ordenados por algum parâmetro
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    Iterator<IJogador> getJogadoresOrdenadosPor(TipoOrdenacao tipoOrdenacao);
-
-
-    /**
-     * retorna o iterador com os bots ordenados por algum parâmetro
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    Iterator<IBot> getBotsOrdenadosPor(TipoOrdenacao tipoOrdenacao);
-
-
-    /**
-     * retorna o iterador com os rotas ordenados por algum parâmetro
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    Iterator<IRota<ILocal>> getRotasOrdenadosPor(TipoOrdenacao tipoOrdenacao);
+    public IJogador getJogadorPorNome(String nome);
 }
