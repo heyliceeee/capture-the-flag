@@ -78,7 +78,7 @@ public class Mapa implements IMapa
     {}
 
 
-    public void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
+    public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
     {
         validarArgumentos(locExistentesJogador1, locExistentesJogador2, densidadeArestasJogador1, densidadeArestasJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, tipoCaminho); // region validacoes dos argumentos
 

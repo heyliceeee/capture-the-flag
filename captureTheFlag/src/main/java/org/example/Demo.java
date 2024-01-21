@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.InterfaceGrafica.DataManager;
+import org.example.InterfaceGrafica.InterfaceGraficaMenuPrincipal;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.*;
 import org.example.api.interfaces.*;
@@ -40,9 +42,16 @@ public class Demo
 
     //endregion
 
+    static DataManager dataManager = new DataManager();
+
+
+
     public static void main(String[] args) throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
     {
-        mostrarMenuInicial();
+        //mostrarMenuInicial();
+
+       InterfaceGraficaMenuPrincipal.setDataManager(dataManager);
+       InterfaceGraficaMenuPrincipal.launch(InterfaceGraficaMenuPrincipal.class, args);
     }
 
 
