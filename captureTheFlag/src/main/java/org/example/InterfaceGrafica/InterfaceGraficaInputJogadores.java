@@ -57,7 +57,7 @@ public class InterfaceGraficaInputJogadores extends Application {
         root.getChildren().add(nextButton);
 
         Scene scene = new Scene(root, 500, 400);
-        stage.setTitle("Capture the Flag Game");
+        stage.setTitle("Captura da Bandeira");
         stage.setScene(scene);
         stage.show();
     }
@@ -68,7 +68,7 @@ public class InterfaceGraficaInputJogadores extends Application {
 
         // Numero de localizações
         playerLabel = new Label("Jogador " + playerNumber);
-        locationLabel = new Label("Numero de Localizaçoes:");
+        locationLabel = new Label("Numero de Localizacoes:");
         locationTextField = new TextField();
         locationTextField.setPromptText("Insira um numero maior que 6");
 
@@ -83,7 +83,7 @@ public class InterfaceGraficaInputJogadores extends Application {
         // Numero de bots
         densidadeLabel = new Label("Densidade das arestas:");
         densidadeTextField = new TextField();
-        densidadeTextField.setPromptText("Em % (1 - 100)");
+        densidadeTextField.setPromptText("Em % (10 - 100)");
 
         form.getChildren().addAll(playerLabel, locationLabel, locationTextField, directionLabel, directedRadioButton,
                 bidirectedRadioButton, densidadeLabel, densidadeTextField);
@@ -97,7 +97,7 @@ public class InterfaceGraficaInputJogadores extends Application {
         this.densidadeArestasJogador1 = Integer.parseInt(densidadeTextField.getText());
         this.tipoCaminhoJogador1 = this.getTipoCaminho();
 
-        if (locExistentesJogador1 > 6 && densidadeArestasJogador1 > 0 && densidadeArestasJogador1 <= 100) {
+        if (locExistentesJogador1 >= 6 && (densidadeArestasJogador1 >= 10 && densidadeArestasJogador1 <= 100)) {
             root.getChildren().clear();
             root.getChildren().add(formularioInput(2));
             root.getChildren().add(okButton);
@@ -107,7 +107,7 @@ public class InterfaceGraficaInputJogadores extends Application {
             // Mostrar uma mensagem de erro ou uma indicação de que os valores inseridos são
             // inválidos
             // Por exemplo, você pode usar um Alert para isso
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Retificar numero de localizaçoes ou densidade");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Retificar numero de localizacoes ou densidade");
             alert.showAndWait();
         }
 
@@ -119,11 +119,13 @@ public class InterfaceGraficaInputJogadores extends Application {
         this.densidadeArestasJogador2 = Integer.parseInt(densidadeTextField.getText());
         this.tipoCaminhoJogador2 = this.getTipoCaminho();
 
-        if (locExistentesJogador2 > 6 && densidadeArestasJogador2 > 0 && densidadeArestasJogador2 <= 100) {
+        if (locExistentesJogador2 >= 6 && densidadeArestasJogador2 >= 10 && densidadeArestasJogador2 <= 100) {
 
             Mapa.gerarMapa(this.dataManager.grafo, this.dataManager.raiz, this.dataManager.rota,
                     locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2,
                     densidadeArestasJogador1, densidadeArestasJogador2);
+
+            System.out.println(this.dataManager.grafo);
 
             Platform.runLater(() -> new InterfaceGraficaSelecionarBandeira(this.dataManager).start(new Stage()));
 
@@ -133,7 +135,7 @@ public class InterfaceGraficaInputJogadores extends Application {
             // Mostrar uma mensagem de erro ou uma indicação de que os valores inseridos são
             // inválidos
             // Por exemplo, você pode usar um Alert para isso
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Retificar numero de localizaçoes ou densidade");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Retificar numero de localizacoes ou densidade");
             alert.showAndWait();
         }
 
