@@ -300,11 +300,11 @@ public class Demo
             System.out.println("+-------------------------------------------+");
             System.out.println("introduza os seguintes dados: *              ");
             System.out.println("+-------------------------------------------+");
-            System.out.println("| Numero de bots (3 - "+maxBots+"):                  |\n");
+            System.out.println("| Numero de bots (3 - "+(maxBots/2)+"):                  |\n");
 
             botsJogador1 = scanner.nextInt();
         }
-        while (botsJogador1 < 3 || botsJogador1 > maxBots);
+        while (botsJogador1 < 3 || botsJogador1 > (maxBots/2));
 
 
         do
@@ -315,11 +315,11 @@ public class Demo
             System.out.println("+-------------------------------------------+");
             System.out.println("introduza os seguintes dados: *              ");
             System.out.println("+-------------------------------------------+");
-            System.out.println("| Numero de bots (3 - "+maxBots+"):                  |\n");
+            System.out.println("| Numero de bots (3 - "+(maxBots/2)+"):                  |\n");
 
             botsJogador2 = scanner.nextInt();
         }
-        while (botsJogador2 < 3 || botsJogador2 > maxBots);
+        while (botsJogador2 < 3 || botsJogador2 > (maxBots/2));
 
 
         int nBots = 0;

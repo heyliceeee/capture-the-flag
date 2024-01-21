@@ -272,7 +272,7 @@ public class Graph<T> implements GraphADT<T>
      * @param startIndex o índice para iniciar o percurso de pesquisa em profundidade
      * @return iterador que executa uma primeira travessia de pesquisa em profundidade começando no índice dado.
      */
-    private Iterator<T> iteratorDFS(int startIndex)
+    public Iterator<T> iteratorDFS(int startIndex)
     {
         Integer x;
         boolean found;

@@ -131,16 +131,49 @@ public class Jogo
         }
         else if(algoritmo.equals("BFS"))
         {
-            BuscaPorProfundidade(grafo, botAtual, raiz, pontoA, pontoB);
+            BuscaPorProfundidade(grafo, botAtual, raiz, pontoA);
         }
         else if(algoritmo.equals("DFS"))
         {
-            BuscaPorLargura(grafo, botAtual, raiz, pontoA, pontoB);
+            BuscaPorLargura(grafo, botAtual, raiz, pontoA);
         }
     }
 
-    private static void BuscaPorLargura(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, ILocal pontoB)
+
+    /**
+     * busca por largura
+     * @param grafo
+     * @param botAtual
+     * @param raiz
+     * @param pontoA
+     */
+    private static void BuscaPorLargura(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA)
     {
+        Iterator<ILocal> dfs = grafo.iteratorDFS(pontoA.getId());
+
+        if(dfs.hasNext()) //existe vertices no caminho
+        {
+            System.out.print(botAtual.getNome()+": "+dfs.next()+" => ");
+
+
+            while (dfs.hasNext()) //percorre todos os restantes vertices
+            {
+                if(dfs.hasNext()) //existe vertices no caminho
+                {
+                    Object resultadoObjeto = dfs.next();
+                    System.out.print(resultadoObjeto +" => ");
+
+                    String resultadoString = resultadoObjeto.toString();
+                    int resultadoInt = Integer.parseInt(resultadoString);
+
+                    ILocal localAtual = raiz.getLocalByID(resultadoInt); //descobrir qual a localizacao/bandeira atual
+
+                    botAtual.setCoordenada(localAtual.getCoordenadas()); //coordenadas da localizacao/bandeira para onde se moveu
+                }
+
+                break; //porque queremos percorrer um vertice de cada vez
+            }
+        }
     }
 
 
@@ -150,9 +183,8 @@ public class Jogo
      * @param botAtual
      * @param raiz
      * @param pontoA
-     * @param pontoB
      */
-    private static void BuscaPorProfundidade(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, ILocal pontoB)
+    private static void BuscaPorProfundidade(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA)
     {
         Iterator<ILocal> bfs = grafo.iteratorBFS(pontoA.getId());
 
