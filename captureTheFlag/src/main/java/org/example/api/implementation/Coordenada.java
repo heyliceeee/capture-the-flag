@@ -45,6 +45,7 @@ public class Coordenada implements ICoordenada
         return longitude;
     }
 
+
     /**
      * define a longitude da coordenada
      *
@@ -56,6 +57,7 @@ public class Coordenada implements ICoordenada
         this.longitude = longitude;
     }
 
+
     /**
      * retorna a latitude da coordenada
      *
@@ -66,6 +68,7 @@ public class Coordenada implements ICoordenada
     {
         return latitude;
     }
+
 
     /**
      * define a latitude da coordenada

@@ -1,7 +1,6 @@
 package org.example.api.implementation;
 
 import org.example.api.interfaces.ICoordenada;
-import org.example.api.interfaces.IInteracao;
 import org.example.api.interfaces.ILocalizacao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,31 +31,6 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
 
 
 
-    /**
-     * retorna o array de json das interacoes
-     * @return o array de json das interacoes
-     */
-    private JSONArray getInteracoesArrayJson()
-    {
-        JSONArray interacoesArray = new JSONArray();
-        Iterator<IInteracao> iteratorInteracao = this.interacoes.iterator();
-
-        while (iteratorInteracao.hasNext())
-        {
-            interacoesArray.add(iteratorInteracao.next().interacaoParaObjetoJson());
-        }
-
-        return interacoesArray;
-    }
-
-
-    @Override
-    public void exportInteracoesParaJson() throws IOException
-    {
-        iEJson.exportarParaFicheiroJSON(getInteracoesArrayJson().toJSONString(), "Interacoes");
-    }
-
-
     @Override
     public JSONObject localizacaoParaObjetoJSON()
     {
@@ -66,7 +40,6 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
         raiz.put("tipo", getTipo());
         raiz.put("name", getNome());
         raiz.put("coordenadas", getCoordenadas());
-        raiz.put("interacao", getListaInteracoes());
 
         return raiz;
     }
@@ -129,17 +102,6 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
         this.nome = nome;
     }
 
-    /**
-     * define o nome do bot do jogador de interação com a localizacao
-     *
-     * @param id      identificador único da interação
-     * @param nomeBot novo nome do bot do jogador de interação
-     */
-    @Override
-    public void setInteracaoBot(int id, String nomeBot)
-    {
-
-    }
 
     /**
      * Compares this object with the specified object for order.  Returns a

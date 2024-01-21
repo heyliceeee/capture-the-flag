@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.example.api.interfaces.ICoordenada;
-import org.example.api.interfaces.IInteracao;
 import org.example.api.interfaces.ILocal;
 import org.example.collections.implementation.ArrayUnorderedList;
 import org.example.collections.interfaces.UnorderedListADT;
@@ -47,12 +46,6 @@ public class Local implements ILocal
 
 
     /**
-     * registo de interacoes do localizacao/bandeira
-     */
-    public UnorderedListADT<IInteracao> interacoes = new ArrayUnorderedList<>();
-
-
-    /**
      * constructor
      *
      * @param id
@@ -67,94 +60,6 @@ public class Local implements ILocal
     }
 
 
-    @Override
-    public String adicionarInteracao(IInteracao interacao)
-    {
-        if(interacao == null)
-        {
-            throw new IllegalArgumentException("interacao nao pode ser nulo");
-        }
-
-        String s = "Falhou";
-
-        if(this.interacoes.isEmpty() || !this.interacoes.contains(interacao)) //se a lista de interacoes estiver vazia ou não conter o interacao a ser adicionado, adiciona-o á lista
-        {
-            this.interacoes.addToRear(interacao); //adiciona o interacao no fim da lista
-            s = "Sucesso";
-        }
-
-        return s;
-    }
-
-
-    @Override
-    public String getListaInteracoes()
-    {
-        String s = "Interacoes: {\n";
-
-        if(!this.interacoes.isEmpty())
-        {
-            Iterator<IInteracao> iterator = interacoes.iterator();
-
-            while (iterator.hasNext())
-            {
-                s += iterator.next().toString() + "\n";
-            }
-        }
-        else
-        {
-            s += "nao existe interacoes na lista!\n";
-        }
-
-        s += "}";
-
-        return s;
-    }
-
-
-    @Override
-    public IInteracao getInteracaoPorID(int id)
-    {
-        Iterator<IInteracao> iterator = this.interacoes.iterator();
-        IInteracao interacao;
-
-        while (iterator.hasNext())
-        {
-            interacao = iterator.next();
-
-            if(interacao.getID() == id)
-            {
-                return interacao;
-            }
-        }
-
-        return null;
-    }
-
-
-
-    @Override
-    public int getIDUltimaInteracao()
-    {
-        int idUltimaInteracao = 0;
-
-        Iterator<IInteracao> iterator = this.interacoes.iterator();
-        IInteracao interacao;
-
-        while (iterator.hasNext())
-        {
-            interacao = iterator.next();
-
-            if(interacao.getID() > idUltimaInteracao)
-            {
-                return idUltimaInteracao;
-            }
-        }
-
-
-        return idUltimaInteracao;
-    }
-
 
     @Override
     public String toString()
@@ -163,7 +68,6 @@ public class Local implements ILocal
                 "id=" + id +
                 ", tipo='" + tipo + '\'' +
                 ", coordenadas=" + coordenadas +
-                ", interacoes=" + interacoes +
                 '}';
     }
 
@@ -207,23 +111,5 @@ public class Local implements ILocal
     {
         this.coordenadas = coordenadas;
     }
-
-
-    @Override
-    public void setTipoInteracao(int id, String tipo)
-    {}
-
-    /**
-     * define o bot do jogador que fez a interacao
-     *
-     * @param id      da (bandeira/localizacao)
-     * @param nomeBot bot (jogador1 ou jogador2)
-     */
-    @Override
-    public void setBotInteracao(int id, String nomeBot)
-    {
-
-    }
-
     //endregion
 }

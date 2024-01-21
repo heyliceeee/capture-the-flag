@@ -2,13 +2,9 @@ package org.example.api.implementation;
 
 import org.example.api.interfaces.*;
 import org.example.collections.implementation.ArrayOrderedList;
-import org.example.collections.implementation.LinkedList;
 import org.example.collections.interfaces.IExporter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Mapa implements IMapa
 {
@@ -54,35 +50,53 @@ public class Mapa implements IMapa
     private static int calculoDensidadeArestas;
 
 
+    static LinkedList<String> arestasList = new LinkedList<>();
+
+
+
 
     /**
      * constructor
-     * 
+     *
      * @param qttLocExistentes
      * @param tipoCaminhoString
      * @param densidadeArestas
      */
-    public Mapa(int qttLocExistentes, String tipoCaminhoString, int densidadeArestas) {
+    public Mapa(int qttLocExistentes, String tipoCaminhoString, int densidadeArestas)
+    {
         this.qttLocExistentes = qttLocExistentes;
         this.tipoCaminhoString = tipoCaminhoString;
         this.densidadeArestas = densidadeArestas;
     }
 
 
-    public static void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
+    /**
+     * constructor
+     *
+     */
+    public Mapa()
+    {}
+
+
+    public void gerarMapa(RouteNetwork grafo, IRaiz raiz, IRota rota, int locExistentesJogador1, int locExistentesJogador2, int tipoCaminhoJogador1, int tipoCaminhoJogador2, int densidadeArestasJogador1, int densidadeArestasJogador2)
     {
         validarArgumentos(locExistentesJogador1, locExistentesJogador2, densidadeArestasJogador1, densidadeArestasJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, tipoCaminho); // region validacoes dos argumentos
 
         //region densidade das arestas
-        double direcionado = (locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100));
-
-        calculoDensidadeArestas = (int) Math.round(direcionado);
+        if(tipoCaminhoString.equals("direcionado"))
+        {
+            double direcionado = (locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100));
+            calculoDensidadeArestas = (int) Math.round(direcionado);
+        }
+        else
+        {
+            double bidirecionado = (locExistentes * (locExistentes - 1) * ((double) densidadeArestas / 100))*2;
+            calculoDensidadeArestas = (int) Math.round(bidirecionado);
+        }
 
         arestas = calculoDensidadeArestas;
 
         //endregion
-
-        // region criar o grafo && adicionar os dados ás classes
 
         ArrayOrderedList<String> nomeSpots = new ArrayOrderedList<>();
         nomeSpots.add("CT Stairs");
@@ -108,53 +122,15 @@ public class Mapa implements IMapa
 
             ILocalizacao localizacao = new Localizacao(i, "localizacao", nomeSpots.first(), null);
 
-            raiz.adicionarLocal(localizacao); // adiciona um novo local
+            raiz.adicionarLocal(localizacao); // adiciona um novo local á rede
             nomeSpots.removeFirst();
         }
 
+        //region criar arestas
 
-        for (int j=0; j < arestas; j++) // percorrer todas arestas
-        {
-            //region garantir que todos os vertices tem uma aresta
+        gerarArestas(raiz, grafo);
 
-            int de = gerarNumeroRandom(0, locExistentes);
-
-            int para;
-
-            do
-            {
-                para = gerarNumeroRandom(0, locExistentes);
-            }
-            while (para == de);
-
-            //endregion
-
-            Coordenada coordenadasDe = new Coordenada(de * 100, para * 100); // definir coordenadas
-            Coordenada coordenadasPara = new Coordenada(para * 100, de * 100); // definir coordenadas
-
-            ILocalizacao localizacaoDe = raiz.getLocalizacaoPorID(de);// procurar a localizacao por id
-            ILocalizacao localizacaoPara = raiz.getLocalizacaoPorID(para);// procurar a localizacao por id
-
-            raiz.removerLocal(localizacaoDe); // eliminar o local existente
-            raiz.removerLocal(localizacaoPara); // eliminar o local existente
-
-            ILocalizacao localizacaoDeNova = new Localizacao(localizacaoDe.getId(), localizacaoDe.getTipo(), localizacaoDe.getNome(), coordenadasDe); // localizacao com as coordenadas atualizadas
-            ILocalizacao localizacaoParaNova = new Localizacao(localizacaoPara.getId(), localizacaoPara.getTipo(), localizacaoPara.getNome(), coordenadasPara); // localizacao com as coordenadas atualizadas
-
-            raiz.adicionarLocal(localizacaoDeNova); // adiciona um novo local
-            raiz.adicionarLocal(localizacaoParaNova); // adiciona um novo local
-
-            double distancia = gerarNumeroRandom(1, 15);
-
-            ILocal localDe = raiz.getLocalByID(de); // procurar a local por id
-            ILocal localPara = raiz.getLocalByID(para); // procurar a local por id
-
-
-            //grafo.addEdge(localDe, localPara, distancia, tipoCaminhoString);
-            raiz.adicionarRota(localDe, localPara, distancia, tipoCaminhoString); // adicionar aresta com peso
-        }
-
-        // endregion
+        //endregion
     }
 
 
@@ -261,14 +237,110 @@ public class Mapa implements IMapa
 
 
     /**
-     * @param bidirecional     true se o grafo for bidirecionado, caso contrário
-     *                         false
-     * @param densidadeArestas percentagem de arestas que devem estar presentes no
-     *                         grafo
+     * gera arestas no mapa com base na densidade de arestas dada
+     *
+     * @param raiz
+     * @param grafo
      */
-    @Override
-    public void gerarArestas(boolean bidirecional, double densidadeArestas) {
+    public static void gerarArestas(IRaiz raiz, RouteNetwork grafo)
+    {
+        //region garantir que todos os vertices tem uma aresta
+        int de=0, para=0, countArestas=0;
 
+        //cria as rotas
+        for (de = 0; (de < locExistentes-1 && countArestas < arestas); de++)
+        {
+            for (para = de + 1; (para < locExistentes && countArestas < arestas); para++)
+            {
+                // Gerar valores aleatórios para "de" e "para"
+                de = gerarNumeroRandom(0, locExistentes);
+                para = gerarNumeroRandom(0, locExistentes);
+
+                while (de == para)// Garantir que "de" e "para" sejam diferentes
+                {
+                    para = gerarNumeroRandom(0, locExistentes);
+                }
+
+                String aresta = de + ", " + para;
+                String inversa = para + ", " + de;
+
+
+                if(tipoCaminhoString.equals("bidirecionado"))
+                {
+                    if(!arestasList.contains(aresta) && !arestasList.contains(inversa))
+                    {
+                        arestasList.add(aresta);
+                        arestasList.add(inversa);
+
+                        countArestas += 2;
+                    }
+                }
+                else if (tipoCaminhoString.equals("direcionado"))
+                {
+                    if(!arestasList.contains(aresta) && !arestasList.contains(inversa))
+                    {
+                        arestasList.add(aresta);
+
+                        countArestas++;
+                    }
+                }
+            }
+        }
+
+
+        //criar rotas
+        criarRotas(raiz, grafo);
+    }
+
+
+    /**
+     * criar rotas
+     */
+    private static void criarRotas(IRaiz raiz, RouteNetwork grafo)
+    {
+        for(String aresta : arestasList)
+        {
+            String[] vertices = aresta.split(", ");
+
+            int de = Integer.parseInt(vertices[0]);//obter de
+            int para = Integer.parseInt(vertices[1]);//obter para
+
+
+            Coordenada coordenadasDe = new Coordenada(de * 100, para * 100); // definir coordenadas
+            Coordenada coordenadasPara = new Coordenada(para * 100, de * 100); // definir coordenadas
+
+            ILocalizacao localizacaoDe = raiz.getLocalizacaoPorID(de);// procurar a localizacao por id
+            ILocalizacao localizacaoPara = raiz.getLocalizacaoPorID(para);// procurar a localizacao por id
+
+            raiz.removerLocal(localizacaoDe); // eliminar o local existente
+            raiz.removerLocal(localizacaoPara); // eliminar o local existente
+
+            ILocalizacao localizacaoDeNova = new Localizacao(localizacaoDe.getId(), localizacaoDe.getTipo(), localizacaoDe.getNome(), coordenadasDe); // localizacao com as coordenadas atualizadas
+            ILocalizacao localizacaoParaNova = new Localizacao(localizacaoPara.getId(), localizacaoPara.getTipo(), localizacaoPara.getNome(), coordenadasPara); // localizacao com as coordenadas atualizadas
+
+            raiz.adicionarLocal(localizacaoDeNova); // adiciona um novo local
+            raiz.adicionarLocal(localizacaoParaNova); // adiciona um novo local
+
+            double distancia = gerarNumeroRandom(1, 15);
+
+            ILocal localDe = raiz.getLocalByID(de); // procurar a local por id
+            ILocal localPara = raiz.getLocalByID(para); // procurar a local por id
+
+
+            if (tipoCaminhoString.equals("direcionado"))
+            {
+                grafo.addEdge(localDe.getId(), localPara.getId(), distancia); //adicionar aresta com peso ao grafo
+                raiz.adicionarRota(localDe, localPara, distancia); //adicionar aresta com peso á rede
+            }
+            else
+            {
+                grafo.addEdge(localDe.getId(), localPara.getId(), distancia); //adicionar aresta com peso ao grafo
+                //grafo.addEdge(localPara.getId(), localDe.getId(), distancia);
+
+                raiz.adicionarRota(localDe, localPara, distancia); //adicionar aresta com peso á rede
+                //raiz.adicionarRota(localPara, localDe, distancia);
+            }
+        }
     }
 
 

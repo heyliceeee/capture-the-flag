@@ -14,9 +14,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
-public class Demo {
+public class Demo
+{
+    //region instancias
+    public static Mapa mapa = new Mapa();
     public static ImportarExportarJson iEJson = new ImportarExportarJson();
 
     /**
@@ -34,9 +38,9 @@ public class Demo {
     public static IJogador jogador1 = new Jogador("Jogador 1", 0, 0);
     public static IJogador jogador2 = new Jogador("Jogador 2", 0, 0);
     public static IRota rota = new Rota(null, null, 0);
-
     static Scanner scanner = new Scanner(System.in);
 
+    //endregion
 
     static DataManager dataManager = new DataManager();
 
@@ -212,10 +216,14 @@ public class Demo {
                 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         //region criar mapa
-        Mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
+        mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
         //endregion
 
         //region escolher bandeira
+        Iterator<IRota<ILocal>> rotas = grafo.getRotas();
+
+        System.out.println(grafo);
+
         ArrayOrderedList<ILocalizacao> localizacaoList = raiz.getListaLocalizacoes();
 
         System.out.println("\n");
@@ -240,9 +248,10 @@ public class Demo {
 
         ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); //localizacao selecionada
         raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
-        IBandeira bandeiraJogador1 = new Bandeira(0, "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); //criar bandeira
+        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); //criar bandeira
 
         jogador1.setBandeira(bandeiraJogador1);
+        raiz.adicionarLocal(bandeiraJogador1);
 
         localizacaoList = raiz.getListaLocalizacoes();
 
@@ -268,9 +277,11 @@ public class Demo {
 
         ILocalizacao localJogador2Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador2); //localizacao selecionada
         raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
-        IBandeira bandeiraJogador2 = new Bandeira(1, "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); //criar bandeira
+        IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); //criar bandeira
 
         jogador2.setBandeira(bandeiraJogador2);
+        raiz.adicionarLocal(bandeiraJogador2);
+
 
         localizacaoList = raiz.getListaLocalizacoes(); //localizacoes atualizadas apos selecionar a bandeira
         //endregion
@@ -287,7 +298,7 @@ public class Demo {
     private static void mostrarMenuSelecionarBots()
     {
         int botsJogador1 = 0, botsJogador2 = 0;
-        int maxBots = Mapa.obterMaxBots();
+        int maxBots = mapa.obterMaxBots();
 
 
         do
@@ -298,11 +309,11 @@ public class Demo {
             System.out.println("+-------------------------------------------+");
             System.out.println("introduza os seguintes dados: *              ");
             System.out.println("+-------------------------------------------+");
-            System.out.println("| Numero de bots (3 - "+maxBots+"):                  |\n");
+            System.out.println("| Numero de bots (3 - "+(maxBots/2)+"):                  |\n");
 
             botsJogador1 = scanner.nextInt();
         }
-        while (botsJogador1 < 3 || botsJogador1 > maxBots);
+        while (botsJogador1 < 3 || botsJogador1 > (maxBots/2));
 
 
         do
@@ -313,11 +324,11 @@ public class Demo {
             System.out.println("+-------------------------------------------+");
             System.out.println("introduza os seguintes dados: *              ");
             System.out.println("+-------------------------------------------+");
-            System.out.println("| Numero de bots (3 - "+maxBots+"):                  |\n");
+            System.out.println("| Numero de bots (3 - "+(maxBots/2)+"):                  |\n");
 
             botsJogador2 = scanner.nextInt();
         }
-        while (botsJogador2 < 3 || botsJogador2 > maxBots);
+        while (botsJogador2 < 3 || botsJogador2 > (maxBots/2));
 
 
         int nBots = 0;
@@ -325,7 +336,7 @@ public class Demo {
         //region fazer media de bots
         if(botsJogador1 > botsJogador2)
         {
-            nBots = Mapa.fazerMedia(botsJogador2, botsJogador1);
+            nBots = mapa.fazerMedia(botsJogador2, botsJogador1);
 
             // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
             if (nBots % 2 != 0)
@@ -335,7 +346,7 @@ public class Demo {
         }
         else if(botsJogador2 > botsJogador1)
         {
-            nBots = Mapa.fazerMedia(botsJogador1, botsJogador2);
+            nBots = mapa.fazerMedia(botsJogador1, botsJogador2);
 
             // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
             if (nBots % 2 != 0)
@@ -373,9 +384,9 @@ public class Demo {
             System.out.println("selecione uma das opcoes: *                      ");
             System.out.println("+-----------------------------------------------+");
             System.out.println("| Para o bot "+(i+1)+", seleciona o algoritmo desejado: |");
-            System.out.println("| 1. Caminho mais curto                         |");
-            System.out.println("| 2. Caminho mais longo                         |");
-            System.out.println("| 3. Caminho x                         |");
+            System.out.println("| 1. Dijkstra                                   |");
+            System.out.println("| 2. BFS                                        |");
+            System.out.println("| 3. DFS                                        |");
 
 
             algoritmoBotJogador1 = scanner.nextInt();
@@ -383,11 +394,15 @@ public class Demo {
 
             if(algoritmoBotJogador1 == 1)
             {
-                stringAlgortimoBotJogador1 = "Caminho mais curto";
+                stringAlgortimoBotJogador1 = "Dijkstra";
             }
             else if(algoritmoBotJogador1 == 2)
             {
-                stringAlgortimoBotJogador1 = "Caminho mais longo";
+                stringAlgortimoBotJogador1 = "BFS";
+            }
+            else if(algoritmoBotJogador1 == 3)
+            {
+                stringAlgortimoBotJogador1 = "DFS";
             }
 
 
@@ -418,9 +433,9 @@ public class Demo {
             System.out.println("selecione uma das opcoes: *                      ");
             System.out.println("+-----------------------------------------------+");
             System.out.println("| Para o bot "+(i+1)+", seleciona o algoritmo desejado: |");
-            System.out.println("| 1. Caminho mais curto                         |");
-            System.out.println("| 2. Caminho mais longo                         |");
-            System.out.println("| 3. Caminho x                         |");
+            System.out.println("| 1. Dijkstra                                   |");
+            System.out.println("| 2. BFS                                        |");
+            System.out.println("| 3. DFS                                        |");
 
 
             algoritmoBotJogador2 = scanner.nextInt();
@@ -428,11 +443,15 @@ public class Demo {
 
             if(algoritmoBotJogador2 == 1)
             {
-                stringAlgortimoBotJogador2 = "Caminho mais curto";
+                stringAlgortimoBotJogador2 = "Dijkstra";
             }
             else if(algoritmoBotJogador2 == 2)
             {
-                stringAlgortimoBotJogador2 = "Caminho mais longo";
+                stringAlgortimoBotJogador2 = "BFS";
+            }
+            else if(algoritmoBotJogador2 == 3)
+            {
+                stringAlgortimoBotJogador2 = "DFS";
             }
 
 
@@ -455,7 +474,7 @@ public class Demo {
      */
     private static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException
     {
-        int quemComeca = Mapa.gerarNumeroRandom(1, 2);
+        int quemComeca = mapa.gerarNumeroRandom(1, 2);
 
         System.out.println("\n");
         System.out.println("+-------------------------------------------+");
