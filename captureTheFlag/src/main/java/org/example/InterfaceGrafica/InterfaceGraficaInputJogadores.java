@@ -50,8 +50,7 @@ public class InterfaceGraficaInputJogadores extends Application {
         });
 
         okButton.setOnAction(event -> {
-            this.logicaBotaoOk(root);
-            stage.close();
+            this.logicaBotaoOk(stage);
         });
 
         root.getChildren().add(nextButton);
@@ -113,7 +112,7 @@ public class InterfaceGraficaInputJogadores extends Application {
 
     }
 
-    private void logicaBotaoOk(VBox root) {
+    private void logicaBotaoOk(Stage stage) {
 
         this.locExistentesJogador2 = Integer.parseInt(locationTextField.getText());
         this.densidadeArestasJogador2 = Integer.parseInt(densidadeTextField.getText());
@@ -126,7 +125,7 @@ public class InterfaceGraficaInputJogadores extends Application {
                     densidadeArestasJogador1, densidadeArestasJogador2);
 
             Platform.runLater(() -> new InterfaceGraficaSelecionarBandeira(this.dataManager).start(new Stage()));
-
+            stage.close();
         }
 
         else {
