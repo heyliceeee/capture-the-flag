@@ -3,6 +3,7 @@ package org.example.InterfaceGrafica;
 import java.util.Iterator;
 
 import org.example.api.implementation.Bot;
+import org.example.api.implementation.Mapa;
 import org.example.api.interfaces.IBot;
 import org.example.api.interfaces.IJogador;
 import org.example.collections.implementation.DoubleLinkedUnorderedList;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
 public class InterfaceGraficaAlgoritmoBots extends Application {
 
     private DataManager dataManager;
-    private int numeroBots;
+    private int numeroBots, quemComeca;
     private VBox root;
     private DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador1;
     private DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador2;
@@ -32,6 +33,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         this.numeroBots = numeroBots;
         comboBoxJogador1 = new DoubleLinkedUnorderedList<ComboBox<String>>();
         comboBoxJogador2 = new DoubleLinkedUnorderedList<ComboBox<String>>();
+        this.quemComeca = Mapa.gerarNumeroRandom(1, 2);
     }
 
     @Override
