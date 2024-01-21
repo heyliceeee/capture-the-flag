@@ -14,14 +14,14 @@ public interface GraphADT<T>
      * remove uma vertice, com o valor dado, no grafo
      * @param vertex o vertice que vai ser removido no grafo
      */
-    public void removeVertex(T vertex);
+    public boolean removeVertex(T vertex);
 
     /**
      * adiciona uma aresta entre 2 vertices no grafo
      * @param vertex1 o primeiro vertice
      * @param vertex2 o segundo vertice
      */
-    public void addEdge(T vertex1, T vertex2, String tipoCaminho);
+    public void addEdge(T vertex1, T vertex2);
 
     /**
      * remove uma aresta entre 2 vertices do grafo

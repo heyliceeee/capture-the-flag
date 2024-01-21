@@ -2,26 +2,18 @@ package org.example.api.implementation;
 
 import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ICoordenada;
-import org.example.api.interfaces.IInteracao;
-import org.example.api.interfaces.ILocalizacao;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.util.Iterator;
 
-public class Bandeira extends Local implements IBandeira
+public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
 {
     /**
      * nome da bandeira
      */
     private String nome;
-
-
-    /**
-     * coordenadas da bandeira
-     */
-    private ICoordenada coordenada;
 
 
     /**
@@ -31,37 +23,10 @@ public class Bandeira extends Local implements IBandeira
 
 
 
-    public Bandeira(int id, String tipo, String nome, ICoordenada coordenada)
+    public Bandeira(int id, String tipo, String nome, ICoordenada coordenadas)
     {
-        super(id, tipo, coordenada);
+        super(id, tipo, coordenadas);
         this.nome = nome;
-        this.coordenada = coordenada;
-    }
-
-
-
-    /**
-     * retorna o array de json das interacoes
-     * @return o array de json das interacoes
-     */
-    private JSONArray getInteracoesArrayJson()
-    {
-        JSONArray interacoesArray = new JSONArray();
-        Iterator<IInteracao> iteratorInteracao = this.interacoes.iterator();
-
-        while (iteratorInteracao.hasNext())
-        {
-            interacoesArray.add(iteratorInteracao.next().interacaoParaObjetoJson());
-        }
-
-        return interacoesArray;
-    }
-
-
-    @Override
-    public void exportInteracoesParaJson() throws IOException
-    {
-        iEJson.exportarParaFicheiroJSON(getInteracoesArrayJson().toJSONString(), "Interacoes");
     }
 
 
@@ -72,23 +37,22 @@ public class Bandeira extends Local implements IBandeira
 
         raiz.put("id", getId());
         raiz.put("tipo", getTipo());
-        raiz.put("name", this.nome);
-        raiz.put("coordenadas", getCoordenadasObjetoJSON());
-        raiz.put("interacao", getInteracoesArrayJson());
+        raiz.put("nome", this.nome);
+        raiz.put("coordenadas", getCoordenadas());
 
         return raiz;
     }
 
 
-    private JSONObject getCoordenadasObjetoJSON()
+    /*private JSONObject getCoordenadasObjetoJSON()
     {
         JSONObject coordenadas = new JSONObject();
 
-        coordenadas.put("longitude", this.coordenada.getLongitude());
-        coordenadas.put("latitude", this.coordenada.getLatitude());
+        coordenadas.put("longitude", this.coordenadas.getLongitude());
+        coordenadas.put("latitude", this.coordenadas.getLatitude());
 
         return coordenadas;
-    }
+    }*/
 
 
 
@@ -97,7 +61,6 @@ public class Bandeira extends Local implements IBandeira
     {
         return "Bandeira{" +
                 "nome='" + nome + '\'' +
-                ", coordenadas=" + coordenada +
                 ", " + super.toString() +
                 '}';
     }
@@ -123,25 +86,44 @@ public class Bandeira extends Local implements IBandeira
         this.nome = nome;
     }
 
+
     /**
-     * define o nome do bot do jogador de interação com a bandeira
+     * Compares this object with the specified object for order.  Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified object.
      *
-     * @param id      identificador único da interação
-     * @param nomeBot novo nome do bot do jogador de interação
+     * <p>The implementor must ensure {@link Integer#signum
+     * signum}{@code (x.compareTo(y)) == -signum(y.compareTo(x))} for
+     * all {@code x} and {@code y}.  (This implies that {@code
+     * x.compareTo(y)} must throw an exception if and only if {@code
+     * y.compareTo(x)} throws an exception.)
+     *
+     * <p>The implementor must also ensure that the relation is transitive:
+     * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
+     * {@code x.compareTo(z) > 0}.
+     *
+     * <p>Finally, the implementor must ensure that {@code
+     * x.compareTo(y)==0} implies that {@code signum(x.compareTo(z))
+     * == signum(y.compareTo(z))}, for all {@code z}.
+     *
+     * @param o the object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object
+     * is less than, equal to, or greater than the specified object.
+     * @throws NullPointerException if the specified object is null
+     * @throws ClassCastException   if the specified object's type prevents it
+     *                              from being compared to this object.
+     * @apiNote It is strongly recommended, but <i>not</i> strictly required that
+     * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
+     * class that implements the {@code Comparable} interface and violates
+     * this condition should clearly indicate this fact.  The recommended
+     * language is "Note: this class has a natural ordering that is
+     * inconsistent with equals."
      */
     @Override
-    public void setInteracaoBot(int id, String nomeBot)
+    public int compareTo(Bandeira o)
     {
-
+        return this.getNome().compareTo(o.getNome());
     }
-
-    /**
-     * @param id     identificador único da interação
-     * @param pontos os pontos de interação
-     */
-    @Override
-    public void setPontosInteracao(int id, int pontos)
-    {}
 
     //endregion
 }

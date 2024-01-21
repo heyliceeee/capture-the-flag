@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 public class Graph<T> implements GraphADT<T>
 {
-    protected final int DEFAULT_CAPACITY = 10;
+    protected final int DEFAULT_CAPACITY = 100;
     protected int numVertices; //numero de vertices no grafo
     protected double[][] adjMatrix; //matriz de adjacencia
     protected T[] vertices; //valores dos vertices
@@ -72,7 +72,7 @@ public class Graph<T> implements GraphADT<T>
     }
 
     @Override
-    public void removeVertex(T vertex)
+    public boolean removeVertex(T vertex)
     {
         if (vertex == null)
         {
@@ -86,6 +86,8 @@ public class Graph<T> implements GraphADT<T>
                 removeVertex(i);
             }
         }
+
+        return true;
     }
 
     /**
@@ -123,9 +125,9 @@ public class Graph<T> implements GraphADT<T>
     }
 
     @Override
-    public void addEdge(T vertex1, T vertex2, String tipoCaminho)
+    public void addEdge(T vertex1, T vertex2)
     {
-        this.addEdge(getIndex(vertex1), getIndex(vertex2), tipoCaminho);
+        this.addEdge(getIndex(vertex1), getIndex(vertex2));
     }
 
     /**
@@ -151,19 +153,11 @@ public class Graph<T> implements GraphADT<T>
      * @param index1 o primeiro indice
      * @param index2 o segundo indice
      */
-    public void addEdge(int index1, int index2, String tipoCaminho)
+    public void addEdge(int index1, int index2)
     {
         if (indexIsValid(index1) && indexIsValid(index2))
         {
-            if(tipoCaminho.equals("direcionado"))
-            {
-                adjMatrix[index1][index2] = 1;
-            }
-            else
-            {
-                adjMatrix[index1][index2] = 1;
-                adjMatrix[index2][index1] = 1;
-            }
+            adjMatrix[index1][index2] = 1;
         }
         else
         {
@@ -210,7 +204,7 @@ public class Graph<T> implements GraphADT<T>
     @Override
     public Iterator<T> iteratorBFS(T startVertex)
     {
-        return iteratorBFS(getIndex(startVertex));
+        return iteratorBFS(startVertex);
     }
 
     /**
@@ -218,7 +212,7 @@ public class Graph<T> implements GraphADT<T>
      * @param startIndex o indice para iniciar a pesquisa
      * @return um iterador que executa uma travessia de pesquisa ampla comecando no indice dado
      */
-    private Iterator<T> iteratorBFS(int startIndex)
+    public Iterator<T> iteratorBFS(int startIndex)
     {
         Integer x;
         LinkedQueue<Integer> traversalQueue = new LinkedQueue<>();
@@ -230,6 +224,7 @@ public class Graph<T> implements GraphADT<T>
         }
 
         boolean[] visited = new boolean[numVertices];
+
 
         for (int i = 0; i < numVertices; i++)
         {
@@ -277,7 +272,7 @@ public class Graph<T> implements GraphADT<T>
      * @param startIndex o índice para iniciar o percurso de pesquisa em profundidade
      * @return iterador que executa uma primeira travessia de pesquisa em profundidade começando no índice dado.
      */
-    private Iterator<T> iteratorDFS(int startIndex)
+    public Iterator<T> iteratorDFS(int startIndex)
     {
         Integer x;
         boolean found;
@@ -338,7 +333,7 @@ public class Graph<T> implements GraphADT<T>
      * @param targetIndex o indice do vértice final
      * @return um iterador que contém o caminho mais curto entre os dois vértices
      */
-    private Iterator<T> iteratorShortestPath(int startIndex, int targetIndex)
+    public Iterator<T> iteratorShortestPath(int startIndex, int targetIndex)
     {
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
 

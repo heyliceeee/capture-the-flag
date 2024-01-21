@@ -14,7 +14,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T>
     /**
      * capacidade default da rede
      */
-    protected final int DEFAULT_CAPACITY = 10;
+    protected final int DEFAULT_CAPACITY = 100;
 
     /**
      * matriz adjacência
@@ -40,7 +40,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T>
      * @param weight  o peso/custo da aresta
      */
     @Override
-    public void addEdge(T vertex1, T vertex2, double weight, String tipoCaminho) throws EmptyCollectionException
+    public void addEdge(T vertex1, T vertex2, double weight) throws EmptyCollectionException
     {
         if (weight < 0.0D)
         {
@@ -48,7 +48,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T>
         }
         else
         {
-            super.addEdge(vertex1, vertex2, tipoCaminho);
+            super.addEdge(vertex1, vertex2);
             this.setEdgeWeight(vertex1, vertex2, weight);
         }
     }
