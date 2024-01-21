@@ -2,6 +2,7 @@ package org.example.InterfaceGrafica;
 
 import org.example.api.implementation.Mapa;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -114,6 +115,9 @@ public class InterfaceGraficaNumeroBots extends Application {
         }
 
         this.calcularNumeroBots();
+
+        Platform.runLater(
+                () -> new InterfaceGraficaAlgoritmoBots(this.dataManager, this.numeroBots).start(new Stage()));
         stage.close();
         // PROXIMA JANELAAAAAAAAAAA
     }
