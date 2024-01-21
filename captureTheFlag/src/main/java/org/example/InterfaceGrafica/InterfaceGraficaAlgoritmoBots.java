@@ -114,7 +114,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     private boolean todosCamposPreenchidos(DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador) {
 
-        boolean curto = false, longo = false, x = false; // Os 3 algoritmos
+        boolean Dijkstra = false, BFS = false, DFS = false; // Os 3 algoritmos
 
         for (ComboBox<String> comboBox : comboBoxJogador) {
 
@@ -123,20 +123,37 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
             }
 
             else {
-                if (comboBox.getValue().contains("Caminho mais curto"))
-                    curto = true;
-                if (comboBox.getValue().contains("Caminho mais longo"))
-                    longo = true;
-                if (comboBox.getValue().contains("Caminho x"))
-                    x = true;
+                if (comboBox.getValue().contains("Dijkstra")) {
+                    Dijkstra = true;
+                }
+
+                if (comboBox.getValue().contains("BFS")) {
+                    BFS = true;
+                }
+
+                if (comboBox.getValue().contains("DFS")) {
+                    DFS = true;
+                }
+
             }
         }
 
-        if (!longo || !curto || !x)
-            return false; // Nao foram escolhidos os 3 algoritmsos
+        if ((comboBoxJogador.size() + 1) <= 1 && (Dijkstra || BFS || DFS))
+            return true; // Apenas um bot por jogador
 
-        else
-            return true;
+        else if ((comboBoxJogador.size() + 1) == 2) {
+            if ((BFS && Dijkstra) || (BFS && DFS) || (Dijkstra && DFS))
+                return true; // 2 algoritmos diferentes em 2
+            else
+                return false; // Em 2, não existem 2 algoritmos diferentes
+        }
+
+        else { // 3 ou mais bots por jogador
+            if (!BFS || !Dijkstra || !DFS)
+                return false; // Nao foram escolhidos os 3 algoritmsos
+            else
+                return true;
+        }
 
     }
 
@@ -146,7 +163,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         form.setAlignment(Pos.CENTER);
         Label label = new Label("Para o bot nr " + botNum + " (" + jogador + ")");
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll("Caminho mais curto", "Caminho mais longo", "Caminho x");
+        comboBox.getItems().addAll("Dijkstra", "BFS", "DFS");
         comboBoxes.addToRear(comboBox);
         form.getChildren().addAll(label, comboBox);
         return form;

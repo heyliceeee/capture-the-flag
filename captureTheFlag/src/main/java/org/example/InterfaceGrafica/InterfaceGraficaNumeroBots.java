@@ -83,7 +83,7 @@ public class InterfaceGraficaNumeroBots extends Application {
         this.botsJogador1 = comboBox1.getValue();
 
         // Verificar se o numero foi realmente selecionado
-        if (botsJogador1 == 0) {
+        if (botsJogador1 == 0 || comboBox1.getValue() == null) {
             // Mostrar um alerta ou lidar com a situação de nenhuma seleção
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Seleção Incompleta");
