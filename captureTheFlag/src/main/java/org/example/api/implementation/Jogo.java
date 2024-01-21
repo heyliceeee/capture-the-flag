@@ -22,9 +22,12 @@ public class Jogo
         int indiceBotJogador2 = 0; // indice do bot do jogador 2
 
 
+        setSpawn(botsJogador1, botsJogador2, jogador1, jogador2);//definir que aonde cada bot comeca (na sua bandeira)
+
+
         while (true)//loop infinito até que o jogo termine
         {
-            System.out.println("Turno " + turno);
+            System.out.println("\n\nTurno " + turno+"\n");
 
             IBot botAtual = null;// Determinar qual bot deve jogar neste turno
 
@@ -40,21 +43,45 @@ public class Jogo
             }
 
 
-            movimentarBot(jogadorComeca, jogador1, jogador2, botAtual, grafo, raiz, rota);
+            movimentarBot(jogador1, jogador2, botAtual, grafo, raiz, rota);
 
 
-            // Lógica para mover o bot atual de acordo com as regras
-            // Implemente a lógica de movimento aqui
-
-
-            if (verificaVitoria(jogadorComeca, jogador1, jogador2, botAtual)) // Verificar se o bot atual alcançou o campo do inimigo
+            if (verificaVitoria(jogador1, jogador2, botAtual)) // Verificar se o bot atual alcançou o campo do inimigo
             {
-                System.out.println(botAtual.getNome() + " venceu!");
+                System.out.println("\n"+botAtual.getNome() + " venceu!");
                 break; // Encerrar o loop, o jogo terminou
             }
 
             turno++; // Avançar para o próximo turno
         }
+    }
+
+
+    /**
+     * definir que aonde cada bot comeca (na sua bandeira)
+     * @param botsJogador1
+     * @param botsJogador2
+     * @param jogador1
+     * @param jogador2
+     */
+    private static void setSpawn(ArrayOrderedList<IBot> botsJogador1, ArrayOrderedList<IBot> botsJogador2, IJogador jogador1, IJogador jogador2)
+    {
+        IBandeira bandeiraJogador1 = jogador1.getBandeira();
+        IBandeira bandeiraJogador2 = jogador2.getBandeira();
+
+
+        //region definir o spawn de cada bot
+        for(IBot bot : botsJogador1)
+        {
+            bot.setCoordenada(bandeiraJogador1.getCoordenadas());
+        }
+
+        for(IBot bot : botsJogador2)
+        {
+            bot.setCoordenada(bandeiraJogador2.getCoordenadas());
+        }
+
+        //endregion
     }
 
 
@@ -65,48 +92,180 @@ public class Jogo
      * @param raiz
      * @param rota
      */
-    private static void movimentarBot(IJogador jogadorComeca, IJogador jogador1, IJogador jogador2, IBot botAtual, RouteNetwork<ILocal> grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, ParseException
+    private static void movimentarBot(IJogador jogador1, IJogador jogador2, IBot botAtual, RouteNetwork<ILocal> grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, ParseException
     {
         String algoritmo = botAtual.getAlgoritmoMovimento(); //algoritmo do bot
         ILocal pontoA = null;
 
+        ArrayOrderedList<ILocalizacao> localizacoesList = raiz.getListaLocalizacoes();
+        ArrayOrderedList<IBandeira> bandeirasList = raiz.getListaBandeiras();
 
-        for (Iterator<ILocalizacao> it = grafo.getLocalizacoes(); it.hasNext(); )
+
+        //region saber qual localizacao/bandeira esta o bot
+        for (ILocalizacao localizacaoObj : localizacoesList)
         {
-            ILocal local = it.next();
-            if (local.getCoordenadas().equals(botAtual.getCoordenada()))
+            if(localizacaoObj.getCoordenadas().equals(botAtual.getCoordenada())) //saber qual localizacao esta o bot
             {
-                pontoA = local; // Encontrou um local com coordenadas iguais às do botAtual
-                break; // Não precisa continuar a procurar, podemos sair do loop
+                pontoA = localizacaoObj; //encontrou uma localizacao com coordenadas iguais às do botAtual
+                break; //não precisa continuar a procurar, podemos sair do loop
             }
         }
 
 
-        ILocal pontoB = (jogadorComeca == jogador1) ? jogador2.getBandeira() : jogador1.getBandeira(); //bandeira inimiga
-
-
-        if(algoritmo.equals("Caminho mais curto"))
+        for (IBandeira bandeiraObj : bandeirasList)
         {
-            grafo.iteratorShortestPath(pontoA, pontoB);
+            if(bandeiraObj.getCoordenadas().equals(botAtual.getCoordenada())) //saber qual bandeira esta o bot
+            {
+                pontoA = bandeiraObj; //encontrou uma bandeira com coordenadas iguais às do botAtual
+                break; //não precisa continuar a procurar, podemos sair do loop
+            }
         }
-        else if(algoritmo.equals("Caminho mais longo"))
-        {
+        //endregion
 
+        ILocal pontoB = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira() : jogador1.getBandeira(); //bandeira inimiga
+
+
+        if(algoritmo.equals("Dijkstra"))
+        {
+            CaminhoMaisCurto(grafo, botAtual, raiz, pontoA, pontoB);
+        }
+        else if(algoritmo.equals("BFS"))
+        {
+            BuscaPorProfundidade(grafo, botAtual, raiz, pontoA);
+        }
+        else if(algoritmo.equals("DFS"))
+        {
+            BuscaPorLargura(grafo, botAtual, raiz, pontoA);
+        }
+    }
+
+
+    /**
+     * busca por largura
+     * @param grafo
+     * @param botAtual
+     * @param raiz
+     * @param pontoA
+     */
+    private static void BuscaPorLargura(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA)
+    {
+        Iterator<ILocal> dfs = grafo.iteratorDFS(pontoA.getId());
+
+        if(dfs.hasNext()) //existe vertices no caminho
+        {
+            System.out.print(botAtual.getNome()+": "+dfs.next()+" => ");
+
+
+            while (dfs.hasNext()) //percorre todos os restantes vertices
+            {
+                if(dfs.hasNext()) //existe vertices no caminho
+                {
+                    Object resultadoObjeto = dfs.next();
+                    System.out.print(resultadoObjeto +" => ");
+
+                    String resultadoString = resultadoObjeto.toString();
+                    int resultadoInt = Integer.parseInt(resultadoString);
+
+                    ILocal localAtual = raiz.getLocalByID(resultadoInt); //descobrir qual a localizacao/bandeira atual
+
+                    botAtual.setCoordenada(localAtual.getCoordenadas()); //coordenadas da localizacao/bandeira para onde se moveu
+                }
+
+                break; //porque queremos percorrer um vertice de cada vez
+            }
+        }
+    }
+
+
+    /**
+     * busca por profundidade
+     * @param grafo
+     * @param botAtual
+     * @param raiz
+     * @param pontoA
+     */
+    private static void BuscaPorProfundidade(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA)
+    {
+        Iterator<ILocal> bfs = grafo.iteratorBFS(pontoA.getId());
+
+
+        if(bfs.hasNext()) //existe vertices no caminho
+        {
+            System.out.print(botAtual.getNome()+": "+bfs.next()+" => ");
+
+
+            while (bfs.hasNext()) //percorre todos os restantes vertices
+            {
+                if(bfs.hasNext()) //existe vertices no caminho
+                {
+                    Object resultadoObjeto = bfs.next();
+                    System.out.print(resultadoObjeto +" => ");
+
+                    String resultadoString = resultadoObjeto.toString();
+                    int resultadoInt = Integer.parseInt(resultadoString);
+
+                    ILocal localAtual = raiz.getLocalByID(resultadoInt); //descobrir qual a localizacao/bandeira atual
+
+                    botAtual.setCoordenada(localAtual.getCoordenadas()); //coordenadas da localizacao/bandeira para onde se moveu
+                }
+
+                break; //porque queremos percorrer um vertice de cada vez
+            }
+        }
+    }
+
+
+    /**
+     * caminho mais curto
+     * @param grafo
+     * @param botAtual
+     * @param raiz
+     */
+    private static void CaminhoMaisCurto(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, ILocal pontoB) throws NotLocalInstanceException, ParseException
+    {
+        //CaminhoMaisCurtoMovimento.dijkstra(grafo, pontoA.getId(), pontoB.getId());
+
+        //Iterator<ILocal> caminhoMaisCurtoDijkstra = grafo.caminhoMaisCurtoABandeira(raiz, pontoA.getId(), pontoB.getId());
+
+
+        Iterator<ILocal> caminhoMaisCurto = grafo.iteratorShortestPath(pontoA.getId(), pontoB.getId());
+
+        if(caminhoMaisCurto.hasNext()) //existe vertices no caminho
+        {
+            System.out.print(botAtual.getNome()+": "+caminhoMaisCurto.next()+" => ");
+
+
+            while (caminhoMaisCurto.hasNext()) //percorre todos os restantes vertices
+            {
+                if(caminhoMaisCurto.hasNext()) //existe vertices no caminho
+                {
+                    Object resultadoObjeto = caminhoMaisCurto.next();
+                    System.out.print(resultadoObjeto +" => ");
+
+                    String resultadoString = resultadoObjeto.toString();
+                    int resultadoInt = Integer.parseInt(resultadoString);
+
+                    ILocal localAtual = raiz.getLocalByID(resultadoInt); //descobrir qual a localizacao/bandeira atual
+
+                    botAtual.setCoordenada(localAtual.getCoordenadas()); //coordenadas da localizacao/bandeira para onde se moveu
+                }
+
+                break; //porque queremos percorrer um vertice de cada vez
+            }
         }
     }
 
 
     /**
      * verifica se o bot atual alcancou a bandeira inimiga
-     * @param jogadorComeca
      * @param jogador1
      * @param jogador2
      * @param botAtual
      * @return
      */
-    private static boolean verificaVitoria(IJogador jogadorComeca, IJogador jogador1, IJogador jogador2, IBot botAtual)
+    private static boolean verificaVitoria(IJogador jogador1, IJogador jogador2, IBot botAtual)
     {
-        IBandeira bandeiraJogadorOposto = (jogadorComeca == jogador1) ? jogador2.getBandeira() : jogador1.getBandeira();
+        IBandeira bandeiraJogadorOposto = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira() : jogador1.getBandeira();
         ICoordenada coordenadasBot = botAtual.getCoordenada();
 
         return coordenadasBot.equals(bandeiraJogadorOposto.getCoordenadas());

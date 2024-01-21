@@ -42,7 +42,7 @@ public class InterfaceGraficaMenuPrincipal extends Application {
         root.getChildren().addAll(jogar, sair);
 
         Scene scene = new Scene(root, 400, 200);
-        primaryStage.setTitle("Capture the Flag Game");
+        primaryStage.setTitle("Capturar a Bandeira");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

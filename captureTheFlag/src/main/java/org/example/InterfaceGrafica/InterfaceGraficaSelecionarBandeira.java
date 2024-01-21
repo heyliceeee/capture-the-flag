@@ -89,16 +89,16 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
         if (localJogador1Escolheu == null) {
             // Mostrar um alerta ou lidar com a situação de nenhuma seleção
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Seleção Incompleta");
+            alert.setTitle("Selecao Incompleta");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor, selecione uma localização.");
+            alert.setContentText("Por favor, selecione uma localizacao.");
             alert.showAndWait();
             return;
         }
 
         dataManager.raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
 
-        IBandeira bandeiraJogador1 = new Bandeira(0, "Bandeira", localJogador1Escolheu.getNome(),
+        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(),
                 localJogador1Escolheu.getCoordenadas()); // criar bandeira
 
         dataManager.jogador1.setBandeira(bandeiraJogador1);
@@ -120,14 +120,14 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Seleção Incompleta");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor, selecione uma localização.");
+            alert.setContentText("Por favor, selecione uma localizacao.");
             alert.showAndWait();
             return;
         }
 
         dataManager.raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
 
-        IBandeira bandeiraJogador2 = new Bandeira(0, "Bandeira", localJogador2Escolheu.getNome(),
+        IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira", localJogador2Escolheu.getNome(),
                 localJogador2Escolheu.getCoordenadas()); // criar bandeira
 
         dataManager.jogador2.setBandeira(bandeiraJogador2);
@@ -135,6 +135,9 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
         Platform.runLater(() -> new InterfaceGraficaNumeroBots(this.dataManager).start(new Stage()));
         stage.close();
 
+
+        //menu para selecionar os bots e o seu algoritmo
+        //jogo (mostrar grafo com os bots)
     }
 
     private void preencherComboBox(ComboBox<ILocalizacao> comboBox) {

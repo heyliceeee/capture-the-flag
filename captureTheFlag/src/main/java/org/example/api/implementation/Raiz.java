@@ -206,9 +206,9 @@ public class Raiz implements IRaiz
      * @return "Successful" se conseguir adicionar uma rota entre 2 localizacoes e/ou bandeiras
      */
     @Override
-    public String adicionarRota(ILocal local1, ILocal local2, double weight, String tipoCaminho) throws EmptyCollectionException
+    public String adicionarRota(ILocal local1, ILocal local2, double weight) throws EmptyCollectionException
     {
-        this.routeNetwork.addEdge(local1, local2, weight, tipoCaminho);
+        this.routeNetwork.addEdge(local1, local2, weight);
 
         return "Successful";
     }
@@ -239,12 +239,12 @@ public class Raiz implements IRaiz
     {
         Iterator<ILocal> localsIterator;
 
-        switch (opcao)
+        /*switch (opcao)
         {
             case 1:
                 localsIterator = routeNetwork.caminhoMaisCurtoABandeira(raiz, local);
                 return localsIterator;
-        }
+        }*/
 
         return null;
     }
@@ -360,14 +360,36 @@ public class Raiz implements IRaiz
     }
 
     /**
-     * retorna em string uma listagem das bandeiras
+     * retorna a listagem das bandeiras
      *
-     * @return em string uma listagem das bandeiras
+     * @return a listagem das bandeiras
      */
     @Override
-    public String getListaBandeiras()
+    public ArrayOrderedList<IBandeira> getListaBandeiras()
     {
-        String s = "Bandeiras: {\n";
+        ArrayOrderedList<IBandeira> lista = new ArrayOrderedList<>();
+
+        if(routeNetwork.getNumeroDeBandeiras() != 0)
+        {
+            Iterator<IBandeira> iterator = routeNetwork.getBandeiras();
+
+            if (iterator != null)
+            {
+                while (iterator.hasNext())
+                {
+                    IBandeira bandeira = iterator.next();
+
+                    if (bandeira != null)
+                    {
+                        lista.add(bandeira);
+                    }
+                }
+            }
+        }
+
+        return lista;
+
+        /*String s = "Bandeiras: {\n";
 
         if (this.routeNetwork.getNumeroDeBandeiras() != 0)
         {
@@ -385,7 +407,7 @@ public class Raiz implements IRaiz
 
         s += "}";
 
-        return s;
+        return s;*/
     }
 
     /**
@@ -571,6 +593,7 @@ public class Raiz implements IRaiz
         return jogadoresArray;
     }
 
+
     /**
      * retorna o {@link ILocal localizacao/bandeira} com o ID enviado por parâmetro
      *
@@ -597,6 +620,7 @@ public class Raiz implements IRaiz
         }
     }
 
+
     /**
      * retorna o localizacao com o id dado
      *
@@ -622,55 +646,6 @@ public class Raiz implements IRaiz
         return null;
     }
 
-    /**
-     * atualiza o ID do localizacao
-     *
-     * @param id    atual ID do localizacao
-     * @param newID novo ID do localizacao
-     * @throws ElementNotFoundException      se o ID enviado por parametro não corresponde a nenhum localizacao
-     * @throws ElementAlreadyExistsException se já existe um localizacao com o novo ID
-     */
-    @Override
-    public void setLocalizacaoID(int id, int newID) throws ElementNotFoundException, ElementAlreadyExistsException
-    {
-
-    }
-
-    /**
-     * atualiza o nome da localizacao
-     *
-     * @param id   ID da localizacao
-     * @param nome novo nome do localizacao
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
-     */
-    @Override
-    public void setLocalizacaoNome(int id, String nome) throws ElementNotFoundException {
-
-    }
-
-    /**
-     * atualiza as coordenadas do localizacao
-     *
-     * @param id         ID do localizacao
-     * @param coordenadas novas coordenadas do localizacao
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
-     */
-    @Override
-    public void setLocalizacaoCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException {
-
-    }
-
-    /**
-     * atualiza as interações do localizacao com o bot do jogador
-     *
-     * @param id        ID do localizacao
-     * @param interacao novas interações do localizacao
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum localizacao
-     */
-    @Override
-    public void setLocalizacaoInteracao(int id, List<Interacao> interacao) throws ElementNotFoundException {
-
-    }
 
     /**
      * retorna o bandeira com o id dado
@@ -697,55 +672,6 @@ public class Raiz implements IRaiz
         return null;
     }
 
-    /**
-     * atualiza o ID do bandeira
-     *
-     * @param id    atual ID do bandeira
-     * @param newID novo ID do bandeira
-     * @throws ElementNotFoundException      se o ID enviado por parametro não corresponde a nenhum bandeira
-     * @throws ElementAlreadyExistsException se já existe um bandeira com o novo ID
-     */
-    @Override
-    public void setBandeiraID(int id, int newID) throws ElementNotFoundException, ElementAlreadyExistsException
-    {
-
-    }
-
-    /**
-     * atualiza o nome da bandeira
-     *
-     * @param id   ID da bandeira
-     * @param nome novo nome do bandeira
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
-     */
-    @Override
-    public void setBandeiraNome(int id, String nome) throws ElementNotFoundException {
-
-    }
-
-    /**
-     * atualiza as coordenadas do bandeira
-     *
-     * @param id         ID do bandeira
-     * @param coordenadas novas coordenadas do bandeira
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
-     */
-    @Override
-    public void setBandeiraCoordenadas(int id, Coordenada coordenadas) throws ElementNotFoundException {
-
-    }
-
-    /**
-     * atualiza as interações do bandeira com o bot do jogador
-     *
-     * @param id        ID do bandeira
-     * @param interacao novas interações do bandeira
-     * @throws ElementNotFoundException se o ID enviado por parametro não corresponde a nenhum bandeira
-     */
-    @Override
-    public void setBandeiraInteracao(int id, List<Interacao> interacao) throws ElementNotFoundException {
-
-    }
 
     /**
      * retorna toda a informação do jogador pelo nome
@@ -772,17 +698,6 @@ public class Raiz implements IRaiz
         return null;
     }
 
-    /**
-     * atualiza a quantidade de bandeiras conquistados pelo jogador
-     *
-     * @param name                  nome do jogador
-     * @param bandeirasConquistadas quantidade de bandeiras conquistados
-     */
-    @Override
-    public void setJogadorBandeirasConquistadas(String name, int bandeirasConquistadas)
-    {
-
-    }
 
     /**
      * retorna toda a informação do bot pelo nome
@@ -806,72 +721,6 @@ public class Raiz implements IRaiz
             }
         }
 
-        return null;
-    }
-
-    /**
-     * atualiza as coordenadas do bot
-     *
-     * @param name        nome do bot
-     * @param coordenadas coordenadas
-     */
-    @Override
-    public void setBotCoordenadas(String name, Coordenada coordenadas) {
-
-    }
-
-    /**
-     * retorna o iterador com os localizacoes ordenados por algum parâmetro
-     *
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    @Override
-    public Iterator<ILocalizacao> getLocalizacoesOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
-        return null;
-    }
-
-    /**
-     * retorna o iterador com os bandeiras ordenados por algum parâmetro
-     *
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    @Override
-    public Iterator<IBandeira> getBandeirasOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
-        return null;
-    }
-
-    /**
-     * retorna o iterador com os jogadores ordenados por algum parâmetro
-     *
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    @Override
-    public Iterator<IJogador> getJogadoresOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
-        return null;
-    }
-
-    /**
-     * retorna o iterador com os bots ordenados por algum parâmetro
-     *
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    @Override
-    public Iterator<IBot> getBotsOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
-        return null;
-    }
-
-    /**
-     * retorna o iterador com os rotas ordenados por algum parâmetro
-     *
-     * @param tipoOrdenacao tipo de ordenação a ser aplicado
-     * @return iterador com os dados ordenados
-     */
-    @Override
-    public Iterator<IRota<ILocal>> getRotasOrdenadosPor(TipoOrdenacao tipoOrdenacao) {
         return null;
     }
 }

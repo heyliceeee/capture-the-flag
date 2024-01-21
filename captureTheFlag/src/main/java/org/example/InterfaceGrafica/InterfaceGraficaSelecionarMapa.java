@@ -30,7 +30,7 @@ public class InterfaceGraficaSelecionarMapa extends Application {
 
         Button importarMapa = new Button("Importar Mapa");
 
-        Button sair = new Button("sair");
+        Button sair = new Button("Sair");
 
         // Se o botão criar mapa é premido, avança para a jeanela de introdução dos
         // dados
@@ -64,7 +64,7 @@ public class InterfaceGraficaSelecionarMapa extends Application {
         root.getChildren().addAll(criarMapa, importarMapa, sair);
 
         Scene scene = new Scene(root, 400, 200);
-        stage.setTitle("Capture the Flag Game");
+        stage.setTitle("Capturar a Bandeira");
         stage.setScene(scene);
         stage.show();
     }
