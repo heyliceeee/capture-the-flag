@@ -1,3 +1,4 @@
+import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.implementation.Graph;
 import org.example.collections.interfaces.GraphADT;
 import org.junit.jupiter.api.BeforeEach;
@@ -133,5 +134,28 @@ public class testGrafo
         assertDoesNotThrow(() -> grafo.removeEdge(3, 1)); //nao retorna nada porque foi removido uma aresta com sucesso
 
         assertEquals(3, grafo.size()); //o tamanho do grafo tem que ser 3
+    }
+
+
+    @Test
+    @DisplayName("Verificar se a aresta esta conectada ao grafo")
+    public void testVerificarConexaoVertice1Grafo_Valid()
+    {
+        assertThrows(EmptyCollectionException.class, () -> grafo.isConnected()); //retorna EmptyCollectionException porque o grafo é vazio
+
+        assertTrue(grafo.addVertex(1)); //retorna true se consegue adicionar vertice 1
+        assertTrue(grafo.isConnected()); //retorna true se o grafo nao tem nem precisa de aresta para conetar o vertice 1
+
+        assertTrue(grafo.addVertex(2)); //retorna true se consegue adicionar vertice 2
+        assertFalse(grafo.isConnected()); //retorna false se o grafo tem uma aresta a conetar os vertices 1 e 2
+
+        assertTrue(grafo.addVertex(3)); //retorna true se consegue adicionar vertice 3
+        assertFalse(grafo.isConnected()); //retorna false se o grafo tem uma aresta a conetar os vertices 1 e 2 e 3
+
+        assertDoesNotThrow(() -> grafo.addEdge(1, 2)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertFalse(grafo.isConnected()); //retorna false se o grafo tem uma aresta a conetar os vertices 1 e 2 e 3
+
+        assertDoesNotThrow(() -> grafo.removeEdge(2, 3)); //nao retorna nada porque foi removid uma aresta com sucesso
+        assertTrue(grafo.isConnected()); //retorna true se o grafo tem uma aresta a conetar os vertices 1 e 2 e 3
     }
 }
