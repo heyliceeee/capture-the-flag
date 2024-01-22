@@ -34,24 +34,20 @@ public class Jogador implements IJogador
     private IBandeira bandeira;
 
 
-
-    /**
-     * total de bandeiras conquistados pelo jogador
-     */
-    private int bandeirasConquistadas;
-
-
     /**
      * construtor
      * @param nome
      * @param bots
-     * @param bandeirasConquistadas
      */
-    public Jogador(String nome, int bots, int bandeirasConquistadas)
+    public Jogador(String nome, int bots)
     {
+        if(nome == null || nome.equals(""))
+        {
+            throw new IllegalArgumentException("Nome nao pode ser vazio ou nulo!");
+        }
+
         this.nome = nome;
         this.bots = bots;
-        this.bandeirasConquistadas = bandeirasConquistadas;
         this.botsJogador = new ArrayOrderedList<>();
     }
 
@@ -140,29 +136,6 @@ public class Jogador implements IJogador
     }
 
 
-    /**
-     * retorna o numero de bandeiras conquistados pelo jogador
-     *
-     * @return o numero de bandeiras conquistados pelo jogador
-     */
-    @Override
-    public int getBandeirasConquistadas()
-    {
-        return bandeirasConquistadas;
-    }
-
-
-    /**
-     * define o numero de bandeiras conquistados pelo jogador
-     *
-     * @param bandeirasConquistadas
-     */
-    @Override
-    public void setBandeirasConquistadas(int bandeirasConquistadas)
-    {
-        this.bandeirasConquistadas = bandeirasConquistadas;
-    }
-
 
     /**
      * retorna o objeto JSON do jogador
@@ -176,7 +149,6 @@ public class Jogador implements IJogador
 
         raiz.put("nome", this.nome);
         raiz.put("numeroBots", this.bots);
-        raiz.put("bandeirasConquistadas", this.bandeirasConquistadas);
 
         return raiz;
     }
@@ -188,7 +160,6 @@ public class Jogador implements IJogador
                 "nome='" + nome + '\'' +
                 ", bots=" + bots +
                 ", bandeira=" + bandeira +
-                ", bandeirasConquistadas=" + bandeirasConquistadas +
                 '}';
     }
 }

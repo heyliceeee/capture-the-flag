@@ -126,9 +126,8 @@ public class ImportarExportarJson
 
                 String nome = (String) jogadores.get("nome");
                 long numeroBots = (long) jogadores.get("bots");
-                long bandeirasConquistadas = (long) jogadores.get("bandeirasConquistadas");
 
-                IJogador jogador = new Jogador(nome, (int)numeroBots, (int)bandeirasConquistadas);
+                IJogador jogador = new Jogador(nome, (int)numeroBots);
 
                 raiz.adicionarJogador(jogador);
             }
