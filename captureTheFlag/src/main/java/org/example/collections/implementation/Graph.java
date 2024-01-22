@@ -288,7 +288,14 @@ public class Graph<T> implements GraphADT<T>
     @Override
     public Iterator<T> iteratorDFS(T startVertex)
     {
-        return iteratorDFS(getIndex(startVertex));
+        int startIndex = getIndex(startVertex); // Converte o vértice em índice
+
+        if(startIndex == -1)
+        {
+            throw new IllegalArgumentException("Vértice não encontrado");
+        }
+
+        return iteratorDFS(startIndex);
     }
 
     /**

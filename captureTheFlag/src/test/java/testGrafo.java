@@ -195,4 +195,41 @@ public class testGrafo
 
         assertEquals(6, count); //se o count == 6
     }
+
+
+
+    @Test
+    @DisplayName("DFS")
+    public void testDFS_Valid()
+    {
+        assertTrue(grafo.addVertex(1)); //retorna true se consegue adicionar vertice 1
+        assertTrue(grafo.addVertex(2)); //retorna true se consegue adicionar vertice 2
+        assertTrue(grafo.addVertex(3)); //retorna true se consegue adicionar vertice 3
+        assertTrue(grafo.addVertex(4)); //retorna true se consegue adicionar vertice 4
+        assertTrue(grafo.addVertex(5)); //retorna true se consegue adicionar vertice 5
+        assertTrue(grafo.addVertex(6)); //retorna true se consegue adicionar vertice 6
+
+        assertDoesNotThrow(() -> grafo.addEdge(1, 1)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(1, 2)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 2)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 3)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 4)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 6)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(3, 3)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(4, 5)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+
+        assertThrows(IllegalArgumentException.class, () -> grafo.iteratorDFS(-222)); //retorna IllegalArgumentException porque o grafo nao consegue iterar com um vertice negativo
+
+        Iterator<Integer> iterator = grafo.iteratorDFS(1);
+        assertDoesNotThrow(() -> iterator); //nao retorna erro porque foi iterado com um vertice valido
+
+        int count = 0;
+        while (iterator.hasNext())
+        {
+            Integer temp = iterator.next();
+            count++;
+        }
+
+        assertEquals(6, count); //se o count == 6
+    }
 }
