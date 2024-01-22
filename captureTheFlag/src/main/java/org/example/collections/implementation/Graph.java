@@ -195,11 +195,28 @@ public class Graph<T> implements GraphADT<T>
             throw new IllegalArgumentException("O segundo vertice nao é valido");
         }
 
+        if (!edgeExists(index1, index2))
+        {
+            throw new IllegalArgumentException("Aresta entre os vertices nao existe");
+        }
+
         if (indexIsValid(index1) && indexIsValid(index2))
         {
             adjMatrix[index1][index2] = 0;
             adjMatrix[index2][index1] = 0;
         }
+    }
+
+
+    /**
+     * retorna true caso a aresta existe, caso contrario retorna false
+     * @param index1
+     * @param index2
+     * @return true caso a aresta existe, caso contrario retorna false
+     */
+    private boolean edgeExists(int index1, int index2)
+    {
+        return adjMatrix[index1][index2] != 0 || adjMatrix[index2][index1] != 0;
     }
 
     @Override

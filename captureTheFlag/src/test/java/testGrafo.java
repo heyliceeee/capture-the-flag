@@ -108,4 +108,30 @@ public class testGrafo
 
         assertEquals(3, grafo.size()); //o tamanho do grafo tem que ser 3
     }
+
+
+    @Test
+    @DisplayName("Remover uma aresta ao grafo")
+    public void testRemoverArestaGrafo_Valid()
+    {
+        assertTrue(grafo.addVertex(1)); //retorna true se consegue adicionar vertice 1
+        assertTrue(grafo.addVertex(2)); //retorna true se consegue adicionar vertice 2
+        assertTrue(grafo.addVertex(3)); //retorna true se consegue adicionar vertice 3
+
+        assertEquals(3, grafo.size()); //o tamanho do grafo tem que ser 3
+
+        assertThrows(IllegalArgumentException.class, () -> grafo.removeEdge(1, 2)); //retorna IllegalArgumentException porque o grafo nao consegue remover aresta que nao foi criada
+        assertThrows(IllegalArgumentException.class, () -> grafo.removeEdge(2, 3)); //retorna IllegalArgumentException porque o grafo nao consegue remover aresta que nao foi criada
+        assertThrows(IllegalArgumentException.class, () -> grafo.removeEdge(3, 1)); //retorna IllegalArgumentException porque o grafo nao consegue remover aresta que nao foi criada
+
+        assertDoesNotThrow(() -> grafo.addEdge(1, 2)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 3)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(3, 1)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+
+        assertDoesNotThrow(() -> grafo.removeEdge(1, 2)); //nao retorna nada porque foi removido uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.removeEdge(2, 3)); //nao retorna nada porque foi removid uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.removeEdge(3, 1)); //nao retorna nada porque foi removido uma aresta com sucesso
+
+        assertEquals(3, grafo.size()); //o tamanho do grafo tem que ser 3
+    }
 }
