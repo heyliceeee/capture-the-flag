@@ -222,7 +222,14 @@ public class Graph<T> implements GraphADT<T>
     @Override
     public Iterator<T> iteratorBFS(T startVertex)
     {
-        return iteratorBFS(startVertex);
+        int startIndex = getIndex(startVertex); // Converte o vértice em índice
+
+        if(startIndex == -1)
+        {
+            throw new IllegalArgumentException("Vértice não encontrado");
+        }
+
+        return iteratorBFS(startIndex);
     }
 
     /**
