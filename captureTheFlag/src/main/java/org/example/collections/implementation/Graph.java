@@ -4,6 +4,7 @@ import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.interfaces.GraphADT;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Graph<T> implements GraphADT<T>
 {
@@ -76,7 +77,7 @@ public class Graph<T> implements GraphADT<T>
     {
         if (vertex == null)
         {
-            throw new IllegalArgumentException("vertice nulo");
+            throw new NoSuchElementException("vertice nulo");
         }
 
         for (int i = 0; i < numVertices; i++)
