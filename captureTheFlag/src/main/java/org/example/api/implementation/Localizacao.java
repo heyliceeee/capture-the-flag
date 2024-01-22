@@ -26,6 +26,12 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
     public Localizacao(int id, String tipo, String nome, ICoordenada coordenadas)
     {
         super(id, tipo, coordenadas);
+
+        if(nome == null || nome.equals(""))
+        {
+            throw new IllegalArgumentException("Nome nao pode ser vazio ou nulo!");
+        }
+
         this.nome = nome;
     }
 

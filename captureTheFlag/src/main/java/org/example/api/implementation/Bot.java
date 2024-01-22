@@ -32,9 +32,26 @@ public class Bot implements IBot, Comparable<Bot>
 
     public Bot(String nome, String nomeJogador, ICoordenada coordenada, String algoritmoMovimento)
     {
+        if(nome == null || nome.equals(""))
+        {
+            throw new IllegalArgumentException("Nome nao pode ser vazio ou nulo!");
+        }
+
         this.nome = nome;
+
+        if(nomeJogador == null || nomeJogador.equals(""))
+        {
+            throw new IllegalArgumentException("Nome do Jogador nao pode ser vazio ou nulo!");
+        }
+
         this.nomeJogador = nomeJogador;
         this.coordenada = coordenada;
+
+        if(algoritmoMovimento == null || algoritmoMovimento.equals(""))
+        {
+            throw new IllegalArgumentException("Nome do algoritmo nao pode ser vazio ou nulo!");
+        }
+
         this.algoritmoMovimento = algoritmoMovimento;
     }
 
