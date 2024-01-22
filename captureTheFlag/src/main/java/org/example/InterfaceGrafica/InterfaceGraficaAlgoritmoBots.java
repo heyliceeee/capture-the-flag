@@ -51,12 +51,18 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
         Button okButton = new Button("Ok");
 
+        Button iniciarButton = new Button("Iniciar Partida");
+
         proximoButton.setOnAction(event -> {
-            this.logicaBotaoNext(root, okButton);
+            this.logicaBotaoNext(okButton);
         });
 
         okButton.setOnAction(event -> {
-            this.logicaBotaoOk(stage);
+            this.logicaBotaoOk(iniciarButton);
+        });
+
+        iniciarButton.setOnAction(event -> {
+            this.logicaIniciarButton(stage);
         });
 
         root.getChildren().add(proximoButton);
@@ -67,6 +73,19 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         stage.show();
     }
 
+    private VBox formularioBot(int botNum, String jogador, DoubleLinkedUnorderedList<ComboBox<String>> comboBoxes) {
+
+        VBox form = new VBox(5);
+        form.setAlignment(Pos.CENTER);
+        Label label = new Label("Para o bot nr " + botNum + " (" + jogador + ")");
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("Dijkstra", "BFS", "DFS");
+        comboBoxes.addToRear(comboBox);
+        form.getChildren().addAll(label, comboBox);
+        return form;
+
+    }
+
     private void mostrarFormularioJogador2() {
         // Adicionar ComboBoxes e Labels para o Jogador 2
         for (int i = 1; i <= numeroBots / 2; i++) {
@@ -74,10 +93,17 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         }
     }
 
-    private void logicaBotaoNext(VBox root, Button okButton) {
+    private void mostrarPrimeiroJogador() {
+
+        Label primeiro = new Label("Primeiro a jogar: " + this.quemComeca);
+        root.getChildren().add(primeiro);
+
+    }
+
+    private void logicaBotaoNext(Button okButton) {
 
         // Verificar se os campos foram preenchidos
-        if (!this.todosCamposPreenchidos(comboBoxJogador1)) {
+        if (!this.verificarAlgoritmosEscolhidos(comboBoxJogador1)) {
             // Mostrar um alerta ou lidar com a situação de falhas na seleção
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Seleção Incorreta");
@@ -94,10 +120,10 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     }
 
-    private void logicaBotaoOk(Stage stage) {
+    private void logicaBotaoOk(Button iniciarButton) {
 
         // Verificar se os campos foram preenchidos
-        if (!this.todosCamposPreenchidos(comboBoxJogador2)) {
+        if (!this.verificarAlgoritmosEscolhidos(comboBoxJogador2)) {
             // Mostrar um alerta ou lidar com a situação de falhas na seleção
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Seleção Incorreta");
@@ -108,15 +134,20 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         }
 
         this.criarBots(dataManager.jogador2.getNome(), comboBoxJogador2, dataManager.jogador2);
-
-        // PROXIMAAAAAA JANELLLAAAAAAAA
-        stage.close();
-
+        root.getChildren().clear();
+        this.mostrarPrimeiroJogador();
+        root.getChildren().add(iniciarButton);
     }
 
-    private boolean todosCamposPreenchidos(DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador) {
+    private void logicaIniciarButton(Stage stage) {
 
-        boolean Dijkstra = false, BFS = false, DFS = false; // Os 3 algoritmos
+        // PROXIMA JANELLLAAAAAA
+        stage.close();
+    }
+
+    private boolean verificarAlgoritmosEscolhidos(DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador) {
+
+        int dijkstra = 0, bfs = 0, dfs = 0; // Os 3 algoritmos
 
         for (ComboBox<String> comboBox : comboBoxJogador) {
 
@@ -126,49 +157,47 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
             else {
                 if (comboBox.getValue().contains("Dijkstra")) {
-                    Dijkstra = true;
+                    dijkstra++;
                 }
 
                 if (comboBox.getValue().contains("BFS")) {
-                    BFS = true;
+                    bfs++;
                 }
 
                 if (comboBox.getValue().contains("DFS")) {
-                    DFS = true;
+                    dfs++;
                 }
 
             }
         }
 
-        if ((comboBoxJogador.size() + 1) <= 1 && (Dijkstra || BFS || DFS))
-            return true; // Apenas um bot por jogador
-
-        else if ((comboBoxJogador.size() + 1) == 2) {
-            if ((BFS && Dijkstra) || (BFS && DFS) || (Dijkstra && DFS))
-                return true; // 2 algoritmos diferentes em 2
-            else
-                return false; // Em 2, não existem 2 algoritmos diferentes
-        }
-
-        else { // 3 ou mais bots por jogador
-            if (!BFS || !Dijkstra || !DFS)
-                return false; // Nao foram escolhidos os 3 algoritmsos
-            else
-                return true;
-        }
+        return this.testaNumeroAlgoritmosEscolhidos(dijkstra, bfs, dfs);
 
     }
 
-    private VBox formularioBot(int botNum, String jogador, DoubleLinkedUnorderedList<ComboBox<String>> comboBoxes) {
+    private boolean testaNumeroAlgoritmosEscolhidos(int a, int b, int c) {
 
-        VBox form = new VBox(5);
-        form.setAlignment(Pos.CENTER);
-        Label label = new Label("Para o bot nr " + botNum + " (" + jogador + ")");
-        ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll("Dijkstra", "BFS", "DFS");
-        comboBoxes.addToRear(comboBox);
-        form.getChildren().addAll(label, comboBox);
-        return form;
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+
+        if (a < min)
+            min = a;
+        if (a > max)
+            max = a;
+
+        if (b < min)
+            min = b;
+        if (b > max)
+            max = b;
+
+        if (c < min)
+            min = c;
+        if (c > max)
+            max = c;
+
+        if ((max - min) > 1)
+            return false;
+        else
+            return true;
 
     }
 
