@@ -5,6 +5,7 @@ import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ILocalizacao;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -46,7 +47,7 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
         });
 
         okButton.setOnAction(event -> {
-            this.logicaBotaoOk(root);
+            this.logicaBotaoOk(stage);
         });
 
         root.getChildren().add(nextButton);
@@ -108,7 +109,7 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
 
     }
 
-    private void logicaBotaoOk(VBox root) {
+    private void logicaBotaoOk(Stage stage) {
 
         // Guardar a localização selecionada na variável localJogador1Escolheu
         localJogador2Escolheu = comboBox2.getValue();
@@ -131,7 +132,8 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
 
         dataManager.jogador2.setBandeira(bandeiraJogador2);
 
-        root.getChildren().clear();
+        Platform.runLater(() -> new InterfaceGraficaNumeroBots(this.dataManager).start(new Stage()));
+        stage.close();
 
 
         //menu para selecionar os bots e o seu algoritmo
