@@ -27,9 +27,25 @@ public class testGrafo
 
 
     @Test
-    @DisplayName("")
-    public void test_Valid()
+    @DisplayName("Adicionar um novo vertice no grafo")
+    public void testAdicionarVerticeGrafo_Valid()
     {
+        assertEquals(0, grafo.size());
 
+        assertTrue(grafo.addVertex(1));
+        assertEquals(1, grafo.size());
+
+        assertTrue(grafo.addVertex(2));
+        assertEquals(2, grafo.size());
+
+        assertTrue(grafo.addVertex(3));
+        assertEquals(3, grafo.size());
+
+        assertTrue(grafo.addVertex(4));
+        assertEquals(4, grafo.size());
+
+        assertFalse(grafo.isEmpty());
+
+        assertThrows(IllegalArgumentException.class, () -> grafo.addVertex(null));
     }
 }
