@@ -30,7 +30,7 @@ public class testGrafo
 
 
     @Test
-    @DisplayName("Adicionar um novo vertice no grafo")
+    @DisplayName("Adicionar um vertice no grafo")
     public void testAdicionarVerticeGrafo_Valid()
     {
         assertEquals(0, grafo.size()); //o tamanho do grafo tem que ser == 0
@@ -60,6 +60,7 @@ public class testGrafo
         assertTrue(grafo.addVertex(1)); //retorna true se consegue adicionar vertice 1
         assertTrue(grafo.addVertex(2)); //retorna true se consegue adicionar vertice 2
         assertTrue(grafo.addVertex(3)); //retorna true se consegue adicionar vertice 3
+
         assertEquals(3, grafo.size()); //o tamanho do grafo tem que ser 3
 
         assertThrows(NoSuchElementException.class, () -> grafo.removeVertex(null)); //retorna NoSuchElementException porque o grafo nao consegue remover nodes nulos
@@ -78,5 +79,33 @@ public class testGrafo
 
         grafo.removeVertex(1); //remove vertice 1
         assertEquals(0, grafo.size()); //o tamanho do grafo tem que ser 0
+    }
+
+
+    @Test
+    @DisplayName("Adicionar uma aresta ao grafo")
+    public void testAdicionarArestaGrafo_Valid()
+    {
+        assertTrue(grafo.addVertex(1)); //retorna true se consegue adicionar vertice 1
+        assertTrue(grafo.addVertex(2)); //retorna true se consegue adicionar vertice 2
+        assertTrue(grafo.addVertex(3)); //retorna true se consegue adicionar vertice 3
+
+        assertEquals(3, grafo.size()); //o tamanho do grafo tem que ser 3
+
+        assertThrows(IllegalArgumentException.class, () -> grafo.addEdge(null, null)); //retorna IllegalArgumentException porque o grafo nao consegue adicionar aresta com 2 nodes nulos
+        assertThrows(IllegalArgumentException.class, () -> grafo.addEdge(null, 1)); //retorna IllegalArgumentException porque o grafo nao consegue adicionar aresta com 1 node nulo
+        assertThrows(IllegalArgumentException.class, () -> grafo.addEdge(1, null)); //retorna IllegalArgumentException porque o grafo nao consegue adicionar aresta com 1 node nulo
+
+        assertDoesNotThrow(() -> grafo.addEdge(1, 1)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(1, 2)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(1, 3)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 1)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 2)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(2, 3)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(3, 1)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(3, 2)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+        assertDoesNotThrow(() -> grafo.addEdge(3, 3)); //nao retorna nada porque foi adicionado uma aresta com sucesso
+
+        assertEquals(3, grafo.size()); //o tamanho do grafo tem que ser 3
     }
 }
