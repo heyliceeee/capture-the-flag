@@ -1,2 +1,3 @@
-public class testBot {
+public class testBot
+{
 }

@@ -35,8 +35,8 @@ public class Demo
 
     public static IRaiz raiz = new Raiz();
     public static ILocal local = new Local(0, "", null);
-    public static IJogador jogador1 = new Jogador("Jogador 1", 0, 0);
-    public static IJogador jogador2 = new Jogador("Jogador 2", 0, 0);
+    public static IJogador jogador1 = new Jogador("Jogador 1", 0);
+    public static IJogador jogador2 = new Jogador("Jogador 2", 0);
     public static IRota rota = new Rota(null, null, 0);
     static Scanner scanner = new Scanner(System.in);
 
