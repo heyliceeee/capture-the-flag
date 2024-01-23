@@ -47,7 +47,7 @@ public class InterfaceGraficaJogo extends Application {
         }
 
         // Atualizar posições dos bots...
-        atualizarBots(graph);
+        // atualizarBots(graph);
 
         graph.display();
     }
@@ -88,21 +88,9 @@ public class InterfaceGraficaJogo extends Application {
                 "}";
     }
 
-    private void atualizarBots(Graph graph) {
+    private String getLocalizacaoBot(IBot bot, DataManager dmanager) {
 
-        // Exemplo - iterar sobre todos os bots e atualizar sua posição no grafo
-        for (IBot bot : dataManager.jogador1.getBotsJogador()) {
-            Node node = graph.getNode(bot.getLocalizacaoAtual().getNome());
-            // Adicione alguma marcação visual ou texto ao nó para indicar a presença do bot
-            node.setAttribute("ui.label", bot.getNome());
-
-            // Exemplo - iterar sobre todos os bots e atualizar sua posição no grafo
-            for (IBot bot : dataManager.jogador1.getBotsJogador()) {
-                Node node = graph.getNode(bot.getLocalizacaoAtual().getNome());
-                // Adicione alguma marcação visual ou texto ao nó para indicar a presença do bot
-                node.setAttribute("ui.label", bot.getNome());
-            }
-        }
+        return "";
     }
 
 }

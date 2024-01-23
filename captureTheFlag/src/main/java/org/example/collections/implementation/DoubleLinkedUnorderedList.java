@@ -1,35 +1,28 @@
 package org.example.collections.implementation;
 
-
 import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.interfaces.UnorderedListADT;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements UnorderedListADT<T>
-{
-    public DoubleLinkedUnorderedList()
-    {
+public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements UnorderedListADT<T> {
+    public DoubleLinkedUnorderedList() {
         super();
     }
 
     @Override
-    public T removeFirst()
-    {
-        if (isEmpty())
-        {
+    public T removeFirst() {
+        if (isEmpty()) {
             throw new EmptyCollectionException("double linked unordered list removed first UNSUCCESSFULLY");
         }
 
         T removed = head.getElement();
         head = head.getNext();
 
-        if (head == null)
-        {
+        if (head == null) {
             tail = null;
-        } else
-        {
+        } else {
             head.setPrev(null);
         }
 
@@ -39,22 +32,17 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
     @Override
-    public T removeLast()
-    {
-        if (isEmpty())
-        {
+    public T removeLast() {
+        if (isEmpty()) {
             throw new EmptyCollectionException("double linked unordered list removed last UNSUCCESSFULLY");
         }
 
         T removed = tail.getElement();
         tail = tail.getPrev();
 
-        if (tail == null)
-        {
+        if (tail == null) {
             head = null;
-        }
-        else
-        {
+        } else {
             tail.setNext(null);
         }
 
@@ -63,24 +51,18 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
     @Override
-    public T remove(T element)
-    {
+    public T remove(T element) {
         DoublyNode<T> current = head;
 
-        while (current != null)
-        {
-            if (current.getElement().equals(element))
-            {
-                if (current == head)
-                {
+        while (current != null) {
+            if (current.getElement().equals(element)) {
+                if (current == head) {
                     return removeFirst();
 
-                } else if (current == tail)
-                {
+                } else if (current == tail) {
                     return removeLast();
 
-                } else
-                {
+                } else {
                     current.getPrev().setNext(current.getNext());
                     current.getNext().setPrev(current.getPrev());
 
@@ -96,10 +78,8 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
     @Override
-    public T first()
-    {
-        if (isEmpty())
-        {
+    public T first() {
+        if (isEmpty()) {
             throw new EmptyCollectionException("double linked unordered list get first UNSUCCESSFULLY");
         }
 
@@ -107,10 +87,8 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
     @Override
-    public T last()
-    {
-        if (isEmpty())
-        {
+    public T last() {
+        if (isEmpty()) {
             throw new EmptyCollectionException("double linked unordered list get last UNSUCCESSFULLY");
         }
 
@@ -118,14 +96,11 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
     @Override
-    public boolean contains(T target)
-    {
+    public boolean contains(T target) {
         DoublyNode<T> current = head;
 
-        while (current != null)
-        {
-            if (current.getElement().equals(target))
-            {
+        while (current != null) {
+            if (current.getElement().equals(target)) {
                 return true;
             }
 
@@ -135,40 +110,36 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
     @Override
-    public int size()
-    {
+    public int size() {
         return size;
     }
 
     @Override
-    public Iterator<T> iterator()
-    {
+    public Iterator<T> iterator() {
         return new BasicIterator<>();
     }
 
     @Override
-    public void addToFront(T element)
-    {
+    public void addToFront(T element) {
         DoublyNode<T> newNode = new DoublyNode<T>(element);
-        newNode.setElement(element); //novo node = elemento adicionado
+        newNode.setElement(element); // novo node = elemento adicionado
 
-        newNode.setNext(head); //elemento seguinte do novo node = head
-        newNode.setPrev(null); //elemento anterior do novo node = null
+        newNode.setNext(head); // elemento seguinte do novo node = head
+        newNode.setPrev(null); // elemento anterior do novo node = null
 
-        if(head != null) //se tiver elementos na lista
+        if (head != null) // se tiver elementos na lista
         {
-            head.setPrev(newNode); //elemento anterior ao head = novo node
+            head.setPrev(newNode); // elemento anterior ao head = novo node
         }
 
-        head = newNode; //head = novo node
-        tail = newNode; //tail = novo node
+        head = newNode; // head = novo node
+        tail = newNode; // tail = novo node
 
         size++;
     }
 
     @Override
-    public void addToRear(T element)
-    {
+    public void addToRear(T element) {
         DoublyNode<T> newNode = new DoublyNode<>(element);
         newNode.setElement(element);
 
@@ -176,18 +147,17 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
 
         newNode.setNext(null);
 
-        if (head == null)
-        {
+        if (head == null) {
             newNode.setPrev(null);
 
             head = newNode;
             tail = newNode;
 
+            size++;
             return;
         }
 
-        while (last.getNext() != null)
-        {
+        while (last.getNext() != null) {
             last = last.getNext();
         }
 
@@ -198,42 +168,34 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
     @Override
-    public void addAfter(T element, T target)
-    {
+    public void addAfter(T element, T target) {
         DoublyNode<T> newnode = new DoublyNode<T>(element);
         newnode.setElement(element);
 
         boolean found = false;
 
         // 1º caso - A lista está vazia
-        if (isEmpty())
-        {
+        if (isEmpty()) {
             head = newnode;
             tail = newnode;
 
-        } else
-        {
+        } else {
             DoublyNode<T> current = head;
-            while (current != null && !found)
-            {
-                if (target.equals(current.getElement()))
-                {
+            while (current != null && !found) {
+                if (target.equals(current.getElement())) {
                     found = true;
 
-                } else
-                {
+                } else {
                     current = current.getNext();
                 }
             }
 
-            if(current.getNext() == null)
-            {
+            if (current.getNext() == null) {
                 current.setNext(newnode);
                 newnode.setPrev(current);
                 tail = newnode;
 
-            } else
-            {
+            } else {
                 DoublyNode<T> next = current.getNext();
 
                 current.setNext(newnode);
@@ -245,7 +207,6 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
         size++;
     }
 
-
     @Override
     public String toString() {
         return "DoubleLinkedUnorderedList{" +
@@ -255,28 +216,26 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
                 '}';
     }
 
-
-    private class BasicIterator<T> implements Iterator<T>
-    {
+    private class BasicIterator<T> implements Iterator<T> {
         private DoublyNode<T> current; // Ponteiro para o nó atual
 
-        public BasicIterator()
-        {
+        public BasicIterator() {
             current = (DoublyNode<T>) head; // Começa no nó da cabeça
         }
 
         @Override
-        public boolean hasNext()
-        {
+        public boolean hasNext() {
             return current != null; // Verifica se há próximo nó
         }
 
         @Override
-        public T next()
-        {
-            if (!hasNext())
-            {
-                throw new NoSuchElementException("double linked unordered list nao existe elementos"); // Lança exceção se não houver próximo elemento
+        public T next() {
+            if (!hasNext()) {
+                throw new EmptyCollectionException("double linked unordered list nao existe elementos"); // Lança
+                                                                                                         // exceção se
+                                                                                                         // não houver
+                                                                                                         // próximo
+                                                                                                         // elemento
             }
 
             T element = current.getElement(); // Obtém o elemento atual
@@ -286,4 +245,3 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
         }
     }
 }
-

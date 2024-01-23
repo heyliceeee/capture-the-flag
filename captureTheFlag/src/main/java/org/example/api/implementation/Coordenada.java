@@ -5,8 +5,7 @@ import org.example.api.interfaces.ICoordenada;
 /**
  * Representacao da classe de uma coordenada
  */
-public class Coordenada implements ICoordenada
-{
+public class Coordenada implements ICoordenada {
     /**
      * longitude da coordenada
      */
@@ -17,9 +16,7 @@ public class Coordenada implements ICoordenada
      */
     private double latitude;
 
-
-    public Coordenada(double longitude, double latitude)
-    {
+    public Coordenada(double longitude, double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
@@ -32,19 +29,15 @@ public class Coordenada implements ICoordenada
                 '}';
     }
 
-
-
     /**
      * retorna a longitude da coordenada
      *
      * @return a longitude da coordenada
      */
     @Override
-    public double getLongitude()
-    {
+    public double getLongitude() {
         return longitude;
     }
-
 
     /**
      * define a longitude da coordenada
@@ -52,11 +45,9 @@ public class Coordenada implements ICoordenada
      * @param longitude
      */
     @Override
-    public void setLongitude(double longitude)
-    {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
 
     /**
      * retorna a latitude da coordenada
@@ -64,11 +55,9 @@ public class Coordenada implements ICoordenada
      * @return a latitude da coordenada
      */
     @Override
-    public double getLatitude()
-    {
+    public double getLatitude() {
         return latitude;
     }
-
 
     /**
      * define a latitude da coordenada
@@ -76,8 +65,22 @@ public class Coordenada implements ICoordenada
      * @param latitude
      */
     @Override
-    public void setLatitude(double latitude)
-    {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Coordenada other = (Coordenada) obj;
+        return this.longitude == other.getLongitude() &&
+                this.latitude == other.getLatitude();
+    }
+
 }
