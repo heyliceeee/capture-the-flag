@@ -190,14 +190,16 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     }
 
-    private void criarBots(String nomeJogador, DoubleLinkedUnorderedList<ComboBox<String>> comboBoxes,
-            IJogador jogador) {
-
-        for (int i = 0; i < comboBoxes.size(); i++) {
+    private void criarBots(String nomeJogador, DoubleLinkedUnorderedList<ComboBox<String>> comboBoxes, IJogador jogador)
+    {
+        for (int i = 0; i < comboBoxes.size(); i++)
+        {
             String nomeBot = "Bot " + (i + 1) + " - " + nomeJogador;
             String algoritmo = comboBoxes.removeFirst().getValue();
             IBot bot = new Bot(nomeBot, nomeJogador, jogador.getBandeira().getCoordenadas(), algoritmo);
             jogador.getBotsJogador().add(bot);
+
+            Demo.raiz.adicionarBot(bot);
         }
 
         jogador.setNumeroBots(comboBoxes.size());

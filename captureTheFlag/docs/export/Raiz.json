@@ -1,5 +1,24 @@
 {
-  "bots": [],
+  "bots": [
+    {
+      "nomeJogador": "Jogador 1",
+      "nome": "Bot 1 - Jogador 1",
+      "coordenadas": {
+        "latitude": 500.0,
+        "longitude": 0.0
+      },
+      "algoritmoMovimento": "Dijkstra"
+    },
+    {
+      "nomeJogador": "Jogador 2",
+      "nome": "Bot 1 - Jogador 2",
+      "coordenadas": {
+        "latitude": 400.0,
+        "longitude": 500.0
+      },
+      "algoritmoMovimento": "Dijkstra"
+    }
+  ],
   "jogadores": [
     {
       "numeroBots": 1,
@@ -7,7 +26,7 @@
       "bandeira": {
         "tipo": "Bandeira",
         "coordenada": {
-          "latitude": 100.0,
+          "latitude": 500.0,
           "longitude": 0.0
         },
         "nome": "B Apartments",

@@ -136,9 +136,9 @@ public class Raiz implements IRaiz
 
         String s = "Falhou";
 
-        if(this.bots.isEmpty() || this.bots.contains(bot)) //se a lista de bots estiver vazia ou não conter o bot a ser adicionado, adiciona-o á lista
+        if(this.bots.isEmpty() || !this.bots.contains(bot)) //se a lista de bots estiver vazia ou não conter o bot a ser adicionado, adiciona-o á lista
         {
-            this.bots.remove(bot); //remove o player no fim da lista
+            this.bots.addToRear(bot); //remove o player no fim da lista
             s = "Sucesso";
         }
 

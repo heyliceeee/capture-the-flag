@@ -190,7 +190,7 @@ public class Jogador implements IJogador
      * retorna a coordenada da bandeira em objeto JSON
      * @return
      */
-    private Object getCoordenadaObjetoJson()
+    private JSONObject getCoordenadaObjetoJson()
     {
         JSONObject coordenada = new JSONObject();
 

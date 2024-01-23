@@ -74,6 +74,38 @@ public class ImportarExportarJson
         }
 
 
+        JSONArray botsArray = (JSONArray) objeto.get("bots"); //"bots":[]
+
+        try
+        {
+            for(int i=0; i < botsArray.size(); i++)
+            {
+                JSONObject bots = (JSONObject) botsArray.get(i);
+
+                String nome = (String) bots.get("nome");
+                String nomeJogador = (String) bots.get("nomeJogador");
+                String algoritmoMovimento = (String) bots.get("algoritmoMovimento");
+
+
+                JSONObject coordenada = (JSONObject) bots.get("coordenadas");
+                double latitude = (double) coordenada.get("latitude");
+                double longitude = (double) coordenada.get("longitude");
+
+
+                ICoordenada coordenada1 = new Coordenada(latitude, longitude);
+
+
+                IBot bot = new Bot(nome, nomeJogador, coordenada1, algoritmoMovimento);
+
+                raiz.adicionarBot(bot);
+            }
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("ERRO: "+e.getMessage());
+        }
+
+
         JSONArray locaisArray = (JSONArray) objeto.get("locais"); //"locais":[]
 
         try
@@ -154,37 +186,6 @@ public class ImportarExportarJson
         {
             System.out.println("ERRO: "+e.getMessage());
         }
-
-
-
-        JSONArray botsArray = (JSONArray) objeto.get("bots"); //"bots":[]
-
-        try
-        {
-            for(int i=0; i < botsArray.size(); i++)
-            {
-                JSONObject bots = (JSONObject) botsArray.get(i);
-
-                String nome = (String) bots.get("nome");
-                String nomeJogador = (String) bots.get("nomeJogador");
-                String algoritmoMovimento = (String) bots.get("algoritmoMovimento");
-
-                JSONObject coordenadas = (JSONObject) bots.get("coordenadas");
-
-                double longitudeCoordenada = (double) coordenadas.get("longitude");
-                double latitudeCoordenada = (double) coordenadas.get("latitude");
-                ICoordenada coordenada1 = new Coordenada(longitudeCoordenada, latitudeCoordenada);
-
-                IBot bot = new Bot(nome, nomeJogador, coordenada1, algoritmoMovimento);
-
-                raiz.adicionarBot(bot);
-            }
-        }
-        catch (NullPointerException e)
-        {
-            System.out.println("ERRO: "+e.getMessage());
-        }
-
 
 
         JSONArray mapaArray = (JSONArray) objeto.get("mapa"); //"mapa":[]

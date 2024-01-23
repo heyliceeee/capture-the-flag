@@ -55,6 +55,8 @@ public class Bot implements IBot, Comparable<Bot>
         this.algoritmoMovimento = algoritmoMovimento;
     }
 
+
+    //region getters e setters
     /**
      * retorna o nome do bot
      *
@@ -150,6 +152,7 @@ public class Bot implements IBot, Comparable<Bot>
         this.algoritmoMovimento = algoritmoMovimento;
     }
 
+    //endregion
 
     /**
      * retorna o objeto JSON do bot
@@ -164,34 +167,27 @@ public class Bot implements IBot, Comparable<Bot>
         raiz.put("nome", this.nome);
         raiz.put("nomeJogador", this.nomeJogador);
         raiz.put("algoritmoMovimento", this.algoritmoMovimento);
-        raiz.put("coordenadas", getCoordenadasObjetoJSON());
+        raiz.put("coordenadas", getCoordenadaObjetoJSON());
 
         return raiz;
     }
 
-    private Object getCoordenadasObjetoJSON()
+    private JSONObject getCoordenadaObjetoJSON()
     {
-        JSONObject coordenadas = new JSONObject();
+        JSONObject coordenada = new JSONObject();
 
         try
         {
-            coordenadas.put("longitude", this.coordenada.getLongitude());
-
-        } catch (Exception e)
+            coordenada.put("longitude", this.coordenada.getLongitude());
+            coordenada.put("latitude", this.coordenada.getLatitude());
+        }
+        catch (Exception e)
         {
-            coordenadas.put("longitude", 0);
+            coordenada.put("longitude", 0);
+            coordenada.put("latitude", 0);
         }
 
-        try
-        {
-            coordenadas.put("latitude", this.coordenada.getLatitude());
-
-        } catch (Exception e)
-        {
-            coordenadas.put("latitude", 0);
-        }
-
-        return coordenadas;
+        return coordenada;
     }
 
 
