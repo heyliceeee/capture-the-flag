@@ -1,9 +1,11 @@
 package org.example.InterfaceGrafica;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Iterator;
 
 import org.example.Demo;
+import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Bot;
 import org.example.api.implementation.Mapa;
 import org.example.api.interfaces.IBot;
@@ -68,7 +70,13 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         });
 
         iniciarButton.setOnAction(event -> {
-            this.logicaIniciarButton(stage);
+            try {
+                this.logicaIniciarButton(stage);
+            } catch (NotLocalInstanceException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         root.getChildren().add(proximoButton);
@@ -157,10 +165,12 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         root.getChildren().add(iniciarButton);
     }
 
-    private void logicaIniciarButton(Stage stage) {
+    private void logicaIniciarButton(Stage stage) throws NotLocalInstanceException, ParseException {
 
         // PROXIMA JANELLLAAAAAA
         stage.close();
+
+        Demo.iniciarPartida(dataManager.jogador1, dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
     }
 
     private boolean verificarAlgoritmosEscolhidos(DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador) {
