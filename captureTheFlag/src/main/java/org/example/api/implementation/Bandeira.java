@@ -15,6 +15,11 @@ public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
      */
     private String nome;
 
+    /**
+     * coordenadas do bandeira
+     */
+    private ICoordenada coordenada;
+
 
     /**
      * instancia da classe de importar e exportar JSON
@@ -23,10 +28,11 @@ public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
 
 
 
-    public Bandeira(int id, String tipo, String nome, ICoordenada coordenadas)
+    public Bandeira(int id, String tipo, String nome, ICoordenada coordenada)
     {
-        super(id, tipo, coordenadas);
+        super(id, tipo, coordenada);
         this.nome = nome;
+        this.coordenada = coordenada;
     }
 
 
@@ -38,21 +44,29 @@ public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
         raiz.put("id", getId());
         raiz.put("tipo", getTipo());
         raiz.put("nome", this.nome);
-        raiz.put("coordenadas", getCoordenadas());
+        raiz.put("coordenadas", getCoordenadaObjetoJSON());
 
         return raiz;
     }
 
 
-    /*private JSONObject getCoordenadasObjetoJSON()
+    private JSONObject getCoordenadaObjetoJSON()
     {
-        JSONObject coordenadas = new JSONObject();
+        JSONObject coordenada = new JSONObject();
 
-        coordenadas.put("longitude", this.coordenadas.getLongitude());
-        coordenadas.put("latitude", this.coordenadas.getLatitude());
+        try
+        {
+            coordenada.put("longitude", this.coordenada.getLongitude());
+            coordenada.put("latitude", this.coordenada.getLatitude());
+        }
+        catch (Exception e)
+        {
+            coordenada.put("longitude", 0);
+            coordenada.put("latitude", 0);
+        }
 
-        return coordenadas;
-    }*/
+        return coordenada;
+    }
 
 
 

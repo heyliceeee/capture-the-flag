@@ -4,6 +4,7 @@ import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.interfaces.GraphADT;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Graph<T> implements GraphADT<T>
 {
@@ -76,7 +77,7 @@ public class Graph<T> implements GraphADT<T>
     {
         if (vertex == null)
         {
-            throw new IllegalArgumentException("vertice nulo");
+            throw new NoSuchElementException("vertice nulo");
         }
 
         for (int i = 0; i < numVertices; i++)
@@ -194,6 +195,11 @@ public class Graph<T> implements GraphADT<T>
             throw new IllegalArgumentException("O segundo vertice nao é valido");
         }
 
+        if (!edgeExists(index1, index2))
+        {
+            throw new IllegalArgumentException("Aresta entre os vertices nao existe");
+        }
+
         if (indexIsValid(index1) && indexIsValid(index2))
         {
             adjMatrix[index1][index2] = 0;
@@ -201,10 +207,29 @@ public class Graph<T> implements GraphADT<T>
         }
     }
 
+
+    /**
+     * retorna true caso a aresta existe, caso contrario retorna false
+     * @param index1
+     * @param index2
+     * @return true caso a aresta existe, caso contrario retorna false
+     */
+    private boolean edgeExists(int index1, int index2)
+    {
+        return adjMatrix[index1][index2] != 0 || adjMatrix[index2][index1] != 0;
+    }
+
     @Override
     public Iterator<T> iteratorBFS(T startVertex)
     {
-        return iteratorBFS(startVertex);
+        int startIndex = getIndex(startVertex); // Converte o vértice em índice
+
+        if(startIndex == -1)
+        {
+            throw new IllegalArgumentException("Vértice não encontrado");
+        }
+
+        return iteratorBFS(startIndex);
     }
 
     /**
@@ -263,7 +288,14 @@ public class Graph<T> implements GraphADT<T>
     @Override
     public Iterator<T> iteratorDFS(T startVertex)
     {
-        return iteratorDFS(getIndex(startVertex));
+        int startIndex = getIndex(startVertex); // Converte o vértice em índice
+
+        if(startIndex == -1)
+        {
+            throw new IllegalArgumentException("Vértice não encontrado");
+        }
+
+        return iteratorDFS(startIndex);
     }
 
     /**

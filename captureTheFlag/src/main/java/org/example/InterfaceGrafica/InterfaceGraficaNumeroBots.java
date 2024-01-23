@@ -1,5 +1,7 @@
 package org.example.InterfaceGrafica;
 
+import org.example.Demo;
+import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Mapa;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -11,6 +13,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.text.ParseException;
+
+import static org.example.Demo.iniciarPartida;
 
 public class InterfaceGraficaNumeroBots extends Application {
 
@@ -45,7 +51,13 @@ public class InterfaceGraficaNumeroBots extends Application {
         });
 
         okButton.setOnAction(event -> {
-            this.logicaBotaoOk(stage);
+            try {
+                this.logicaBotaoOk(stage);
+            } catch (NotLocalInstanceException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         root.getChildren().add(nextButton);
@@ -99,7 +111,7 @@ public class InterfaceGraficaNumeroBots extends Application {
 
     }
 
-    private void logicaBotaoOk(Stage stage) {
+    private void logicaBotaoOk(Stage stage) throws NotLocalInstanceException, ParseException {
 
         this.botsJogador2 = comboBox2.getValue();
 
@@ -123,7 +135,7 @@ public class InterfaceGraficaNumeroBots extends Application {
     }
 
     private void preencherComboBox(ComboBox<Integer> comboBox) {
-        for (int i = 3; i <= maxBots; i++) {
+        for (int i = 6; i <= maxBots; i++) {
             comboBox.getItems().add(i);
         }
     }

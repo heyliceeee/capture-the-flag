@@ -34,24 +34,21 @@ public class Jogador implements IJogador
     private IBandeira bandeira;
 
 
-
-    /**
-     * total de bandeiras conquistados pelo jogador
-     */
-    private int bandeirasConquistadas;
-
-
     /**
      * construtor
      * @param nome
      * @param bots
-     * @param bandeirasConquistadas
      */
-    public Jogador(String nome, int bots, int bandeirasConquistadas)
+    public Jogador(String nome, int bots, IBandeira bandeira)
     {
+        if(nome == null || nome.equals(""))
+        {
+            throw new IllegalArgumentException("Nome nao pode ser vazio ou nulo!");
+        }
+
         this.nome = nome;
         this.bots = bots;
-        this.bandeirasConquistadas = bandeirasConquistadas;
+        this.bandeira = bandeira;
         this.botsJogador = new ArrayOrderedList<>();
     }
 
@@ -140,29 +137,6 @@ public class Jogador implements IJogador
     }
 
 
-    /**
-     * retorna o numero de bandeiras conquistados pelo jogador
-     *
-     * @return o numero de bandeiras conquistados pelo jogador
-     */
-    @Override
-    public int getBandeirasConquistadas()
-    {
-        return bandeirasConquistadas;
-    }
-
-
-    /**
-     * define o numero de bandeiras conquistados pelo jogador
-     *
-     * @param bandeirasConquistadas
-     */
-    @Override
-    public void setBandeirasConquistadas(int bandeirasConquistadas)
-    {
-        this.bandeirasConquistadas = bandeirasConquistadas;
-    }
-
 
     /**
      * retorna o objeto JSON do jogador
@@ -176,9 +150,62 @@ public class Jogador implements IJogador
 
         raiz.put("nome", this.nome);
         raiz.put("numeroBots", this.bots);
-        raiz.put("bandeirasConquistadas", this.bandeirasConquistadas);
+        raiz.put("bandeira", getBandeiraObjetoJson());
 
         return raiz;
+    }
+
+
+    /**
+     * retorna a bandeira do jogador em objeto JSON
+     * @return
+     */
+    private JSONObject getBandeiraObjetoJson()
+    {
+        JSONObject bandeira = new JSONObject();
+
+
+        try
+        {
+            bandeira.put("id", this.bandeira.getId());
+            bandeira.put("nome", this.bandeira.getNome());
+            bandeira.put("tipo", this.bandeira.getTipo());
+            bandeira.put("coordenadas", getCoordenadaObjetoJson());
+
+        }
+        catch (Exception e)
+        {
+            bandeira.put("id", 0);
+            bandeira.put("nome", "");
+            bandeira.put("tipo", "Bandeira");
+            bandeira.put("coordenadas", null);
+        }
+
+
+        return bandeira;
+    }
+
+
+    /**
+     * retorna a coordenada da bandeira em objeto JSON
+     * @return
+     */
+    private JSONObject getCoordenadaObjetoJson()
+    {
+        JSONObject coordenada = new JSONObject();
+
+        try
+        {
+            coordenada.put("longitude", this.bandeira.getCoordenadas().getLongitude());
+            coordenada.put("latitude", this.bandeira.getCoordenadas().getLatitude());
+        }
+        catch (Exception e)
+        {
+            coordenada.put("longitude", 0);
+            coordenada.put("latitude", 0);
+        }
+
+        return coordenada;
     }
 
 
@@ -188,7 +215,6 @@ public class Jogador implements IJogador
                 "nome='" + nome + '\'' +
                 ", bots=" + bots +
                 ", bandeira=" + bandeira +
-                ", bandeirasConquistadas=" + bandeirasConquistadas +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package org.example.InterfaceGrafica;
 
+import org.example.Demo;
 import org.example.api.implementation.Bandeira;
 import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ILocalizacao;
@@ -58,20 +59,23 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
         stage.show();
     }
 
-    private VBox formularioInput(int playerNumber) {
+    private VBox formularioInput(int playerNumber)
+    {
 
         VBox form = new VBox(5); // Espaçamento entre elementos
         form.setAlignment(Pos.CENTER);
 
         playerLabel = new Label("Jogador " + playerNumber);
 
-        if (playerNumber == 1) {
+        if (playerNumber == 1)
+        {
             comboBox1 = new ComboBox<>();
             this.preencherComboBox(this.comboBox1);
             form.getChildren().addAll(playerLabel, comboBox1);
         }
 
-        else {
+        else
+        {
             comboBox2 = new ComboBox<>();
             this.preencherComboBox(this.comboBox2);
             form.getChildren().addAll(playerLabel, comboBox2);
@@ -98,10 +102,10 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
 
         dataManager.raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
 
-        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(),
-                localJogador1Escolheu.getCoordenadas()); // criar bandeira
+        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); // criar bandeira
 
         dataManager.jogador1.setBandeira(bandeiraJogador1);
+        Demo.raiz.adicionarLocal(bandeiraJogador1);
 
         root.getChildren().clear();
         root.getChildren().add(formularioInput(2));
@@ -127,10 +131,10 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
 
         dataManager.raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
 
-        IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira", localJogador2Escolheu.getNome(),
-                localJogador2Escolheu.getCoordenadas()); // criar bandeira
+        IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); // criar bandeira
 
         dataManager.jogador2.setBandeira(bandeiraJogador2);
+        Demo.raiz.adicionarLocal(bandeiraJogador2);
 
         Platform.runLater(() -> new InterfaceGraficaNumeroBots(this.dataManager).start(new Stage()));
         stage.close();
@@ -159,10 +163,9 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
             }
         });
 
-        for (ILocalizacao localizacaoObj : dataManager.raiz.getListaLocalizacoes()) {
+        for (ILocalizacao localizacaoObj : dataManager.raiz.getListaLocalizacoes())
+        {
             comboBox.getItems().add(localizacaoObj);
         }
-
     }
-
 }
