@@ -16,36 +16,49 @@ import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class InterfaceGraficaJogo extends Application {
 
     private DataManager dataManager;
     private Graph graph;
+    private int quemComeca;
 
     public InterfaceGraficaJogo(DataManager dataManager, int quemComeca) {
         this.dataManager = dataManager;
+        this.quemComeca = quemComeca;
     }
 
     @Override
     public void start(Stage stage) throws NotLocalInstanceException, ParseException {
 
         graph = new SingleGraph("Jogo");
-
-        graph.setAttribute("ui.stylesheet", styleSheet());
-
-        graph = new SingleGraph("Jogo");
         graph.setAttribute("ui.stylesheet", styleSheet());
 
         desenharJanela();
-        Jogo.partida(this, 1, dataManager.jogador1,
-                dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
+
+        new Thread(() -> {
+            try {
+                Jogo.partida(this, quemComeca, dataManager.jogador1, dataManager.jogador2,
+                        dataManager.grafo, dataManager.raiz, dataManager.rota);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
         graph.display();
     }
 
     public void desenharJanela() {
+        Platform.runLater(() -> {
+            adicionarNosLocalizacaoEBandeira();
+            atualizarBots(graph);
+        });
+    }
+
+    public synchronized void atualizarInterface() {
         adicionarNosLocalizacaoEBandeira();
-        // desenharArestas(dataManager);
         atualizarBots(graph);
     }
 
@@ -68,31 +81,6 @@ public class InterfaceGraficaJogo extends Application {
             System.out.println("Nó adicionado: " + bandeira.getNome());
         }
     }
-
-    // private void desenharArestas(DataManager dmanager) {
-
-    // Iterator<IRota<ILocal>> ir = dataManager.grafo.getRotas();
-
-    // while (ir.hasNext()) {
-
-    // IRota<ILocal> rota = ir.next();
-
-    // if (rota instanceof IRota<ILocal>) {
-
-    // String idOrigem = "origem";// this.getNomeLocalizacao(rota.getDe().getId());
-
-    // String idDestino = "destino"; //
-    // this.getNomeLocalizacao(rota.getPara().getId());
-    // String idAresta = idOrigem + " - " + idDestino;
-
-    // boolean isDirecional =
-    // dmanager.grafo.getTipoDirection().contains("direcionado");
-
-    // graph.addEdge(idAresta, idOrigem, idDestino, isDirecional);
-    // }
-    // }
-
-    // }
 
     private void atualizarBots(Graph graph) {
 

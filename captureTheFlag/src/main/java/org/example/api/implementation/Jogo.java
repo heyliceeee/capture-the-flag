@@ -5,6 +5,8 @@ import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.interfaces.*;
 import org.example.collections.implementation.ArrayOrderedList;
 
+import javafx.application.Platform;
+
 import java.text.ParseException;
 import java.util.Iterator;
 
@@ -25,6 +27,8 @@ public class Jogo {
 
         while (true)// loop infinito até que o jogo termine
         {
+            Platform.runLater(() -> ui.atualizarInterface());
+
             System.out.println("\n\nTurno " + turno + "\n");
 
             IBot botAtual = null;// Determinar qual bot deve jogar neste turno
@@ -53,7 +57,6 @@ public class Jogo {
                 break; // Encerrar o loop, o jogo terminou
             }
 
-            ui.desenharJanela();
             turno++; // Avançar para o próximo turno
         }
     }
