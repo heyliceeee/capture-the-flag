@@ -15,6 +15,7 @@ import org.example.collections.implementation.LinkedQueue;
 import org.example.collections.interfaces.UnorderedListADT;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -157,8 +158,8 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
         this.criarBots(dataManager.jogador2.getNome(), comboBoxJogador2, dataManager.jogador2);
 
-        Demo.raiz.adicionarJogador(dataManager.jogador2);
-        Demo.raiz.exportarRaizParaJson();
+        // Demo.raiz.adicionarJogador(dataManager.jogador2);
+        // Demo.raiz.exportarRaizParaJson();
 
         root.getChildren().clear();
         this.mostrarPrimeiroJogador();
@@ -167,7 +168,15 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     private void logicaIniciarButton(Stage stage) throws NotLocalInstanceException, ParseException {
 
-        // PROXIMA JANELLLAAAAAA
+        Platform.runLater(
+                () -> {
+                    try {
+                        new InterfaceGraficaJogo(this.dataManager, this.quemComeca).start(new Stage());
+                    } catch (NotLocalInstanceException | ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                });
         stage.close();
 
         Demo.iniciarPartida(dataManager.jogador1, dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);

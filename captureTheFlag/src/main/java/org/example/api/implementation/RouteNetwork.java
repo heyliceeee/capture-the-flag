@@ -39,6 +39,14 @@ public class RouteNetwork<T> extends Network<T> implements RouteNetworkADT<T> {
         this.tipoDirection = direction;
     }
 
+    public int getNumVertices() {
+        return super.numVertices;
+    }
+
+    public double[][] getAdjMatrix() {
+        return super.adjMatrix;
+    }
+
     /**
      * enumeração interna para identificar o tipo de local
      */
