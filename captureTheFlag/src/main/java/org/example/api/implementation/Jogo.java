@@ -102,36 +102,46 @@ public class Jogo {
         ArrayOrderedList<ILocalizacao> localizacoesList = raiz.getListaLocalizacoes();
         ArrayOrderedList<IBandeira> bandeirasList = raiz.getListaBandeiras();
 
-        // region saber qual localizacao/bandeira esta o bot
-        for (ILocalizacao localizacaoObj : localizacoesList) {
-            if (localizacaoObj.getCoordenadas() != null
-                    && localizacaoObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual localizacao esta
-                                                                                         // o bot
-            {
-                pontoA = localizacaoObj; // encontrou uma localizacao com coordenadas iguais às do botAtual
-                break; // não precisa continuar a procurar, podemos sair do loop
+        try
+        {
+            // region saber qual localizacao/bandeira esta o bot
+            for (ILocalizacao localizacaoObj : localizacoesList) {
+                if (localizacaoObj.getCoordenadas() != null
+                        && localizacaoObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual localizacao esta
+                // o bot
+                {
+                    pontoA = localizacaoObj; // encontrou uma localizacao com coordenadas iguais às do botAtual
+                    break; // não precisa continuar a procurar, podemos sair do loop
+                }
+            }
+
+            for (IBandeira bandeiraObj : bandeirasList) {
+                if (bandeiraObj.getCoordenadas() != null && bandeiraObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual bandeira esta o bot
+                {
+                    pontoA = bandeiraObj; // encontrou uma bandeira com coordenadas iguais às do botAtual
+                    break; // não precisa continuar a procurar, podemos sair do loop
+                }
+            }
+            // endregion
+
+            ILocal pontoB = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira()
+                    : jogador1.getBandeira(); // bandeira inimiga
+
+            if (algoritmo.equals("Dijkstra")) {
+                CaminhoMaisCurto(grafo, botAtual, raiz, pontoA, pontoB);
+            } else if (algoritmo.equals("BFS")) {
+                BuscaPorProfundidade(grafo, botAtual, raiz, pontoA);
+            } else if (algoritmo.equals("DFS")) {
+                BuscaPorLargura(grafo, botAtual, raiz, pontoA);
             }
         }
+        catch (Exception e)
+        {
 
-        for (IBandeira bandeiraObj : bandeirasList) {
-            if (bandeiraObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual bandeira esta o bot
-            {
-                pontoA = bandeiraObj; // encontrou uma bandeira com coordenadas iguais às do botAtual
-                break; // não precisa continuar a procurar, podemos sair do loop
-            }
         }
-        // endregion
 
-        ILocal pontoB = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira()
-                : jogador1.getBandeira(); // bandeira inimiga
 
-        if (algoritmo.equals("Dijkstra")) {
-            CaminhoMaisCurto(grafo, botAtual, raiz, pontoA, pontoB);
-        } else if (algoritmo.equals("BFS")) {
-            BuscaPorProfundidade(grafo, botAtual, raiz, pontoA);
-        } else if (algoritmo.equals("DFS")) {
-            BuscaPorLargura(grafo, botAtual, raiz, pontoA);
-        }
+
     }
 
     /**
