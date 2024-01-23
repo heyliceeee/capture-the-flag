@@ -11,6 +11,7 @@ import org.example.collections.implementation.LinkedQueue;
 import org.example.collections.interfaces.UnorderedListADT;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -141,7 +142,8 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     private void logicaIniciarButton(Stage stage) {
 
-        // PROXIMA JANELLLAAAAAA
+        Platform.runLater(
+                () -> new InterfaceGraficaJogo(this.dataManager).start(new Stage()));
         stage.close();
     }
 
