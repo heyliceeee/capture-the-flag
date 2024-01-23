@@ -1,0 +1,34 @@
+{
+  "bots": [],
+  "jogadores": [
+    {
+      "numeroBots": 1,
+      "nome": "Jogador 1",
+      "bandeira": {
+        "tipo": "Bandeira",
+        "coordenada": {
+          "latitude": 100.0,
+          "longitude": 0.0
+        },
+        "nome": "B Apartments",
+        "id": 0
+      }
+    },
+    {
+      "numeroBots": 1,
+      "nome": "Jogador 2",
+      "bandeira": {
+        "tipo": "Bandeira",
+        "coordenada": {
+          "latitude": 400.0,
+          "longitude": 500.0
+        },
+        "nome": "Jungle",
+        "id": 5
+      }
+    }
+  ],
+  "rotas": [],
+  "bandeiras": [],
+  "localizacoes": []
+}

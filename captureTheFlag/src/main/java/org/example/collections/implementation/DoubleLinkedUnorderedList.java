@@ -5,6 +5,7 @@ import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.interfaces.UnorderedListADT;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements UnorderedListADT<T>
 {
@@ -255,7 +256,8 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
     }
 
 
-    private class BasicIterator<T> implements Iterator<T> {
+    private class BasicIterator<T> implements Iterator<T>
+    {
         private DoublyNode<T> current; // Ponteiro para o nó atual
 
         public BasicIterator()
@@ -270,10 +272,11 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
         }
 
         @Override
-        public T next() {
+        public T next()
+        {
             if (!hasNext())
             {
-                throw new EmptyCollectionException("double linked unordered list nao existe elementos"); // Lança exceção se não houver próximo elemento
+                throw new NoSuchElementException("double linked unordered list nao existe elementos"); // Lança exceção se não houver próximo elemento
             }
 
             T element = current.getElement(); // Obtém o elemento atual

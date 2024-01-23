@@ -39,7 +39,7 @@ public class Jogador implements IJogador
      * @param nome
      * @param bots
      */
-    public Jogador(String nome, int bots)
+    public Jogador(String nome, int bots, IBandeira bandeira)
     {
         if(nome == null || nome.equals(""))
         {
@@ -48,6 +48,7 @@ public class Jogador implements IJogador
 
         this.nome = nome;
         this.bots = bots;
+        this.bandeira = bandeira;
         this.botsJogador = new ArrayOrderedList<>();
     }
 
@@ -149,8 +150,62 @@ public class Jogador implements IJogador
 
         raiz.put("nome", this.nome);
         raiz.put("numeroBots", this.bots);
+        raiz.put("bandeira", getBandeiraObjetoJson());
 
         return raiz;
+    }
+
+
+    /**
+     * retorna a bandeira do jogador em objeto JSON
+     * @return
+     */
+    private JSONObject getBandeiraObjetoJson()
+    {
+        JSONObject bandeira = new JSONObject();
+
+
+        try
+        {
+            bandeira.put("id", this.bandeira.getId());
+            bandeira.put("nome", this.bandeira.getNome());
+            bandeira.put("tipo", this.bandeira.getTipo());
+            bandeira.put("coordenada", getCoordenadaObjetoJson());
+
+        }
+        catch (Exception e)
+        {
+            bandeira.put("id", 0);
+            bandeira.put("nome", "");
+            bandeira.put("tipo", "Bandeira");
+            bandeira.put("coordenada", null);
+        }
+
+
+        return bandeira;
+    }
+
+
+    /**
+     * retorna a coordenada da bandeira em objeto JSON
+     * @return
+     */
+    private Object getCoordenadaObjetoJson()
+    {
+        JSONObject coordenada = new JSONObject();
+
+        try
+        {
+            coordenada.put("longitude", this.bandeira.getCoordenadas().getLongitude());
+            coordenada.put("latitude", this.bandeira.getCoordenadas().getLatitude());
+        }
+        catch (Exception e)
+        {
+            coordenada.put("longitude", 0);
+            coordenada.put("latitude", 0);
+        }
+
+        return coordenada;
     }
 
 

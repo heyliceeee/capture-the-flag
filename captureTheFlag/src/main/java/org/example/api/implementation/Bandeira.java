@@ -27,11 +27,6 @@ public class Bandeira extends Local implements IBandeira, Comparable<Bandeira>
     {
         super(id, tipo, coordenadas);
 
-        if(nome == null || nome.equals(""))
-        {
-            throw new IllegalArgumentException("Nome nao pode ser vazio ou nulo!");
-        }
-
         this.nome = nome;
     }
 

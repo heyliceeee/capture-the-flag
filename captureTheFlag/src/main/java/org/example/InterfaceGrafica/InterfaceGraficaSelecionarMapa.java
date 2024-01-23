@@ -44,7 +44,7 @@ public class InterfaceGraficaSelecionarMapa extends Application {
             stage.close();
             try {
                 DataManager.iEJson.importarDoFicheiroJSON(dataManager.raiz, dataManager.local,
-                        "docs/import/import.json");
+                        "docs/export/Raiz.json");
             } catch (IOException e) {
 
                 e.printStackTrace();

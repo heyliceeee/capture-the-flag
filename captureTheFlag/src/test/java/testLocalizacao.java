@@ -27,14 +27,6 @@ public class testLocalizacao
     }
 
 
-    @DisplayName("Construtor incorreto da Localizacao")
-    @Test
-    public void testConstrutorIncorretoLocalizacao_Valid()
-    {
-        assertThrows(IllegalArgumentException.class, () -> { ILocalizacao localizacao = new Localizacao(0, null, null, null); }); //retorna erro porque foi criado contrutor sem sucesso
-    }
-
-
     @DisplayName("Getters e Setters da Localizacao")
     @Test
     public void testGettersSettersLocalizacao_Valid()

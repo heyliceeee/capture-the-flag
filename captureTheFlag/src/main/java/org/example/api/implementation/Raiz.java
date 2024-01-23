@@ -475,11 +475,11 @@ public class Raiz implements IRaiz
     {
         JSONObject raiz = new JSONObject();
 
-        raiz.put("localizacoes", getLocalizacoesArrayJSON());
-        raiz.put("bandeiras", getBandeirasArrayJSON());
-        raiz.put("rotas", getRotasArrayJSON());
         raiz.put("jogadores", getJogadoresArrayJSON());
         raiz.put("bots", getBotsArrayJSON());
+        raiz.put("rotas", getRotasArrayJSON());
+        raiz.put("bandeiras", getBandeirasArrayJSON());
+        raiz.put("localizacoes", getLocalizacoesArrayJSON());
 
         Demo.iEJson.exportarParaFicheiroJSON(raiz.toJSONString(), "Raiz");
     }

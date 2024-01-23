@@ -25,14 +25,6 @@ public class testBandeira
     }
 
 
-    @DisplayName("Construtor incorreto da Bandeira")
-    @Test
-    public void testConstrutorIncorretoBandeira_Valid()
-    {
-        assertThrows(IllegalArgumentException.class, () -> { IBandeira bandeira = new Bandeira(0, null, null, null); }); //retorna erro porque foi criado contrutor sem sucesso
-    }
-
-
     @DisplayName("Getters e Setters da Bandeira")
     @Test
     public void testGettersSettersBandeira_Valid()

@@ -1,7 +1,9 @@
 package org.example.InterfaceGrafica;
 
+import java.io.IOException;
 import java.util.Iterator;
 
+import org.example.Demo;
 import org.example.api.implementation.Bot;
 import org.example.api.implementation.Mapa;
 import org.example.api.interfaces.IBot;
@@ -55,8 +57,16 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
             this.logicaBotaoNext(root, okButton);
         });
 
-        okButton.setOnAction(event -> {
-            this.logicaBotaoOk(stage);
+        okButton.setOnAction(event ->
+        {
+            try
+            {
+                this.logicaBotaoOk(stage);
+            }
+            catch (IOException e)
+            {
+                throw new RuntimeException(e);
+            }
         });
 
         root.getChildren().add(proximoButton);
@@ -88,13 +98,18 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         }
 
         this.criarBots(dataManager.jogador1.getNome(), comboBoxJogador1, dataManager.jogador1);
+
+        Demo.raiz.adicionarJogador(dataManager.jogador1);
+
         root.getChildren().clear();
+
         this.mostrarFormularioJogador2();
         root.getChildren().add(okButton);
 
     }
 
-    private void logicaBotaoOk(Stage stage) {
+    private void logicaBotaoOk(Stage stage) throws IOException
+    {
 
         // Verificar se os campos foram preenchidos
         if (!this.todosCamposPreenchidos(comboBoxJogador2)) {
@@ -109,9 +124,12 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
         this.criarBots(dataManager.jogador2.getNome(), comboBoxJogador2, dataManager.jogador2);
 
+        Demo.raiz.adicionarJogador(dataManager.jogador2);
+
         // PROXIMAAAAAA JANELLLAAAAAAAA
         stage.close();
 
+        Demo.raiz.exportarRaizParaJson();
     }
 
     private boolean todosCamposPreenchidos(DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador) {
