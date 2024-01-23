@@ -1,5 +1,6 @@
 package org.example.api.implementation;
 
+import org.example.Demo;
 import org.example.api.interfaces.*;
 import org.example.collections.implementation.ArrayOrderedList;
 import org.example.collections.interfaces.IExporter;
@@ -122,7 +123,7 @@ public class Mapa implements IMapa
 
             ILocalizacao localizacao = new Localizacao(i, "localizacao", nomeSpots.first(), null);
 
-            raiz.adicionarLocal(localizacao); // adiciona um novo local á rede
+            Demo.raiz.adicionarLocal(localizacao); // adiciona um novo local á rede
             nomeSpots.removeFirst();
         }
 
@@ -330,45 +331,18 @@ public class Mapa implements IMapa
             if (tipoCaminhoString.equals("direcionado"))
             {
                 grafo.addEdge(localDe.getId(), localPara.getId(), distancia); //adicionar aresta com peso ao grafo
-                raiz.adicionarRota(localDe, localPara, distancia); //adicionar aresta com peso á rede
+                Demo.raiz.adicionarRota(localDe, localPara, distancia); //adicionar aresta com peso á rede
+
+                System.out.println(grafo);
             }
             else
             {
                 grafo.addEdge(localDe.getId(), localPara.getId(), distancia); //adicionar aresta com peso ao grafo
                 //grafo.addEdge(localPara.getId(), localDe.getId(), distancia);
 
-                raiz.adicionarRota(localDe, localPara, distancia); //adicionar aresta com peso á rede
+                Demo.raiz.adicionarRota(localDe, localPara, distancia); //adicionar aresta com peso á rede
                 //raiz.adicionarRota(localPara, localDe, distancia);
             }
         }
-    }
-
-
-    /**
-     * @param localizacaoA ponto/vertice A
-     * @param localizacaoB ponto/vertice B
-     * @return
-     */
-    @Override
-    public int obterDistancia(int localizacaoA, int localizacaoB) {
-        return 0;
-    }
-
-
-    /**
-     *
-     */
-    @Override
-    public void exportarMapa() {
-
-    }
-
-
-    /**
-     *
-     */
-    @Override
-    public void importarMapa() {
-
     }
 }

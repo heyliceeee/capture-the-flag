@@ -1,6 +1,7 @@
 package org.example.api.implementation;
 
 import org.example.api.interfaces.IRota;
+import org.json.simple.JSONObject;
 
 /**
  * Classe que representa a rota entre localizacoes e/ou bandeiras

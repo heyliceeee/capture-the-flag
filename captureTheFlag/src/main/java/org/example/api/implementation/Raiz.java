@@ -501,6 +501,8 @@ public class Raiz implements IRaiz
             rotasArray.add(rotaParaObjetoJSON(rota));
         }
 
+        System.out.println(rotasArray);
+
         return rotasArray;
     }
 

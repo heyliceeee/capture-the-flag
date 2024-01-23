@@ -170,7 +170,7 @@ public class Jogador implements IJogador
             bandeira.put("id", this.bandeira.getId());
             bandeira.put("nome", this.bandeira.getNome());
             bandeira.put("tipo", this.bandeira.getTipo());
-            bandeira.put("coordenada", getCoordenadaObjetoJson());
+            bandeira.put("coordenadas", getCoordenadaObjetoJson());
 
         }
         catch (Exception e)
@@ -178,7 +178,7 @@ public class Jogador implements IJogador
             bandeira.put("id", 0);
             bandeira.put("nome", "");
             bandeira.put("tipo", "Bandeira");
-            bandeira.put("coordenada", null);
+            bandeira.put("coordenadas", null);
         }
 
 

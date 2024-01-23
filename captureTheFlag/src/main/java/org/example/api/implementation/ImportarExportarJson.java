@@ -1,5 +1,6 @@
 package org.example.api.implementation;
 
+import org.example.Demo;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
 import org.json.simple.JSONArray;
@@ -53,7 +54,7 @@ public class ImportarExportarJson
                 long idBandeira = (long) bandeira.get("id");
 
 
-                JSONObject coordenada = (JSONObject) bandeira.get("coordenada");
+                JSONObject coordenada = (JSONObject) bandeira.get("coordenadas");
                 double latitude = (double) coordenada.get("latitude");
                 double longitude = (double) coordenada.get("longitude");
 
@@ -106,6 +107,39 @@ public class ImportarExportarJson
         }
 
 
+
+        JSONArray rotasArray = (JSONArray) objeto.get("rotas"); //"rotas":[]
+
+        try
+        {
+            for(int i=0; i < rotasArray.size(); i++)
+            {
+                JSONObject rotas = (JSONObject) rotasArray.get(i);
+
+                long de = (long) rotas.get("de");
+                long para = (long) rotas.get("para");
+                double peso = (double) rotas.get("distancia");
+
+                try
+                {
+                    ILocal deLocal = raiz.getLocalByID((int) de); //localizacao/bandeira correspondente ao id
+                    ILocal paraLocal = raiz.getLocalByID((int) para); //localizacao/bandeira correspondente ao id
+
+
+                    Demo.raiz.adicionarRota(deLocal, paraLocal, peso);
+                }
+                catch (IllegalArgumentException | EmptyCollectionException e)
+                {
+                    System.out.println("ERRO: "+e.getMessage());
+                }
+            }
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("ERRO: "+e.getMessage());
+        }
+
+
         JSONArray locaisArray = (JSONArray) objeto.get("locais"); //"locais":[]
 
         try
@@ -147,45 +181,6 @@ public class ImportarExportarJson
             System.out.println("ERRO: "+e.getMessage());
         }
 
-
-
-        JSONArray rotasArray = (JSONArray) objeto.get("rotas"); //"rotas":[]
-
-        try
-        {
-            for(int i=0; i < rotasArray.size(); i++)
-            {
-                JSONObject rotas = (JSONObject) rotasArray.get(i);
-
-                long de = (long) rotas.get("de");
-                long para = (long) rotas.get("para");
-                String tipoCaminho = (String) rotas.get("tipoCaminho");
-
-                try
-                {
-                    ILocal deLocal = raiz.getLocalByID((int) de); //localizacao/bandeira correspondente ao id
-                    ILocal paraLocal = raiz.getLocalByID((int) para); //localizacao/bandeira correspondente ao id
-
-                    double x1 = deLocal.getCoordenadas().getLongitude();
-                    double y1 = deLocal.getCoordenadas().getLatitude();
-                    double x2 = paraLocal.getCoordenadas().getLongitude();
-                    double y2 = paraLocal.getCoordenadas().getLatitude();
-
-                    double distancia = Math.round(rota.calcularPesoDasCoordenadas(x1, y1, x2, y2) * 1000000); //arredondar
-                    
-
-                    raiz.adicionarRota(deLocal, paraLocal, distancia);
-                }
-                catch (IllegalArgumentException | EmptyCollectionException e)
-                {
-                    System.out.println("ERRO: "+e.getMessage());
-                }
-            }
-        }
-        catch (NullPointerException e)
-        {
-            System.out.println("ERRO: "+e.getMessage());
-        }
 
 
         JSONArray mapaArray = (JSONArray) objeto.get("mapa"); //"mapa":[]

@@ -15,6 +15,11 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
      */
     private String nome;
 
+    /**
+     * coordenadas do localizacao
+     */
+    private ICoordenada coordenada;
+
 
     /**
      * instancia da classe de importar e exportar JSON
@@ -23,11 +28,12 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
 
 
 
-    public Localizacao(int id, String tipo, String nome, ICoordenada coordenadas)
+    public Localizacao(int id, String tipo, String nome, ICoordenada coordenada)
     {
-        super(id, tipo, coordenadas);
+        super(id, tipo, coordenada);
 
         this.nome = nome;
+        this.coordenada = coordenada;
     }
 
 
@@ -40,37 +46,29 @@ public class Localizacao extends Local implements ILocalizacao, Comparable<Local
         raiz.put("id", getId());
         raiz.put("tipo", getTipo());
         raiz.put("name", getNome());
-        raiz.put("coordenadas", getCoordenadas());
+        raiz.put("coordenadas", getCoordenadaObjetoJSON());
 
         return raiz;
     }
-/*
 
-    private JSONObject getCoordenadasObjetoJSON()
+
+    private JSONObject getCoordenadaObjetoJSON()
     {
-        JSONObject coordenadas = new JSONObject();
+        JSONObject coordenada = new JSONObject();
 
         try
         {
-            coordenadas.put("longitude", this.coordenadas.getLongitude());
-
-        } catch (Exception e)
+            coordenada.put("longitude", this.coordenada.getLongitude());
+            coordenada.put("latitude", this.coordenada.getLatitude());
+        }
+        catch (Exception e)
         {
-            coordenadas.put("longitude", 0);
+            coordenada.put("longitude", 0);
+            coordenada.put("latitude", 0);
         }
 
-        try
-        {
-            coordenadas.put("latitude", this.coordenadas.getLatitude());
-
-        } catch (Exception e)
-        {
-            coordenadas.put("latitude", 0);
-        }
-
-        return coordenadas;
-    }*/
-
+        return coordenada;
+    }
 
 
     @Override

@@ -212,8 +212,7 @@ public class Demo
 
             System.out.println("+-------------------------------------------+");
 
-        } while (locExistentesJogador2 < 6 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
-                || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
+        } while (locExistentesJogador2 < 6 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
         //region criar mapa
         mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
@@ -413,10 +412,14 @@ public class Demo
 
             listaBotsJogador1.add(bot);// Adicione o bot à lista de bots do jogador 1
 
+            raiz.adicionarBot(bot);
+
             jogador1.setNumeroBots(nBots/2);
 
         }
         while (algoritmoBotJogador1 < 1 || algoritmoBotJogador1 > 3 ||  i < ((nBots/2)-1));
+
+        //raiz.adicionarJogador(jogador1);
 
         System.out.println("| há "+(nBots/2)+" bots disponíveis                         \n|");
 
@@ -462,10 +465,13 @@ public class Demo
 
             listaBotsJogador2.add(bot);// Adicione o bot à lista de bots do jogador 2
 
+            raiz.adicionarBot(bot);
+
             jogador2.setNumeroBots(nBots/2);
-            raiz.adicionarJogador(jogador2);
         }
         while (algoritmoBotJogador2 < 1 || algoritmoBotJogador2 > 3 ||  i < ((nBots/2)-1));
+
+        //raiz.adicionarJogador(jogador2);
         //endregion
     }
 

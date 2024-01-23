@@ -45,7 +45,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         root.setAlignment(Pos.CENTER);
 
         // Adicionar ComboBoxes e Labels para o Jogador 1
-        for (int i = 1; i <= numeroBots / 2; i++) {
+        for (int i = 1; i <= (numeroBots / 2); i++) {
             root.getChildren().add(formularioBot(i, "Jogador 1", comboBoxJogador1));
         }
 
@@ -79,7 +79,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     private void mostrarFormularioJogador2() {
         // Adicionar ComboBoxes e Labels para o Jogador 2
-        for (int i = 1; i <= numeroBots / 2; i++) {
+        for (int i = 1; i <= (numeroBots / 2); i++) {
             root.getChildren().add(formularioBot(i, "Jogador 2", comboBoxJogador2));
         }
     }
@@ -98,6 +98,11 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         }
 
         this.criarBots(dataManager.jogador1.getNome(), comboBoxJogador1, dataManager.jogador1);
+
+        for(IBot bot : dataManager.jogador1.getBotsJogador())
+        {
+            Demo.raiz.adicionarBot(bot);
+        }
 
         Demo.raiz.adicionarJogador(dataManager.jogador1);
 
@@ -126,10 +131,10 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
         Demo.raiz.adicionarJogador(dataManager.jogador2);
 
+        Demo.raiz.exportarRaizParaJson();
+
         // PROXIMAAAAAA JANELLLAAAAAAAA
         stage.close();
-
-        Demo.raiz.exportarRaizParaJson();
     }
 
     private boolean todosCamposPreenchidos(DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador) {
@@ -194,7 +199,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
     {
         for (int i = 0; i < comboBoxes.size(); i++)
         {
-            String nomeBot = "Bot " + (i + 1) + " - " + nomeJogador;
+            String nomeBot = "Bot " + (i+1) + " - " + nomeJogador;
             String algoritmo = comboBoxes.removeFirst().getValue();
             IBot bot = new Bot(nomeBot, nomeJogador, jogador.getBandeira().getCoordenadas(), algoritmo);
             jogador.getBotsJogador().add(bot);
