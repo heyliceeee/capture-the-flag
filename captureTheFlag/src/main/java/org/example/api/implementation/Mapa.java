@@ -194,7 +194,7 @@ public class Mapa implements IMapa {
     public static int gerarNumeroRandom(int min, int max) {
         Random random = new Random();
 
-        return random.nextInt(max - min) + min;
+        return random.nextInt(max - min + 1) + min;
     }
 
     /**
