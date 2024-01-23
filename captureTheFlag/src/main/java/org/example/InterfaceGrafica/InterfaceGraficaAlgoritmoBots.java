@@ -1,9 +1,11 @@
 package org.example.InterfaceGrafica;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Iterator;
 
 import org.example.Demo;
+import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Bot;
 import org.example.api.implementation.Mapa;
 import org.example.api.interfaces.IBot;
@@ -150,8 +152,8 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
         this.criarBots(dataManager.jogador2.getNome(), comboBoxJogador2, dataManager.jogador2);
 
-        Demo.raiz.adicionarJogador(dataManager.jogador2);
-        Demo.raiz.exportarRaizParaJson();
+        // Demo.raiz.adicionarJogador(dataManager.jogador2);
+        // Demo.raiz.exportarRaizParaJson();
 
         root.getChildren().clear();
         this.mostrarPrimeiroJogador();
@@ -161,7 +163,14 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
     private void logicaIniciarButton(Stage stage) {
 
         Platform.runLater(
-                () -> new InterfaceGraficaJogo(this.dataManager).start(new Stage()));
+                () -> {
+                    try {
+                        new InterfaceGraficaJogo(this.dataManager, this.quemComeca).start(new Stage());
+                    } catch (NotLocalInstanceException | ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                });
         stage.close();
     }
 

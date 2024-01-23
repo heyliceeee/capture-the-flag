@@ -132,7 +132,6 @@ public class InterfaceGraficaNumeroBots extends Application {
                 () -> new InterfaceGraficaAlgoritmoBots(this.dataManager, this.numeroBots).start(new Stage()));
         stage.close();
         // PROXIMA JANELAAAAAAAAAAA
-        Demo.iniciarPartida(this.dataManager.jogador1, this.dataManager.jogador2, this.dataManager.grafo, this.dataManager.raiz, this.dataManager.rota);
     }
 
     private void preencherComboBox(ComboBox<Integer> comboBox) {

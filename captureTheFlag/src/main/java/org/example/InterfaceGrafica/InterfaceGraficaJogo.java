@@ -1,7 +1,12 @@
 package org.example.InterfaceGrafica;
 
+import static org.example.Demo.jogador2;
+
+import java.text.ParseException;
 import java.util.Iterator;
 
+import org.example.api.exceptions.NotLocalInstanceException;
+import org.example.api.implementation.Jogo;
 import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.IBot;
 import org.example.api.interfaces.ILocal;
@@ -18,12 +23,12 @@ public class InterfaceGraficaJogo extends Application {
     private DataManager dataManager;
     private Graph graph;
 
-    public InterfaceGraficaJogo(DataManager dataManager) {
+    public InterfaceGraficaJogo(DataManager dataManager, int quemComeca) {
         this.dataManager = dataManager;
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws NotLocalInstanceException, ParseException {
 
         graph = new SingleGraph("Jogo");
 
@@ -33,7 +38,8 @@ public class InterfaceGraficaJogo extends Application {
         graph.setAttribute("ui.stylesheet", styleSheet());
 
         desenharJanela();
-
+        Jogo.partida(this, 1, dataManager.jogador1,
+                dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
         graph.display();
     }
 
