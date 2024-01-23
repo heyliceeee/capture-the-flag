@@ -60,7 +60,11 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         });
 
         okButton.setOnAction(event -> {
-            this.logicaBotaoOk(iniciarButton);
+            try {
+                this.logicaBotaoOk(iniciarButton);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         iniciarButton.setOnAction(event -> {
@@ -130,7 +134,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     }
 
-    private void logicaBotaoOk(Button iniciarButton) {
+    private void logicaBotaoOk(Button iniciarButton) throws IOException {
 
         // Verificar se os campos foram preenchidos
         if (!this.verificarAlgoritmosEscolhidos(comboBoxJogador2)) {
@@ -148,8 +152,6 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         Demo.raiz.adicionarJogador(dataManager.jogador2);
         Demo.raiz.exportarRaizParaJson();
 
-        // PROXIMAAAAAA JANELLLAAAAAAAA
-        stage.close();
         root.getChildren().clear();
         this.mostrarPrimeiroJogador();
         root.getChildren().add(iniciarButton);

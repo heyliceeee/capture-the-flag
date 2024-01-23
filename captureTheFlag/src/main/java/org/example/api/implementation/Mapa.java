@@ -231,15 +231,15 @@ public class Mapa implements IMapa {
         int de = 0, para = 0, countArestas = 0;
 
         // cria as rotas
-        for (de = 0; (de < locExistentes - 1 && countArestas < arestas); de++) {
-            for (para = de + 1; (para < locExistentes && countArestas < arestas); para++) {
+        for (int i = 0; countArestas < arestas; i++) {
+            for (int j = de + 1; countArestas < arestas; j++) {
                 // Gerar valores aleatórios para "de" e "para"
-                de = gerarNumeroRandom(0, locExistentes);
-                para = gerarNumeroRandom(0, locExistentes);
+                de = gerarNumeroRandom(0, locExistentes - 1);
+                para = gerarNumeroRandom(0, locExistentes - 1);
 
                 while (de == para)// Garantir que "de" e "para" sejam diferentes
                 {
-                    para = gerarNumeroRandom(0, locExistentes);
+                    para = gerarNumeroRandom(0, locExistentes - 1);
                 }
 
                 String aresta = de + ", " + para;
@@ -299,26 +299,20 @@ public class Mapa implements IMapa {
             ILocal localPara = raiz.getLocalByID(para); // procurar a local por id
 
             if (tipoCaminhoString.equals("direcionado")) {
-                grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
-                raiz.adicionarRota(localDe, localPara, distancia); // adicionar aresta com peso á rede
-            } else {
-                grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
-                // grafo.addEdge(localPara.getId(), localDe.getId(), distancia);
-
-                if (tipoCaminhoString.equals("direcionado")) {
                     grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
                     Demo.raiz.adicionarRota(localDe, localPara, distancia); // adicionar aresta com peso á rede
 
                     System.out.println(grafo);
-                } else {
-                    grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
+            }
+            else
+            {
+                grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
                     // grafo.addEdge(localPara.getId(), localDe.getId(), distancia);
 
                     Demo.raiz.adicionarRota(localDe, localPara, distancia); // adicionar aresta com peso á rede
                     // raiz.adicionarRota(localPara, localDe, distancia);
-                }
             }
-        }
+            }
     }
 
     @Override

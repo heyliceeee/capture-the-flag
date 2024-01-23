@@ -283,7 +283,7 @@ public class Demo {
 
         mostrarMenuSelecionarBots();
 
-        iniciarPartida();
+        //iniciarPartida();
     }
 
     /**
@@ -437,7 +437,7 @@ public class Demo {
     /**
      * mostrar o menu de iniciar a partida
      */
-    public static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException {
+    public static void iniciarPartida(IJogador jogador1, IJogador jogador2, RouteNetwork grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, java.text.ParseException {
         int quemComeca = mapa.gerarNumeroRandom(1, 2);
 
         System.out.println("\n");

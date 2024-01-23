@@ -72,7 +72,7 @@ public class ArrayOrderedList<T> implements OrderedListADT<T>
     {
         if (index < 0 || index >= rear)
         {
-            throw new IndexOutOfBoundsException("Índice fora dos limites da lista");
+            throw new IndexOutOfBoundsException("indice fora dos limites da lista");
         }
 
         return list[index];
