@@ -6,7 +6,8 @@ public class DoublyLinkedList<T>
     protected int size;
 
 
-    public DoublyLinkedList() {
+    public DoublyLinkedList()
+    {
         this.size = 0;
         this.head = this.tail = null;
     }
@@ -91,13 +92,9 @@ public class DoublyLinkedList<T>
      *
      * @return
      */
-    public boolean isEmpty() {
-        if (size > 0) {
-
-            return false;
-        }
-
-        return true;
+    public boolean isEmpty()
+    {
+        return this.head == null;
     }
 
     /**

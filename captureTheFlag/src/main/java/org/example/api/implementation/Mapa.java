@@ -4,6 +4,7 @@ import org.example.Demo;
 import org.example.api.interfaces.*;
 import org.example.collections.implementation.ArrayOrderedList;
 import org.example.collections.interfaces.IExporter;
+import org.json.simple.JSONObject;
 
 import java.util.*;
 
@@ -24,13 +25,13 @@ public class Mapa implements IMapa
     /**
      * densidade das arestas do mapa (10% - 100%)
      */
-    private static int densidadeArestas;
+    public static int densidadeArestas;
 
 
     /**
      * localizacoes existentes do mapa
      */
-    private static int locExistentes;
+    public static int locExistentes;
 
 
     /**
@@ -344,5 +345,18 @@ public class Mapa implements IMapa
                 //raiz.adicionarRota(localPara, localDe, distancia);
             }
         }
+    }
+
+
+    @Override
+    public JSONObject getMapaObjetoJSON()
+    {
+        JSONObject mapa = new JSONObject();
+
+        mapa.put("qttLocExistentes", locExistentes);
+        mapa.put("tipoCaminho", tipoCaminhoString);
+        mapa.put("densidadeArestas", densidadeArestas);
+
+        return mapa;
     }
 }

@@ -1,4 +1,5 @@
 import org.example.api.implementation.Bandeira;
+import org.example.api.implementation.Coordenada;
 import org.example.api.implementation.Jogador;
 import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.IJogador;
@@ -13,12 +14,15 @@ public class testJogador
     @Test
     public void testConstrutorCorretoJogador_Valid()
     {
-        assertDoesNotThrow(() -> { IJogador jogador = new Jogador("Jogador 1", 0); }); //nao retorna nada porque foi criado contrutor com sucesso
+        IBandeira bandeira = new Bandeira(0, "Bandeira", "Stairs", new Coordenada(0.0, 0.0));
 
-        IJogador jogador = new Jogador("Jogador 1", 0);
+        assertDoesNotThrow(() -> { IJogador jogador = new Jogador("Jogador 1", 0, bandeira); }); //nao retorna nada porque foi criado contrutor com sucesso
+
+        IJogador jogador = new Jogador("Jogador 1", 0, bandeira);
 
         assertEquals("Jogador 1", jogador.getNome()); //se o nome == "Jogador 1"
         assertEquals(0, jogador.getNumeroBots()); //se o bots == 0
+        assertEquals(bandeira, jogador.getBandeira());
     }
 
 
@@ -26,7 +30,7 @@ public class testJogador
     @Test
     public void testConstrutorIncorretoJogador_Valid()
     {
-        assertThrows(IllegalArgumentException.class, () -> { IJogador jogador = new Jogador(null, 0);  }); //retorna erro porque foi criado contrutor sem sucesso
+        assertThrows(IllegalArgumentException.class, () -> { IJogador jogador = new Jogador(null, 0, null);  }); //retorna erro porque foi criado contrutor sem sucesso
     }
 
 
@@ -34,7 +38,8 @@ public class testJogador
     @Test
     public void testGettersSettersJogador_Valid()
     {
-        IJogador jogador = new Jogador("Jogador 1", 0);
+        IBandeira bandeira = new Bandeira(0, "Bandeira", "Stairs", new Coordenada(0.0, 0.0));
+        IJogador jogador = new Jogador("Jogador 1", 0, bandeira);
 
         assertEquals("Jogador 1", jogador.getNome()); //se o nome == "Jogador 1"
         jogador.setNome("Jogador 2");
@@ -43,5 +48,10 @@ public class testJogador
         assertEquals(0, jogador.getNumeroBots()); //se o bots == 0
         jogador.setNumeroBots(1);
         assertEquals(1, jogador.getNumeroBots()); //se o bots == 1
+
+        assertEquals(bandeira, jogador.getBandeira());
+        IBandeira bandeira1 = new Bandeira(0, "Bandeira", "CT Stairs", new Coordenada(0.0, 0.0));
+        jogador.setBandeira(bandeira1);
+        assertEquals(bandeira1, jogador.getBandeira());
     }
 }

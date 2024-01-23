@@ -125,7 +125,6 @@ public class ImportarExportarJson
                     ILocal deLocal = raiz.getLocalByID((int) de); //localizacao/bandeira correspondente ao id
                     ILocal paraLocal = raiz.getLocalByID((int) para); //localizacao/bandeira correspondente ao id
 
-
                     Demo.raiz.adicionarRota(deLocal, paraLocal, peso);
                 }
                 catch (IllegalArgumentException | EmptyCollectionException e)

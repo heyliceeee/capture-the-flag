@@ -18,6 +18,8 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.example.api.implementation.Mapa.*;
+
 /**
  * representacao da classe da raiz do JSON
  */
@@ -144,6 +146,23 @@ public class Raiz implements IRaiz
 
         return s;
     }
+
+
+    @Override
+    public String getMapa()
+    {
+        String s = "Mapa: {\n";
+
+        if(!this.mapas.isEmpty())
+        {
+
+        }
+
+        s += "}";
+
+        return s;
+    }
+
 
     /**
      * remove bot
@@ -480,6 +499,7 @@ public class Raiz implements IRaiz
         raiz.put("rotas", getRotasArrayJSON());
         raiz.put("bandeiras", getBandeirasArrayJSON());
         raiz.put("localizacoes", getLocalizacoesArrayJSON());
+        raiz.put("mapas", getMapasArrayJSON());
 
         Demo.iEJson.exportarParaFicheiroJSON(raiz.toJSONString(), "Raiz");
     }
@@ -595,6 +615,18 @@ public class Raiz implements IRaiz
         return jogadoresArray;
     }
 
+    private JSONArray getMapasArrayJSON()
+    {
+        JSONArray mapasArray = new JSONArray();
+        //Iterator<IMapa> iteratorMapa = this.mapas.iterator();
+
+       // while (iteratorMapa.hasNext())
+        //{
+            mapasArray.add(getMapaObjetoJSON());
+       // }
+
+        return mapasArray;
+    }
 
     /**
      * retorna o {@link ILocal localizacao/bandeira} com o ID enviado por parâmetro
@@ -724,5 +756,21 @@ public class Raiz implements IRaiz
         }
 
         return null;
+    }
+
+
+    /**
+     * retornar o mapa
+     * @return
+     */
+    private JSONObject getMapaObjetoJSON()
+    {
+        JSONObject mapaObject = new JSONObject();
+
+        mapaObject.put("qttLocExistentes", locExistentes);
+        mapaObject.put("tipoCaminho", tipoCaminhoString);
+        mapaObject.put("densidadeArestas", densidadeArestas);
+
+        return mapaObject;
     }
 }

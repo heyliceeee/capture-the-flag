@@ -2,6 +2,8 @@ package org.example.InterfaceGrafica;
 
 import java.io.IOException;
 
+import org.example.Demo;
+import org.example.api.implementation.Mapa;
 import org.json.simple.parser.ParseException;
 
 import javafx.application.Application;
@@ -42,14 +44,22 @@ public class InterfaceGraficaSelecionarMapa extends Application {
         // Se o botao importar mapa é premido, usa a função de importação do mapa
         importarMapa.setOnAction(event -> {
             stage.close();
-            try {
-                DataManager.iEJson.importarDoFicheiroJSON(dataManager.raiz, dataManager.local,
-                        "docs/export/Raiz.json");
-            } catch (IOException e) {
+            try
+            {
+                DataManager.iEJson.importarDoFicheiroJSON(dataManager.raiz, dataManager.local, "docs/export/Raiz.json");
 
+                System.out.println(Demo.raiz.getMapa());
+                System.out.println(Demo.raiz.getListaBots());
+                System.out.println(Demo.raiz.getListaJogadores());
+                System.out.println(Demo.raiz.getListaBandeiras());
+                System.out.println(Demo.raiz.getListaLocalizacoes());
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
-            } catch (ParseException e) {
-
+            }
+            catch (ParseException e)
+            {
                 e.printStackTrace();
             }
         });
