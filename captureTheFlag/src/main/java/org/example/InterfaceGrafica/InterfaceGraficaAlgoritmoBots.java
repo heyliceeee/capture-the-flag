@@ -213,7 +213,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
             jogador.getBotsJogador().add(bot);
         }
 
-        jogador.setNumeroBots(comboBoxes.size());
+        jogador.setNumeroBots(size);
     }
 
 }

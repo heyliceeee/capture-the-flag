@@ -123,7 +123,7 @@ public class InterfaceGraficaNumeroBots extends Application {
     }
 
     private void preencherComboBox(ComboBox<Integer> comboBox) {
-        for (int i = 3; i <= maxBots; i++) {
+        for (int i = 6; i <= maxBots; i++) {
             comboBox.getItems().add(i);
         }
     }
