@@ -17,9 +17,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class Demo
-{
-    //region instancias
+public class Demo {
+    // region instancias
     public static Mapa mapa = new Mapa();
     public static ImportarExportarJson iEJson = new ImportarExportarJson();
 
@@ -40,30 +39,27 @@ public class Demo
     public static IRota rota = new Rota(null, null, 0);
     static Scanner scanner = new Scanner(System.in);
 
-    //endregion
+    // endregion
 
     static DataManager dataManager = new DataManager();
 
+    public static void main(String[] args) throws IOException, ParseException, InterruptedException,
+            NotLocalInstanceException, java.text.ParseException {
+        // mostrarMenuInicial();
 
-
-    public static void main(String[] args) throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
-    {
-        //mostrarMenuInicial();
-
-       InterfaceGraficaMenuPrincipal.setDataManager(dataManager);
-       InterfaceGraficaMenuPrincipal.launch(InterfaceGraficaMenuPrincipal.class, args);
+        InterfaceGraficaMenuPrincipal.setDataManager(dataManager);
+        InterfaceGraficaMenuPrincipal.launch(InterfaceGraficaMenuPrincipal.class, args);
     }
 
-
-    //region MENUS DO JOGO
+    // region MENUS DO JOGO
 
     /**
      * mostrar o menu incial
      * 
      * @throws EmptyCollectionException
      */
-    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
-    {
+    public static void mostrarMenuInicial() throws EmptyCollectionException, IOException, ParseException,
+            InterruptedException, NotLocalInstanceException, java.text.ParseException {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -101,12 +97,11 @@ public class Demo
         } while (!exit);
     }
 
-
     /**
      * mostrar o menu do jogo {criar mapa, importar mapa}
      */
-    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException, NotLocalInstanceException, java.text.ParseException
-    {
+    private static void mostrarMenuJogo() throws IOException, ParseException, InterruptedException,
+            NotLocalInstanceException, java.text.ParseException {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -149,14 +144,14 @@ public class Demo
         } while (!exit);
     }
 
-
     /**
      * mostra o menu de criar o mapa
+     * 
      * @throws IOException
      * @throws InterruptedException
      */
-    private static void mostrarMenuCriarMapa() throws IOException, InterruptedException, NotLocalInstanceException, java.text.ParseException
-    {
+    private static void mostrarMenuCriarMapa()
+            throws IOException, InterruptedException, NotLocalInstanceException, java.text.ParseException {
         boolean exit = false;
         int option = 0;
 
@@ -187,7 +182,8 @@ public class Demo
 
             System.out.println("+-------------------------------------------+");
 
-        } while (locExistentesJogador1 < 6 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2 || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
+        } while (locExistentesJogador1 < 6 || tipoCaminhoJogador1 < 1 || tipoCaminhoJogador1 > 2
+                || densidadeArestasJogador1 < 1 || densidadeArestasJogador1 > 100);
 
         do {
             System.out.println("\n");
@@ -212,13 +208,15 @@ public class Demo
 
             System.out.println("+-------------------------------------------+");
 
-        } while (locExistentesJogador2 < 6 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2 || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
+        } while (locExistentesJogador2 < 6 || tipoCaminhoJogador2 < 1 || tipoCaminhoJogador2 > 2
+                || densidadeArestasJogador2 < 1 || densidadeArestasJogador2 > 100);
 
-        //region criar mapa
-        mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1, tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
-        //endregion
+        // region criar mapa
+        mapa.gerarMapa(grafo, raiz, rota, locExistentesJogador1, locExistentesJogador2, tipoCaminhoJogador1,
+                tipoCaminhoJogador2, densidadeArestasJogador1, densidadeArestasJogador2);
+        // endregion
 
-        //region escolher bandeira
+        // region escolher bandeira
         Iterator<IRota<ILocal>> rotas = grafo.getRotas();
 
         System.out.println(grafo);
@@ -233,27 +231,25 @@ public class Demo
         System.out.println("+-------------------------------------------+");
         System.out.println("| Localizacao da Bandeira:                  |\n");
 
-        //region ciclo para mostrar todas os nodes
-        for (ILocalizacao localizacaoObj : localizacaoList)
-        {
+        // region ciclo para mostrar todas os nodes
+        for (ILocalizacao localizacaoObj : localizacaoList) {
             System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
         }
-        //endregion
-
+        // endregion
 
         locBandeiraJogador1 = scanner.nextInt();
 
         System.out.println("+-------------------------------------------+");
 
-        ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); //localizacao selecionada
+        ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); // localizacao selecionada
         raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
-        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); //criar bandeira
+        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira",
+                localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); // criar bandeira
 
         jogador1.setBandeira(bandeiraJogador1);
         raiz.adicionarLocal(bandeiraJogador1);
 
         localizacaoList = raiz.getListaLocalizacoes();
-
 
         System.out.println("\n");
         System.out.println("+-------------------------------------------+");
@@ -263,117 +259,98 @@ public class Demo
         System.out.println("+-------------------------------------------+");
         System.out.println("| Localizacao da Bandeira:                  |\n");
 
-        //region ciclo para mostrar todas os nodes sem ser aquela selecionada pelo jogador1
-        for (ILocalizacao localizacaoObj : localizacaoList)
-        {
+        // region ciclo para mostrar todas os nodes sem ser aquela selecionada pelo
+        // jogador1
+        for (ILocalizacao localizacaoObj : localizacaoList) {
             System.out.println("| " + localizacaoObj.getId() + ". " + localizacaoObj.getNome() + "\n");
         }
-        //endregion
+        // endregion
 
         locBandeiraJogador2 = scanner.nextInt();
 
         System.out.println("+-------------------------------------------+");
 
-        ILocalizacao localJogador2Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador2); //localizacao selecionada
+        ILocalizacao localJogador2Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador2); // localizacao selecionada
         raiz.removerLocal(localJogador2Escolheu); // remover localizacao selecionada
-        IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); //criar bandeira
+        IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira",
+                localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); // criar bandeira
 
         jogador2.setBandeira(bandeiraJogador2);
         raiz.adicionarLocal(bandeiraJogador2);
 
-
-        localizacaoList = raiz.getListaLocalizacoes(); //localizacoes atualizadas apos selecionar a bandeira
-        //endregion
+        localizacaoList = raiz.getListaLocalizacoes(); // localizacoes atualizadas apos selecionar a bandeira
+        // endregion
 
         mostrarMenuSelecionarBots();
 
         iniciarPartida();
     }
 
-
     /**
      * mostrar o menu de selecionar os bots
      */
-    private static void mostrarMenuSelecionarBots()
-    {
+    private static void mostrarMenuSelecionarBots() {
         int botsJogador1 = 0, botsJogador2 = 0;
-        int maxBots = mapa.obterMaxBots(); //locExistentes
+        int maxBots = mapa.obterMaxBots(); // locExistentes
 
-
-        do
-        {
+        do {
             System.out.println("\n");
             System.out.println("+-------------------------------------------+");
             System.out.println("|        CRIAR MAPA - JOGADOR 1             |");
             System.out.println("+-------------------------------------------+");
             System.out.println("introduza os seguintes dados: *              ");
             System.out.println("+-------------------------------------------+");
-            System.out.println("| Numero de bots (3 - "+(maxBots/2)+"):                  |\n");
+            System.out.println("| Numero de bots (3 - " + (maxBots / 2) + "):                  |\n");
 
             botsJogador1 = scanner.nextInt();
-        }
-        while (botsJogador1 < 3 || botsJogador1 > (maxBots/2));
+        } while (botsJogador1 < 3 || botsJogador1 > (maxBots / 2));
 
-
-        do
-        {
+        do {
             System.out.println("\n");
             System.out.println("+-------------------------------------------+");
             System.out.println("|        CRIAR MAPA - JOGADOR 2             |");
             System.out.println("+-------------------------------------------+");
             System.out.println("introduza os seguintes dados: *              ");
             System.out.println("+-------------------------------------------+");
-            System.out.println("| Numero de bots (3 - "+(maxBots/2)+"):                  |\n");
+            System.out.println("| Numero de bots (3 - " + (maxBots / 2) + "):                  |\n");
 
             botsJogador2 = scanner.nextInt();
-        }
-        while (botsJogador2 < 3 || botsJogador2 > (maxBots/2));
-
+        } while (botsJogador2 < 3 || botsJogador2 > (maxBots / 2));
 
         int nBots = 0;
 
-        //region fazer media de bots
-        if(botsJogador1 > botsJogador2)
-        {
+        // region fazer media de bots
+        if (botsJogador1 > botsJogador2) {
             nBots = mapa.fazerMedia(botsJogador2, botsJogador1);
 
             // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
-            if (nBots % 2 != 0)
-            {
+            if (nBots % 2 != 0) {
                 nBots--;
             }
-        }
-        else if(botsJogador2 > botsJogador1)
-        {
+        } else if (botsJogador2 > botsJogador1) {
             nBots = mapa.fazerMedia(botsJogador1, botsJogador2);
 
             // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
-            if (nBots % 2 != 0)
-            {
+            if (nBots % 2 != 0) {
                 nBots--;
             }
-        }
-        else
-        {
+        } else {
             nBots = botsJogador1;
 
             // Garante que o resultado é um valor inteiro e par, mas não maior que maxBots
-            if (nBots % 2 != 0)
-            {
+            if (nBots % 2 != 0) {
                 nBots--;
             }
         }
-        //endregion
+        // endregion
 
-
-        //region selecionar algoritmo
-        int algoritmoBotJogador1 = 0, algoritmoBotJogador2 = 0, i=-1;
+        // region selecionar algoritmo
+        int algoritmoBotJogador1 = 0, algoritmoBotJogador2 = 0, i = -1;
         String stringAlgortimoBotJogador1 = "", stringAlgortimoBotJogador2 = "";
 
-        System.out.println("| há "+(nBots/2)+" bots disponíveis                       \n|");
+        System.out.println("| há " + (nBots / 2) + " bots disponíveis                       \n|");
 
-        do
-        {
+        do {
             i++;
 
             System.out.println("\n");
@@ -382,51 +359,41 @@ public class Demo
             System.out.println("+-----------------------------------------------+");
             System.out.println("selecione uma das opcoes: *                      ");
             System.out.println("+-----------------------------------------------+");
-            System.out.println("| Para o bot "+(i+1)+", seleciona o algoritmo desejado: |");
+            System.out.println("| Para o bot " + (i + 1) + ", seleciona o algoritmo desejado: |");
             System.out.println("| 1. Dijkstra                                   |");
             System.out.println("| 2. BFS                                        |");
             System.out.println("| 3. DFS                                        |");
 
-
             algoritmoBotJogador1 = scanner.nextInt();
 
-
-            if(algoritmoBotJogador1 == 1)
-            {
+            if (algoritmoBotJogador1 == 1) {
                 stringAlgortimoBotJogador1 = "Dijkstra";
-            }
-            else if(algoritmoBotJogador1 == 2)
-            {
+            } else if (algoritmoBotJogador1 == 2) {
                 stringAlgortimoBotJogador1 = "BFS";
-            }
-            else if(algoritmoBotJogador1 == 3)
-            {
+            } else if (algoritmoBotJogador1 == 3) {
                 stringAlgortimoBotJogador1 = "DFS";
             }
 
-
-            String nomeBot = "Bot "+(i+1)+" do Jogador 1";
+            String nomeBot = "Bot " + (i + 1) + " do Jogador 1";
 
             ArrayOrderedList<IBot> listaBotsJogador1 = jogador1.getBotsJogador();
-            IBot bot = new Bot(nomeBot, "Jogador 1", jogador1.getBandeira().getCoordenadas(), stringAlgortimoBotJogador1); //adicionar bot ao jogador
+            IBot bot = new Bot(nomeBot, "Jogador 1", jogador1.getBandeira().getCoordenadas(),
+                    stringAlgortimoBotJogador1); // adicionar bot ao jogador
 
             listaBotsJogador1.add(bot);// Adicione o bot à lista de bots do jogador 1
 
             raiz.adicionarBot(bot);
 
-            jogador1.setNumeroBots(nBots/2);
+            jogador1.setNumeroBots(nBots / 2);
 
-        }
-        while (algoritmoBotJogador1 < 1 || algoritmoBotJogador1 > 3 ||  i < ((nBots/2)-1));
+        } while (algoritmoBotJogador1 < 1 || algoritmoBotJogador1 > 3 || i < ((nBots / 2) - 1));
 
-        //raiz.adicionarJogador(jogador1);
+        // raiz.adicionarJogador(jogador1);
 
-        System.out.println("| há "+(nBots/2)+" bots disponíveis                         \n|");
+        System.out.println("| há " + (nBots / 2) + " bots disponíveis                         \n|");
 
-
-        i=-1;
-        do
-        {
+        i = -1;
+        do {
             i++;
 
             System.out.println("\n");
@@ -435,57 +402,47 @@ public class Demo
             System.out.println("+-----------------------------------------------+");
             System.out.println("selecione uma das opcoes: *                      ");
             System.out.println("+-----------------------------------------------+");
-            System.out.println("| Para o bot "+(i+1)+", seleciona o algoritmo desejado: |");
+            System.out.println("| Para o bot " + (i + 1) + ", seleciona o algoritmo desejado: |");
             System.out.println("| 1. Dijkstra                                   |");
             System.out.println("| 2. BFS                                        |");
             System.out.println("| 3. DFS                                        |");
 
-
             algoritmoBotJogador2 = scanner.nextInt();
 
-
-            if(algoritmoBotJogador2 == 1)
-            {
+            if (algoritmoBotJogador2 == 1) {
                 stringAlgortimoBotJogador2 = "Dijkstra";
-            }
-            else if(algoritmoBotJogador2 == 2)
-            {
+            } else if (algoritmoBotJogador2 == 2) {
                 stringAlgortimoBotJogador2 = "BFS";
-            }
-            else if(algoritmoBotJogador2 == 3)
-            {
+            } else if (algoritmoBotJogador2 == 3) {
                 stringAlgortimoBotJogador2 = "DFS";
             }
 
-
-            String nomeBot = "Bot "+(i+1)+" do Jogador 2";
+            String nomeBot = "Bot " + (i + 1) + " do Jogador 2";
 
             ArrayOrderedList<IBot> listaBotsJogador2 = jogador2.getBotsJogador();
-            IBot bot = new Bot(nomeBot, "Jogador 2", jogador2.getBandeira().getCoordenadas(), stringAlgortimoBotJogador2); //adicionar bot ao jogador
+            IBot bot = new Bot(nomeBot, "Jogador 2", jogador2.getBandeira().getCoordenadas(),
+                    stringAlgortimoBotJogador2); // adicionar bot ao jogador
 
             listaBotsJogador2.add(bot);// Adicione o bot à lista de bots do jogador 2
 
             raiz.adicionarBot(bot);
 
-            jogador2.setNumeroBots(nBots/2);
-        }
-        while (algoritmoBotJogador2 < 1 || algoritmoBotJogador2 > 3 ||  i < ((nBots/2)-1));
+            jogador2.setNumeroBots(nBots / 2);
+        } while (algoritmoBotJogador2 < 1 || algoritmoBotJogador2 > 3 || i < ((nBots / 2) - 1));
 
-        //raiz.adicionarJogador(jogador2);
-        //endregion
+        // raiz.adicionarJogador(jogador2);
+        // endregion
     }
-
 
     /**
      * mostrar o menu de iniciar a partida
      */
-    public static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException
-    {
+    public static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException {
         int quemComeca = mapa.gerarNumeroRandom(1, 2);
 
         System.out.println("\n");
         System.out.println("+-------------------------------------------+");
-        System.out.println("|        quem comeca: JOGADOR "+quemComeca+"               |");
+        System.out.println("|        quem comeca: JOGADOR " + quemComeca + "               |");
         System.out.println("+---------------------------------------------+");
 
         Jogo.partida(quemComeca, jogador1, jogador2, grafo, raiz, rota);
