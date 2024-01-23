@@ -1,5 +1,6 @@
 package org.example.api.implementation;
 
+import org.example.Demo;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
 import org.json.simple.JSONArray;
@@ -31,6 +32,111 @@ public class ImportarExportarJson
         JSONParser parser = new JSONParser();
         Reader reader = new FileReader(nomeFicheiro);
         JSONObject objeto = (JSONObject) parser.parse(reader);
+
+
+
+        JSONArray jogadoresArray = (JSONArray) objeto.get("jogadores"); //"jogadores":[]
+
+        try
+        {
+            for(int i=0; i < jogadoresArray.size(); i++)
+            {
+                JSONObject jogadores = (JSONObject) jogadoresArray.get(i);
+
+                long numeroBots = (long) jogadores.get("numeroBots");
+                String nome = (String) jogadores.get("nome");
+
+
+                JSONObject bandeira = (JSONObject) jogadores.get("bandeira");
+
+                String tipoBandeira = (String) bandeira.get("tipo");
+                String nomeBandeira = (String) bandeira.get("nome");
+                long idBandeira = (long) bandeira.get("id");
+
+
+                JSONObject coordenada = (JSONObject) bandeira.get("coordenadas");
+                double latitude = (double) coordenada.get("latitude");
+                double longitude = (double) coordenada.get("longitude");
+
+
+                ICoordenada coordenada1 = new Coordenada(latitude, longitude);
+                IBandeira bandeira1 = new Bandeira((int)idBandeira, tipoBandeira, nomeBandeira, coordenada1);
+
+
+
+                IJogador jogador = new Jogador(nome, (int)numeroBots, bandeira1);
+
+                raiz.adicionarJogador(jogador);
+            }
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("ERRO: "+e.getMessage());
+        }
+
+
+        JSONArray botsArray = (JSONArray) objeto.get("bots"); //"bots":[]
+
+        try
+        {
+            for(int i=0; i < botsArray.size(); i++)
+            {
+                JSONObject bots = (JSONObject) botsArray.get(i);
+
+                String nome = (String) bots.get("nome");
+                String nomeJogador = (String) bots.get("nomeJogador");
+                String algoritmoMovimento = (String) bots.get("algoritmoMovimento");
+
+
+                JSONObject coordenada = (JSONObject) bots.get("coordenadas");
+                double latitude = (double) coordenada.get("latitude");
+                double longitude = (double) coordenada.get("longitude");
+
+
+                ICoordenada coordenada1 = new Coordenada(latitude, longitude);
+
+
+                IBot bot = new Bot(nome, nomeJogador, coordenada1, algoritmoMovimento);
+
+                raiz.adicionarBot(bot);
+            }
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("ERRO: "+e.getMessage());
+        }
+
+
+
+        JSONArray rotasArray = (JSONArray) objeto.get("rotas"); //"rotas":[]
+
+        try
+        {
+            for(int i=0; i < rotasArray.size(); i++)
+            {
+                JSONObject rotas = (JSONObject) rotasArray.get(i);
+
+                long de = (long) rotas.get("de");
+                long para = (long) rotas.get("para");
+                double peso = (double) rotas.get("distancia");
+
+                try
+                {
+                    ILocal deLocal = raiz.getLocalByID((int) de); //localizacao/bandeira correspondente ao id
+                    ILocal paraLocal = raiz.getLocalByID((int) para); //localizacao/bandeira correspondente ao id
+
+                    Demo.raiz.adicionarRota(deLocal, paraLocal, peso);
+                }
+                catch (IllegalArgumentException | EmptyCollectionException e)
+                {
+                    System.out.println("ERRO: "+e.getMessage());
+                }
+            }
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("ERRO: "+e.getMessage());
+        }
 
 
         JSONArray locaisArray = (JSONArray) objeto.get("locais"); //"locais":[]
@@ -67,100 +173,6 @@ public class ImportarExportarJson
 
                     raiz.adicionarLocal(bandeira); //adicionar a bandeira á raiz
                 }
-            }
-        }
-        catch (NullPointerException e)
-        {
-            System.out.println("ERRO: "+e.getMessage());
-        }
-
-
-
-        JSONArray rotasArray = (JSONArray) objeto.get("rotas"); //"rotas":[]
-
-        try
-        {
-            for(int i=0; i < rotasArray.size(); i++)
-            {
-                JSONObject rotas = (JSONObject) rotasArray.get(i);
-
-                long de = (long) rotas.get("de");
-                long para = (long) rotas.get("para");
-                String tipoCaminho = (String) rotas.get("tipoCaminho");
-
-                try
-                {
-                    ILocal deLocal = raiz.getLocalByID((int) de); //localizacao/bandeira correspondente ao id
-                    ILocal paraLocal = raiz.getLocalByID((int) para); //localizacao/bandeira correspondente ao id
-
-                    double x1 = deLocal.getCoordenadas().getLongitude();
-                    double y1 = deLocal.getCoordenadas().getLatitude();
-                    double x2 = paraLocal.getCoordenadas().getLongitude();
-                    double y2 = paraLocal.getCoordenadas().getLatitude();
-
-                    double distancia = Math.round(rota.calcularPesoDasCoordenadas(x1, y1, x2, y2) * 1000000); //arredondar
-                    
-
-                    raiz.adicionarRota(deLocal, paraLocal, distancia);
-                }
-                catch (IllegalArgumentException | EmptyCollectionException e)
-                {
-                    System.out.println("ERRO: "+e.getMessage());
-                }
-            }
-        }
-        catch (NullPointerException e)
-        {
-            System.out.println("ERRO: "+e.getMessage());
-        }
-
-
-
-        JSONArray jogadoresArray = (JSONArray) objeto.get("jogadores"); //"jogadores":[]
-
-        try
-        {
-            for(int i=0; i < jogadoresArray.size(); i++)
-            {
-                JSONObject jogadores = (JSONObject) jogadoresArray.get(i);
-
-                String nome = (String) jogadores.get("nome");
-                long numeroBots = (long) jogadores.get("bots");
-                long bandeirasConquistadas = (long) jogadores.get("bandeirasConquistadas");
-
-                IJogador jogador = new Jogador(nome, (int)numeroBots, (int)bandeirasConquistadas);
-
-                raiz.adicionarJogador(jogador);
-            }
-        }
-        catch (NullPointerException e)
-        {
-            System.out.println("ERRO: "+e.getMessage());
-        }
-
-
-
-        JSONArray botsArray = (JSONArray) objeto.get("bots"); //"bots":[]
-
-        try
-        {
-            for(int i=0; i < botsArray.size(); i++)
-            {
-                JSONObject bots = (JSONObject) botsArray.get(i);
-
-                String nome = (String) bots.get("nome");
-                String nomeJogador = (String) bots.get("nomeJogador");
-                String algoritmoMovimento = (String) bots.get("algoritmoMovimento");
-
-                JSONObject coordenadas = (JSONObject) bots.get("coordenadas");
-
-                double longitudeCoordenada = (double) coordenadas.get("longitude");
-                double latitudeCoordenada = (double) coordenadas.get("latitude");
-                ICoordenada coordenada1 = new Coordenada(longitudeCoordenada, latitudeCoordenada);
-
-                IBot bot = new Bot(nome, nomeJogador, coordenada1, algoritmoMovimento);
-
-                raiz.adicionarBot(bot);
             }
         }
         catch (NullPointerException e)

@@ -1,7 +1,9 @@
 package org.example.InterfaceGrafica;
 
+import java.io.IOException;
 import java.util.Iterator;
 
+import org.example.Demo;
 import org.example.api.implementation.Bot;
 import org.example.api.implementation.Mapa;
 import org.example.api.interfaces.IBot;
@@ -44,7 +46,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         root.setAlignment(Pos.CENTER);
 
         // Adicionar ComboBoxes e Labels para o Jogador 1
-        for (int i = 1; i <= numeroBots / 2; i++) {
+        for (int i = 1; i <= (numeroBots / 2); i++) {
             root.getChildren().add(formularioBot(i, "Jogador 1", comboBoxJogador1));
         }
 
@@ -59,7 +61,11 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         });
 
         okButton.setOnAction(event -> {
-            this.logicaBotaoOk(iniciarButton);
+            try {
+                this.logicaBotaoOk(iniciarButton);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         iniciarButton.setOnAction(event -> {
@@ -89,7 +95,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     private void mostrarFormularioJogador2() {
         // Adicionar ComboBoxes e Labels para o Jogador 2
-        for (int i = 1; i <= numeroBots / 2; i++) {
+        for (int i = 1; i <= (numeroBots / 2); i++) {
             root.getChildren().add(formularioBot(i, "Jogador 2", comboBoxJogador2));
         }
     }
@@ -115,13 +121,21 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         }
 
         this.criarBots(dataManager.jogador1.getNome(), comboBoxJogador1, dataManager.jogador1);
+
+        for (IBot bot : dataManager.jogador1.getBotsJogador()) {
+            Demo.raiz.adicionarBot(bot);
+        }
+
+        Demo.raiz.adicionarJogador(dataManager.jogador1);
+
         root.getChildren().clear();
+
         this.mostrarFormularioJogador2();
         root.getChildren().add(okButton);
 
     }
 
-    private void logicaBotaoOk(Button iniciarButton) {
+    private void logicaBotaoOk(Button iniciarButton) throws IOException {
 
         // Verificar se os campos foram preenchidos
         if (!this.verificarAlgoritmosEscolhidos(comboBoxJogador2)) {
@@ -135,6 +149,10 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         }
 
         this.criarBots(dataManager.jogador2.getNome(), comboBoxJogador2, dataManager.jogador2);
+
+        Demo.raiz.adicionarJogador(dataManager.jogador2);
+        Demo.raiz.exportarRaizParaJson();
+
         root.getChildren().clear();
         this.mostrarPrimeiroJogador();
         root.getChildren().add(iniciarButton);
@@ -205,7 +223,6 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
 
     private void criarBots(String nomeJogador, DoubleLinkedUnorderedList<ComboBox<String>> comboBoxes,
             IJogador jogador) {
-
         int size = comboBoxes.size();
 
         for (int i = 0; i < size; i++) {
@@ -213,6 +230,8 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
             String algoritmo = comboBoxes.removeFirst().getValue();
             IBot bot = new Bot(nomeBot, nomeJogador, jogador.getBandeira().getCoordenadas(), algoritmo);
             jogador.getBotsJogador().add(bot);
+
+            Demo.raiz.adicionarBot(bot);
         }
 
         jogador.setNumeroBots(size);

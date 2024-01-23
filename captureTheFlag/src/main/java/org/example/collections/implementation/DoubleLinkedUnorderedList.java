@@ -4,6 +4,7 @@ import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.interfaces.UnorderedListADT;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements UnorderedListADT<T> {
     public DoubleLinkedUnorderedList() {

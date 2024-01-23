@@ -209,4 +209,6 @@ public interface IRaiz
      * @return toda a informação do jogador se for encontrado, null caso contrário
      */
     public IJogador getJogadorPorNome(String nome);
+
+    String getMapa();
 }

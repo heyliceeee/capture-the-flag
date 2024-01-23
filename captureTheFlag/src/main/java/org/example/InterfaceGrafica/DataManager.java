@@ -36,8 +36,8 @@ public class DataManager {
     public DataManager() {
         this.raiz = new Raiz();
         this.local = new Local(0, "", null);
-        this.jogador1 = new Jogador("Jogador 1", 0, 0);
-        this.jogador2 = new Jogador("Jogador 2", 0, 0);
+        this.jogador1 = new Jogador("Jogador 1", 0, null);
+        this.jogador2 = new Jogador("Jogador 2", 0, null);
         this.rota = new Rota(null, null, 0);
     }
 

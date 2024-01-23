@@ -34,8 +34,8 @@ public class Demo {
 
     public static IRaiz raiz = new Raiz();
     public static ILocal local = new Local(0, "", null);
-    public static IJogador jogador1 = new Jogador("Jogador 1", 0, 0);
-    public static IJogador jogador2 = new Jogador("Jogador 2", 0, 0);
+    public static IJogador jogador1 = new Jogador("Jogador 1", 0, null);
+    public static IJogador jogador2 = new Jogador("Jogador 2", 0, null);
     public static IRota rota = new Rota(null, null, 0);
     static Scanner scanner = new Scanner(System.in);
 
@@ -283,7 +283,7 @@ public class Demo {
 
         mostrarMenuSelecionarBots();
 
-        iniciarPartida();
+        //iniciarPartida();
     }
 
     /**
@@ -291,7 +291,7 @@ public class Demo {
      */
     private static void mostrarMenuSelecionarBots() {
         int botsJogador1 = 0, botsJogador2 = 0;
-        int maxBots = mapa.obterMaxBots();
+        int maxBots = mapa.obterMaxBots(); // locExistentes
 
         do {
             System.out.println("\n");
@@ -382,9 +382,13 @@ public class Demo {
 
             listaBotsJogador1.add(bot);// Adicione o bot à lista de bots do jogador 1
 
+            raiz.adicionarBot(bot);
+
             jogador1.setNumeroBots(nBots / 2);
 
         } while (algoritmoBotJogador1 < 1 || algoritmoBotJogador1 > 3 || i < ((nBots / 2) - 1));
+
+        // raiz.adicionarJogador(jogador1);
 
         System.out.println("| há " + (nBots / 2) + " bots disponíveis                         \n|");
 
@@ -421,15 +425,19 @@ public class Demo {
 
             listaBotsJogador2.add(bot);// Adicione o bot à lista de bots do jogador 2
 
+            raiz.adicionarBot(bot);
+
             jogador2.setNumeroBots(nBots / 2);
         } while (algoritmoBotJogador2 < 1 || algoritmoBotJogador2 > 3 || i < ((nBots / 2) - 1));
+
+        // raiz.adicionarJogador(jogador2);
         // endregion
     }
 
     /**
      * mostrar o menu de iniciar a partida
      */
-    private static void iniciarPartida() throws NotLocalInstanceException, java.text.ParseException {
+    public static void iniciarPartida(IJogador jogador1, IJogador jogador2, RouteNetwork grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, java.text.ParseException {
         int quemComeca = mapa.gerarNumeroRandom(1, 2);
 
         System.out.println("\n");
