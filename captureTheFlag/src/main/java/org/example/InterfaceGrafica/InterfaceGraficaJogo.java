@@ -1,7 +1,5 @@
 package org.example.InterfaceGrafica;
 
-import static org.example.Demo.jogador2;
-
 import java.text.ParseException;
 import java.util.Iterator;
 
@@ -9,9 +7,7 @@ import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Jogo;
 import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.IBot;
-import org.example.api.interfaces.ILocal;
 import org.example.api.interfaces.ILocalizacao;
-import org.example.api.interfaces.IRota;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
 
@@ -38,7 +34,7 @@ public class InterfaceGraficaJogo extends Application {
         graph.setAttribute("ui.stylesheet", styleSheet());
 
         desenharJanela();
-        Jogo.partida(this, 1, dataManager.jogador1,
+        Jogo.partida(this, dataManager.mapa.gerarNumeroRandom(1, 2), dataManager.jogador1,
                 dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
         graph.display();
     }

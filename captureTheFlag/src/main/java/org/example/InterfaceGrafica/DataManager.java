@@ -1,11 +1,6 @@
 package org.example.InterfaceGrafica;
 
-import org.example.api.implementation.ImportarExportarJson;
-import org.example.api.implementation.Jogador;
-import org.example.api.implementation.Local;
-import org.example.api.implementation.Raiz;
-import org.example.api.implementation.Rota;
-import org.example.api.implementation.RouteNetwork;
+import org.example.api.implementation.*;
 import org.example.api.interfaces.IJogador;
 import org.example.api.interfaces.ILocal;
 import org.example.api.interfaces.IRaiz;
@@ -32,8 +27,10 @@ public class DataManager {
     protected IJogador jogador1;
     protected IJogador jogador2;
     protected IRota rota;
+    protected Mapa mapa;
 
     public DataManager() {
+        this.mapa = new Mapa();
         this.raiz = new Raiz();
         this.local = new Local(0, "", null);
         this.jogador1 = new Jogador("Jogador 1", 0, null);
@@ -41,4 +38,21 @@ public class DataManager {
         this.rota = new Rota(null, null, 0);
     }
 
+
+    public IRaiz getRaiz() {
+        return raiz;
+    }
+
+    public void setRaiz(IRaiz raiz) {
+        this.raiz = raiz;
+    }
+
+
+    public static ImportarExportarJson getiEJson() {
+        return iEJson;
+    }
+
+    public static void setiEJson(ImportarExportarJson iEJson) {
+        DataManager.iEJson = iEJson;
+    }
 }

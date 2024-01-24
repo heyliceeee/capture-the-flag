@@ -1,6 +1,7 @@
 package org.example.api.implementation;
 
 import org.example.Demo;
+import org.example.InterfaceGrafica.DataManager;
 import org.example.api.exceptions.ElementAlreadyExistsException;
 import org.example.api.exceptions.ElementNotFoundException;
 import org.example.api.exceptions.NotLocalInstanceException;
@@ -45,6 +46,11 @@ public class Raiz implements IRaiz
      * Lista de mapas associados ao jogo
      */
     public static UnorderedListADT<IMapa> mapas = new ArrayUnorderedList<>();
+
+
+
+    private DataManager dataManager;
+
 
 
     /**
@@ -238,11 +244,11 @@ public class Raiz implements IRaiz
      * @throws EmptyCollectionException se o grafo for vazio
      * @throws InterruptedException
      */
-    @Override
+/*    @Override
     public void exportarGrafo() throws EmptyCollectionException, InterruptedException
     {
-        Demo.exportar.exportGraph(this.routeNetwork, "rota");
-    }
+        dataManager.exportar.exportGraph(this.routeNetwork, "rota");
+    }*/
 
     /**
      * retorna o interador com a rota mais curta
@@ -437,7 +443,7 @@ public class Raiz implements IRaiz
     @Override
     public void exportarJogadoresParaJson() throws IOException
     {
-        Demo.iEJson.exportarParaFicheiroJSON(getJogadoresArrayJSON().toJSONString(), "Jogadores");
+        dataManager.getiEJson().exportarParaFicheiroJSON(getJogadoresArrayJSON().toJSONString(), "Jogadores");
     }
 
     /**
@@ -448,7 +454,7 @@ public class Raiz implements IRaiz
     @Override
     public void exportarBotsParaJson() throws IOException
     {
-        Demo.iEJson.exportarParaFicheiroJSON(getBotsArrayJSON().toJSONString(), "Bots");
+        dataManager.getiEJson().exportarParaFicheiroJSON(getBotsArrayJSON().toJSONString(), "Bots");
     }
 
     /**
@@ -459,7 +465,7 @@ public class Raiz implements IRaiz
     @Override
     public void exportarLocalizacoesParaJson() throws IOException
     {
-        Demo.iEJson.exportarParaFicheiroJSON(getLocalizacoesArrayJSON().toJSONString(), "Localizacoes");
+        dataManager.getiEJson().exportarParaFicheiroJSON(getLocalizacoesArrayJSON().toJSONString(), "Localizacoes");
     }
 
     /**
@@ -470,7 +476,7 @@ public class Raiz implements IRaiz
     @Override
     public void exportarBandeirasParaJson() throws IOException
     {
-        Demo.iEJson.exportarParaFicheiroJSON(getBandeirasArrayJSON().toJSONString(), "Bandeiras");
+        dataManager.getiEJson().exportarParaFicheiroJSON(getBandeirasArrayJSON().toJSONString(), "Bandeiras");
     }
 
     /**
@@ -501,7 +507,7 @@ public class Raiz implements IRaiz
         raiz.put("localizacoes", getLocalizacoesArrayJSON());
         raiz.put("mapas", getMapasArrayJSON());
 
-        Demo.iEJson.exportarParaFicheiroJSON(raiz.toJSONString(), "Raiz");
+        dataManager.getiEJson().exportarParaFicheiroJSON(raiz.toJSONString(), "Raiz");
     }
 
 

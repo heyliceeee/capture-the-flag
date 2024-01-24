@@ -1,6 +1,5 @@
 package org.example.InterfaceGrafica;
 
-import org.example.Demo;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Mapa;
 import javafx.application.Application;
@@ -15,8 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.text.ParseException;
-
-import static org.example.Demo.iniciarPartida;
 
 public class InterfaceGraficaNumeroBots extends Application {
 

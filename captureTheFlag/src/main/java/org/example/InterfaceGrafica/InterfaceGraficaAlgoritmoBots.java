@@ -2,7 +2,6 @@ package org.example.InterfaceGrafica;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Iterator;
 
 import org.example.Demo;
 import org.example.api.exceptions.NotLocalInstanceException;
@@ -11,8 +10,6 @@ import org.example.api.implementation.Mapa;
 import org.example.api.interfaces.IBot;
 import org.example.api.interfaces.IJogador;
 import org.example.collections.implementation.DoubleLinkedUnorderedList;
-import org.example.collections.implementation.LinkedQueue;
-import org.example.collections.interfaces.UnorderedListADT;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -131,10 +128,10 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
         this.criarBots(dataManager.jogador1.getNome(), comboBoxJogador1, dataManager.jogador1);
 
         for (IBot bot : dataManager.jogador1.getBotsJogador()) {
-            Demo.raiz.adicionarBot(bot);
+            dataManager.raiz.adicionarBot(bot);
         }
 
-        Demo.raiz.adicionarJogador(dataManager.jogador1);
+        dataManager.raiz.adicionarJogador(dataManager.jogador1);
 
         root.getChildren().clear();
 
@@ -179,7 +176,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
                 });
         stage.close();
 
-        Demo.iniciarPartida(dataManager.jogador1, dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
+        //Demo.iniciarPartida(dataManager.jogador1, dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
     }
 
     private boolean verificarAlgoritmosEscolhidos(DoubleLinkedUnorderedList<ComboBox<String>> comboBoxJogador) {
@@ -248,7 +245,7 @@ public class InterfaceGraficaAlgoritmoBots extends Application {
             IBot bot = new Bot(nomeBot, nomeJogador, jogador.getBandeira().getCoordenadas(), algoritmo);
             jogador.getBotsJogador().add(bot);
 
-            Demo.raiz.adicionarBot(bot);
+            dataManager.raiz.adicionarBot(bot);
         }
 
         jogador.setNumeroBots(size);

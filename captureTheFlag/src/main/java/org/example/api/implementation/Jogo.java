@@ -10,8 +10,7 @@ import java.util.Iterator;
 
 public class Jogo {
 
-    public static void partida(InterfaceGraficaJogo ui, int quemComeca, IJogador jogador1, IJogador jogador2,
-            RouteNetwork<ILocal> grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, ParseException {
+    public static void partida(InterfaceGraficaJogo ui, int quemComeca, IJogador jogador1, IJogador jogador2, RouteNetwork<ILocal> grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, ParseException {
         IJogador jogadorComeca = (quemComeca == 1) ? jogador1 : jogador2;// obter o jogador que começa
 
         ArrayOrderedList<IBot> botsJogador1 = jogador1.getBotsJogador();
@@ -23,6 +22,8 @@ public class Jogo {
 
         setSpawn(botsJogador1, botsJogador2, jogador1, jogador2);// definir que aonde cada bot comeca (na sua bandeira)
 
+        System.out.println("\n\n\n\n\n");
+
         while (true)// loop infinito até que o jogo termine
         {
             System.out.println("\n\nTurno " + turno + "\n");
@@ -31,18 +32,13 @@ public class Jogo {
 
             if (turno % 4 == 1 || turno % 4 == 3) // o primeiro jogador joga
             {
-                botAtual = jogadorComeca.getBotsJogador().getElementAt(indiceBotJogador1); // Bot a jogar do jogador
-                                                                                           // atual
-                indiceBotJogador1 = (indiceBotJogador1 + 1) % jogadorComeca.getBotsJogador().size(); // Avançar para o
-                                                                                                     // próximo bot do
-                                                                                                     // jogador atual
-            } else // o segundo jogador joga novamente
+                botAtual = jogadorComeca.getBotsJogador().getElementAt(indiceBotJogador1); // Bot a jogar do jogador atual
+                indiceBotJogador1 = (indiceBotJogador1 + 1) % jogadorComeca.getBotsJogador().size(); // Avançar para o próximo bot do jogador atual
+            }
+            else // o segundo jogador joga novamente
             {
-                botAtual = (jogadorComeca == jogador1) ? jogador2.getBotsJogador().getElementAt(indiceBotJogador2)
-                        : jogador1.getBotsJogador().getElementAt(indiceBotJogador2); // Bot a jogar do jogador oposto
-                indiceBotJogador2 = (indiceBotJogador2 + 1) % jogador2.getBotsJogador().size(); // Avançar para o
-                                                                                                // próximo bot do
-                                                                                                // jogador oposto
+                botAtual = (jogadorComeca == jogador1) ? jogador2.getBotsJogador().getElementAt(indiceBotJogador2) : jogador1.getBotsJogador().getElementAt(indiceBotJogador2); // Bot a jogar do jogador oposto
+                indiceBotJogador2 = (indiceBotJogador2 + 1) % jogador2.getBotsJogador().size(); // Avançar para o próximo bot do jogador oposto
             }
 
             movimentarBot(jogador1, jogador2, botAtual, grafo, raiz, rota);
@@ -52,6 +48,13 @@ public class Jogo {
                 System.out.println("\n" + botAtual.getNome() + " venceu!");
                 break; // Encerrar o loop, o jogo terminou
             }
+
+            if(turno == (botsJogador1.size() + botsJogador2.size()) * Mapa.arestasList.size()) //verificar se e empate, visto que pode noa haver caminhos para a bandeira
+            {
+                System.out.println("\n empate!");
+                break; // Encerrar o loop, o jogo terminou
+            }
+
 
             ui.desenharJanela();
             turno++; // Avançar para o próximo turno
@@ -66,8 +69,7 @@ public class Jogo {
      * @param jogador1
      * @param jogador2
      */
-    private static void setSpawn(ArrayOrderedList<IBot> botsJogador1, ArrayOrderedList<IBot> botsJogador2,
-            IJogador jogador1, IJogador jogador2) {
+    private static void setSpawn(ArrayOrderedList<IBot> botsJogador1, ArrayOrderedList<IBot> botsJogador2, IJogador jogador1, IJogador jogador2) {
         IBandeira bandeiraJogador1 = jogador1.getBandeira();
         IBandeira bandeiraJogador2 = jogador2.getBandeira();
 
@@ -91,8 +93,7 @@ public class Jogo {
      * @param raiz
      * @param rota
      */
-    private static void movimentarBot(IJogador jogador1, IJogador jogador2, IBot botAtual, RouteNetwork<ILocal> grafo,
-            IRaiz raiz, IRota rota) throws NotLocalInstanceException, ParseException {
+    private static void movimentarBot(IJogador jogador1, IJogador jogador2, IBot botAtual, RouteNetwork<ILocal> grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, ParseException {
         String algoritmo = botAtual.getAlgoritmoMovimento(); // algoritmo do bot
         ILocal pontoA = null;
 
@@ -100,10 +101,9 @@ public class Jogo {
         ArrayOrderedList<IBandeira> bandeirasList = raiz.getListaBandeiras();
 
         // region saber qual localizacao/bandeira esta o bot
+
         for (ILocalizacao localizacaoObj : localizacoesList) {
-            if (localizacaoObj.getCoordenadas() != null
-                    && localizacaoObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual localizacao esta
-                                                                                         // o bot
+            if (localizacaoObj.getCoordenadas() != null && localizacaoObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual localizacao esta o bot
             {
                 pontoA = localizacaoObj; // encontrou uma localizacao com coordenadas iguais às do botAtual
                 break; // não precisa continuar a procurar, podemos sair do loop
@@ -111,16 +111,17 @@ public class Jogo {
         }
 
         for (IBandeira bandeiraObj : bandeirasList) {
-            if (bandeiraObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual bandeira esta o bot
+            if (bandeiraObj.getCoordenadas() != null && bandeiraObj.getCoordenadas().equals(botAtual.getCoordenada())) // saber qual bandeira esta o bot
             {
                 pontoA = bandeiraObj; // encontrou uma bandeira com coordenadas iguais às do botAtual
                 break; // não precisa continuar a procurar, podemos sair do loop
             }
         }
+
         // endregion
 
-        ILocal pontoB = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira()
-                : jogador1.getBandeira(); // bandeira inimiga
+        IBandeira pontoB = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira() : jogador1.getBandeira(); // bandeira inimiga
+
 
         if (algoritmo.equals("Dijkstra")) {
             CaminhoMaisCurto(grafo, botAtual, raiz, pontoA, pontoB);
@@ -210,12 +211,7 @@ public class Jogo {
      * @param botAtual
      * @param raiz
      */
-    private static void CaminhoMaisCurto(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA,
-            ILocal pontoB) throws NotLocalInstanceException, ParseException {
-        // CaminhoMaisCurtoMovimento.dijkstra(grafo, pontoA.getId(), pontoB.getId());
-
-        // Iterator<ILocal> caminhoMaisCurtoDijkstra =
-        // grafo.caminhoMaisCurtoABandeira(raiz, pontoA.getId(), pontoB.getId());
+    private static void CaminhoMaisCurto(RouteNetwork<ILocal> grafo, IBot botAtual, IRaiz raiz, ILocal pontoA, IBandeira pontoB) throws NotLocalInstanceException, ParseException {
 
         Iterator<ILocal> caminhoMaisCurto = grafo.iteratorShortestPath(pontoA.getId(), pontoB.getId());
 
@@ -252,10 +248,9 @@ public class Jogo {
      * @param botAtual
      * @return
      */
-    private static boolean verificaVitoria(IJogador jogador1, IJogador jogador2, IBot botAtual) {
-        IBandeira bandeiraJogadorOposto = (botAtual.getNomeJogador().equals(jogador1.getNome()))
-                ? jogador2.getBandeira()
-                : jogador1.getBandeira();
+    private static boolean verificaVitoria(IJogador jogador1, IJogador jogador2, IBot botAtual)
+    {
+        IBandeira bandeiraJogadorOposto = (botAtual.getNomeJogador().equals(jogador1.getNome())) ? jogador2.getBandeira() : jogador1.getBandeira();
         ICoordenada coordenadasBot = botAtual.getCoordenada();
 
         return coordenadasBot.equals(bandeiraJogadorOposto.getCoordenadas());

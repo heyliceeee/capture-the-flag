@@ -2,8 +2,6 @@ package org.example.InterfaceGrafica;
 
 import java.io.IOException;
 
-import org.example.Demo;
-import org.example.api.implementation.Mapa;
 import org.json.simple.parser.ParseException;
 
 import javafx.application.Application;
@@ -48,11 +46,11 @@ public class InterfaceGraficaSelecionarMapa extends Application {
             {
                 DataManager.iEJson.importarDoFicheiroJSON(dataManager.raiz, dataManager.local, "docs/export/Raiz.json");
 
-                System.out.println(Demo.raiz.getMapa());
-                System.out.println(Demo.raiz.getListaBots());
-                System.out.println(Demo.raiz.getListaJogadores());
-                System.out.println(Demo.raiz.getListaBandeiras());
-                System.out.println(Demo.raiz.getListaLocalizacoes());
+                System.out.println(dataManager.raiz.getMapa());
+                System.out.println(dataManager.raiz.getListaBots());
+                System.out.println(dataManager.raiz.getListaJogadores());
+                System.out.println(dataManager.raiz.getListaBandeiras());
+                System.out.println(dataManager.raiz.getListaLocalizacoes());
             }
             catch (IOException e)
             {

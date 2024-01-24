@@ -1,6 +1,6 @@
 package org.example.api.implementation;
 
-import org.example.Demo;
+import org.example.InterfaceGrafica.DataManager;
 import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
 import org.json.simple.JSONArray;
@@ -16,7 +16,7 @@ import java.io.Reader;
 public class ImportarExportarJson
 {
     IRota rota = new Rota(null, null, 0);
-
+    private DataManager dataManager;
 
     /**
      * retorna "sucesso" se importou os dados do ficheiro JSON com sucesso
@@ -125,7 +125,7 @@ public class ImportarExportarJson
                     ILocal deLocal = raiz.getLocalByID((int) de); //localizacao/bandeira correspondente ao id
                     ILocal paraLocal = raiz.getLocalByID((int) para); //localizacao/bandeira correspondente ao id
 
-                    Demo.raiz.adicionarRota(deLocal, paraLocal, peso);
+                    dataManager.getRaiz().adicionarRota(deLocal, paraLocal, peso);
                 }
                 catch (IllegalArgumentException | EmptyCollectionException e)
                 {

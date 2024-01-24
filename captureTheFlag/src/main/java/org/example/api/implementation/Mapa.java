@@ -1,9 +1,8 @@
 package org.example.api.implementation;
 
-import org.example.Demo;
+import org.example.InterfaceGrafica.DataManager;
 import org.example.api.interfaces.*;
 import org.example.collections.implementation.ArrayOrderedList;
-import org.example.collections.interfaces.IExporter;
 import org.json.simple.JSONObject;
 
 import java.util.*;
@@ -45,6 +44,8 @@ public class Mapa implements IMapa {
     private static int calculoDensidadeArestas;
 
     static LinkedList<String> arestasList = new LinkedList<>();
+
+
 
     /**
      * constructor
@@ -110,9 +111,18 @@ public class Mapa implements IMapa {
         {
             grafo.addVertex(i); // adiciona um novo vertice ao grafo
 
-            ILocalizacao localizacao = new Localizacao(i, "localizacao", nomeSpots.first(), null);
+            int x = gerarNumeroRandom(0, 100) * 100;
+            int y = 0;
 
-            Demo.raiz.adicionarLocal(localizacao); // adiciona um novo local á rede
+            do
+            {
+                y = gerarNumeroRandom(0, 100) * 100;
+            }
+            while (x == y);
+
+            ILocalizacao localizacao = new Localizacao(i, "localizacao", nomeSpots.first(), new Coordenada(x, y));
+
+            raiz.adicionarLocal(localizacao); // adiciona um novo local á rede
             nomeSpots.removeFirst();
         }
 
@@ -138,13 +148,9 @@ public class Mapa implements IMapa {
             int densidadeArestasJogador1, int densidadeArestasJogador2, int tipoCaminhoJogador1,
             int tipoCaminhoJogador2, int tipoCaminho) {
         if (locExistentesJogador1 > locExistentesJogador2) {
-            locExistentes = fazerMedia(locExistentesJogador2, locExistentesJogador1); // decidir entre as 2 opcoes dos
-                                                                                      // jogadores, quantas localizacoes
-                                                                                      // existentes vai ter o mapa
+            locExistentes = fazerMedia(locExistentesJogador2, locExistentesJogador1); // decidir entre as 2 opcoes dos jogadores, quantas localizacoes existentes vai ter o mapa
         } else if (locExistentesJogador2 > locExistentesJogador1) {
-            locExistentes = fazerMedia(locExistentesJogador1, locExistentesJogador2); // decidir entre as 2 opcoes dos
-                                                                                      // jogadores, quantas localizacoes
-                                                                                      // existentes vai ter o mapa
+            locExistentes = fazerMedia(locExistentesJogador1, locExistentesJogador2); // decidir entre as 2 opcoes dos jogadores, quantas localizacoes existentes vai ter o mapa
         } else {
             locExistentes = locExistentesJogador1;
         }
@@ -276,22 +282,29 @@ public class Mapa implements IMapa {
             int de = Integer.parseInt(vertices[0]);// obter de
             int para = Integer.parseInt(vertices[1]);// obter para
 
-            Coordenada coordenadasDe = new Coordenada(de * 100, para * 100); // definir coordenadas
-            Coordenada coordenadasPara = new Coordenada(para * 100, de * 100); // definir coordenadas
+            //Coordenada coordenadasDe = new Coordenada(de * 100, para * 100); // definir coordenadas
+            //Coordenada coordenadasPara = new Coordenada(para * 100, de * 100); // definir coordenadas
 
-            ILocalizacao localizacaoDe = raiz.getLocalizacaoPorID(de);// procurar a localizacao por id
-            ILocalizacao localizacaoPara = raiz.getLocalizacaoPorID(para);// procurar a localizacao por id
+            //ILocalizacao localizacaoDe = raiz.getLocalizacaoPorID(de);// procurar a localizacao por id
+            //ILocalizacao localizacaoPara = raiz.getLocalizacaoPorID(para);// procurar a localizacao por id
 
-            raiz.removerLocal(localizacaoDe); // eliminar o local existente
-            raiz.removerLocal(localizacaoPara); // eliminar o local existente
+            //raiz.removerLocal(localizacaoDe); // eliminar o local existente
+            //raiz.removerLocal(localizacaoPara); // eliminar o local existente
 
-            ILocalizacao localizacaoDeNova = new Localizacao(localizacaoDe.getId(), localizacaoDe.getTipo(),
-                    localizacaoDe.getNome(), coordenadasDe); // localizacao com as coordenadas atualizadas
-            ILocalizacao localizacaoParaNova = new Localizacao(localizacaoPara.getId(), localizacaoPara.getTipo(),
-                    localizacaoPara.getNome(), coordenadasPara); // localizacao com as coordenadas atualizadas
+            //ILocalizacao localizacaoDeNova = new Localizacao(localizacaoDe.getId(), localizacaoDe.getTipo(), localizacaoDe.getNome(), coordenadasDe); // localizacao com as coordenadas atualizadas
+            //ILocalizacao localizacaoParaNova = new Localizacao(localizacaoPara.getId(), localizacaoPara.getTipo(), localizacaoPara.getNome(), coordenadasPara); // localizacao com as coordenadas atualizadas
 
-            raiz.adicionarLocal(localizacaoDeNova); // adiciona um novo local
-            raiz.adicionarLocal(localizacaoParaNova); // adiciona um novo local
+           /* do
+            {
+                raiz.adicionarLocal(localizacaoDeNova); // adiciona um novo local
+            }
+            while (raiz.getLocalizacaoPorID(localizacaoDeNova.getId()).getCoordenadas() == null);
+
+            do
+            {
+                raiz.adicionarLocal(localizacaoParaNova); // adiciona um novo local
+            }
+            while (raiz.getLocalizacaoPorID(localizacaoParaNova.getId()).getCoordenadas() == null);*/
 
             double distancia = gerarNumeroRandom(1, 15);
 
@@ -299,20 +312,17 @@ public class Mapa implements IMapa {
             ILocal localPara = raiz.getLocalByID(para); // procurar a local por id
 
             if (tipoCaminhoString.equals("direcionado")) {
-                    grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
-                    Demo.raiz.adicionarRota(localDe, localPara, distancia); // adicionar aresta com peso á rede
+                grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
+                raiz.adicionarRota(localDe, localPara, distancia); // adicionar aresta com peso á rede
 
-                    System.out.println(grafo);
+                //System.out.println(grafo);
             }
             else
             {
                 grafo.addEdge(localDe.getId(), localPara.getId(), distancia); // adicionar aresta com peso ao grafo
-                    // grafo.addEdge(localPara.getId(), localDe.getId(), distancia);
-
-                    Demo.raiz.adicionarRota(localDe, localPara, distancia); // adicionar aresta com peso á rede
-                    // raiz.adicionarRota(localPara, localDe, distancia);
+                raiz.adicionarRota(localDe, localPara, distancia); // adicionar aresta com peso á rede
             }
-            }
+        }
     }
 
     @Override

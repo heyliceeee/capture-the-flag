@@ -1,6 +1,5 @@
 package org.example.InterfaceGrafica;
 
-import org.example.Demo;
 import org.example.api.implementation.Bandeira;
 import org.example.api.interfaces.IBandeira;
 import org.example.api.interfaces.ILocalizacao;
@@ -105,7 +104,8 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
         IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); // criar bandeira
 
         dataManager.jogador1.setBandeira(bandeiraJogador1);
-        Demo.raiz.adicionarLocal(bandeiraJogador1);
+        dataManager.raiz.adicionarLocal(bandeiraJogador1);
+
 
         root.getChildren().clear();
         root.getChildren().add(formularioInput(2));
@@ -134,7 +134,8 @@ public class InterfaceGraficaSelecionarBandeira extends Application {
         IBandeira bandeiraJogador2 = new Bandeira(localJogador2Escolheu.getId(), "Bandeira", localJogador2Escolheu.getNome(), localJogador2Escolheu.getCoordenadas()); // criar bandeira
 
         dataManager.jogador2.setBandeira(bandeiraJogador2);
-        Demo.raiz.adicionarLocal(bandeiraJogador2);
+        dataManager.raiz.adicionarLocal(bandeiraJogador2);
+
 
         Platform.runLater(() -> new InterfaceGraficaNumeroBots(this.dataManager).start(new Stage()));
         stage.close();

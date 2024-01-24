@@ -8,9 +8,7 @@ import org.example.api.interfaces.*;
 import org.example.collections.exceptions.EmptyCollectionException;
 import org.example.collections.implementation.ArrayOrderedList;
 import org.example.collections.implementation.ExporterGraph;
-import org.example.collections.implementation.LinkedList;
 import org.example.collections.interfaces.IExporter;
-import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -243,8 +241,7 @@ public class Demo {
 
         ILocalizacao localJogador1Escolheu = raiz.getLocalizacaoPorID(locBandeiraJogador1); // localizacao selecionada
         raiz.removerLocal(localJogador1Escolheu); // remover localizacao selecionada
-        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira",
-                localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); // criar bandeira
+        IBandeira bandeiraJogador1 = new Bandeira(localJogador1Escolheu.getId(), "Bandeira", localJogador1Escolheu.getNome(), localJogador1Escolheu.getCoordenadas()); // criar bandeira
 
         jogador1.setBandeira(bandeiraJogador1);
         raiz.adicionarLocal(bandeiraJogador1);

@@ -91,7 +91,7 @@ public interface IRaiz
      * @throws EmptyCollectionException se o grafo for vazio
      * @throws InterruptedException
      */
-    void exportarGrafo() throws EmptyCollectionException, InterruptedException;
+    //void exportarGrafo() throws EmptyCollectionException, InterruptedException;
 
 
     /**
