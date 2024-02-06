@@ -33,8 +33,10 @@ public class InterfaceGraficaJogo extends Application {
         graph.setAttribute("ui.stylesheet", styleSheet());
 
         desenharJanela();
+
         Jogo.partida(this, dataManager.mapa.gerarNumeroRandom(1, 2), dataManager.jogador1,
                 dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
+
         graph.display();
     }
 
@@ -49,25 +51,16 @@ public class InterfaceGraficaJogo extends Application {
         ArrayOrderedList<ILocalizacao> iloc = dataManager.raiz.getListaLocalizacoes();
         ArrayOrderedList<IBandeira> iban = dataManager.raiz.getListaBandeiras();
 
-        //Iterator<ILocalizacao> iloc = dataManager.grafo.getLocalizacoes();
-        //Iterator<IBandeira> iban = dataManager.grafo.getBandeiras();
-
         for (ILocalizacao localizacao : iloc)
         {
-            //ILocalizacao localizacao = iloc.next();
-            if (graph.getNode(localizacao.getNome()) == null)
-                graph.addNode(localizacao.getNome());
-
-            System.out.println("Nó adicionado: " + localizacao.getNome());
+            if (graph.getNode(""+localizacao.getId()) == null)
+                graph.addNode(""+localizacao.getId());
         }
 
         for (IBandeira bandeira : iban)
         {
-            //IBandeira bandeira = iban.next();
-            if (graph.getNode(bandeira.getNome()) == null)
-                graph.addNode(bandeira.getNome());
-
-            System.out.println("Nó adicionado: " + bandeira.getNome());
+            if (graph.getNode(""+bandeira.getId()) == null)
+                graph.addNode(""+bandeira.getId());
         }
     }
 
@@ -79,23 +72,11 @@ public class InterfaceGraficaJogo extends Application {
         {
             IRota<ILocal> rota = ir.next();
 
-            System.out.println(rota);
-
             String idOrigem = String.valueOf(rota.getDe());
             String idDestino = String.valueOf(rota.getPara());
             String idAresta = rota.getDe() + " - " + rota.getPara();
 
             boolean isDirecional = dmanager.grafo.getTipoDirection().contains("direcionado");
-
-            if(graph.getNode(idOrigem) == null)
-            {
-                graph.addNode(idOrigem);
-            }
-
-            if(graph.getNode(idDestino) == null)
-            {
-                graph.addNode(idDestino);
-            }
 
             if(graph.getEdge(idAresta) == null)
             {
@@ -107,20 +88,22 @@ public class InterfaceGraficaJogo extends Application {
     private void atualizarBots(Graph graph) {
 
         Node node = null;
-        String name = "";
 
-        for (IBot bot : dataManager.jogador1.getBotsJogador()) {
-            node = graph.getNode(this.getLocalizacaoBot(bot));
-            if (node != null)
-                node.setAttribute("ui.label", bot.getNome());
+        for (IBot bot1 : dataManager.jogador1.getBotsJogador())
+        {
+            node = graph.getNode(this.getLocalizacaoBot(bot1));
+
+            if (graph.getNode(this.getLocalizacaoBot(bot1)) != null)
+                node.setAttribute("ui.label", bot1.getNome());
         }
 
-        for (IBot bot : dataManager.jogador2.getBotsJogador()) {
-            node = graph.getNode(this.getLocalizacaoBot(bot));
-            if (node != null)
-                node.setAttribute("ui.label", bot.getNome());
-        }
+        for (IBot bot2 : dataManager.jogador2.getBotsJogador())
+        {
+            node = graph.getNode(this.getLocalizacaoBot(bot2));
 
+            if (node != null)
+                node.setAttribute("ui.label", bot2.getNome());
+        }
     }
 
     private String styleSheet() {
@@ -138,27 +121,28 @@ public class InterfaceGraficaJogo extends Application {
 
     private String getLocalizacaoBot(IBot bot) {
 
-        String name = null;
+        String id = null;
         ILocalizacao localizacao = null;
         IBandeira bandeira = null;
 
-        Iterator<ILocalizacao> il = dataManager.grafo.getLocalizacoes();
-        Iterator<IBandeira> ib = dataManager.grafo.getBandeiras();
+        ArrayOrderedList<ILocalizacao> il = dataManager.raiz.getListaLocalizacoes();
+        ArrayOrderedList<IBandeira> ib = dataManager.raiz.getListaBandeiras();
 
-        while (il.hasNext()) {
-            localizacao = il.next();
-            if (bot.getCoordenada().equals(localizacao.getCoordenadas()))
-                name = localizacao.getNome();
 
+        for (ILocalizacao loc : il)
+        {
+            if (bot.getCoordenada().equals(loc.getCoordenadas()))
+                id = String.valueOf(loc.getId());
         }
 
-        while (ib.hasNext()) {
-            bandeira = ib.next();
-            if (bot.getCoordenada().equals(bandeira.getCoordenadas()))
-                name = bandeira.getNome();
+
+        for (IBandeira ban : ib)
+        {
+            if (bot.getCoordenada().equals(ban.getCoordenadas()))
+                id = String.valueOf(ban.getId());
         }
 
-        return name;
+        return id;
     }
 
     private String getNomeLocalizacao(int id) {
