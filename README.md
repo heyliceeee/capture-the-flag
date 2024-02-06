@@ -1,5 +1,6 @@
+<img align="right" src="https://visitor-badge.laobi.icu/badge?page_id=heyliceeee.capture-the-flag" />
+
 # Jogo "Capture the Flag"
- 
 ## 📌 Resumo
 ### Em cada partida
   - ☑️ gera um novo mapa random (cria/importa ficheiro, e depois exporta ficheiro), onde os 2 jogadores acordam:
