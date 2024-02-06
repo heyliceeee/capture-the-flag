@@ -5,9 +5,8 @@ import java.util.Iterator;
 
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Jogo;
-import org.example.api.interfaces.IBandeira;
-import org.example.api.interfaces.IBot;
-import org.example.api.interfaces.ILocalizacao;
+import org.example.api.interfaces.*;
+import org.example.collections.implementation.ArrayOrderedList;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
 
@@ -41,54 +40,69 @@ public class InterfaceGraficaJogo extends Application {
 
     public void desenharJanela() {
         adicionarNosLocalizacaoEBandeira();
-        // desenharArestas(dataManager);
+        desenharArestas(dataManager);
         atualizarBots(graph);
     }
 
     private void adicionarNosLocalizacaoEBandeira() {
 
-        Iterator<ILocalizacao> iloc = dataManager.grafo.getLocalizacoes();
-        Iterator<IBandeira> iban = dataManager.grafo.getBandeiras();
+        ArrayOrderedList<ILocalizacao> iloc = dataManager.raiz.getListaLocalizacoes();
+        ArrayOrderedList<IBandeira> iban = dataManager.raiz.getListaBandeiras();
 
-        while (iloc.hasNext()) {
-            ILocalizacao localizacao = iloc.next();
+        //Iterator<ILocalizacao> iloc = dataManager.grafo.getLocalizacoes();
+        //Iterator<IBandeira> iban = dataManager.grafo.getBandeiras();
+
+        for (ILocalizacao localizacao : iloc)
+        {
+            //ILocalizacao localizacao = iloc.next();
             if (graph.getNode(localizacao.getNome()) == null)
                 graph.addNode(localizacao.getNome());
+
             System.out.println("Nó adicionado: " + localizacao.getNome());
         }
 
-        while (iban.hasNext()) {
-            IBandeira bandeira = iban.next();
+        for (IBandeira bandeira : iban)
+        {
+            //IBandeira bandeira = iban.next();
             if (graph.getNode(bandeira.getNome()) == null)
                 graph.addNode(bandeira.getNome());
+
             System.out.println("Nó adicionado: " + bandeira.getNome());
         }
     }
 
-    // private void desenharArestas(DataManager dmanager) {
+     private void desenharArestas(DataManager dmanager) {
 
-    // Iterator<IRota<ILocal>> ir = dataManager.grafo.getRotas();
+        Iterator<IRota<ILocal>> ir = dataManager.grafo.getRotas();
 
-    // while (ir.hasNext()) {
+        while (ir.hasNext())
+        {
+            IRota<ILocal> rota = ir.next();
 
-    // IRota<ILocal> rota = ir.next();
+            System.out.println(rota);
 
-    // if (rota instanceof IRota<ILocal>) {
+            String idOrigem = String.valueOf(rota.getDe());
+            String idDestino = String.valueOf(rota.getPara());
+            String idAresta = rota.getDe() + " - " + rota.getPara();
 
-    // String idOrigem = "origem";// this.getNomeLocalizacao(rota.getDe().getId());
+            boolean isDirecional = dmanager.grafo.getTipoDirection().contains("direcionado");
 
-    // String idDestino = "destino"; //
-    // this.getNomeLocalizacao(rota.getPara().getId());
-    // String idAresta = idOrigem + " - " + idDestino;
+            if(graph.getNode(idOrigem) == null)
+            {
+                graph.addNode(idOrigem);
+            }
 
-    // boolean isDirecional =
-    // dmanager.grafo.getTipoDirection().contains("direcionado");
+            if(graph.getNode(idDestino) == null)
+            {
+                graph.addNode(idDestino);
+            }
 
-    // graph.addEdge(idAresta, idOrigem, idDestino, isDirecional);
-    // }
-    // }
-
-    // }
+            if(graph.getEdge(idAresta) == null)
+            {
+                graph.addEdge(idAresta, idOrigem, idDestino, isDirecional);
+            }
+        }
+     }
 
     private void atualizarBots(Graph graph) {
 
