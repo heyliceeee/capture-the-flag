@@ -54,13 +54,18 @@ public class InterfaceGraficaJogo extends Application {
         for (ILocalizacao localizacao : iloc)
         {
             if (graph.getNode(""+localizacao.getId()) == null)
-                graph.addNode(""+localizacao.getId());
+            {
+                Node n = graph.addNode(""+localizacao.getId());
+                n.addAttribute("ui.class", "localizacao");
+            }
         }
 
-        for (IBandeira bandeira : iban)
-        {
-            if (graph.getNode(""+bandeira.getId()) == null)
-                graph.addNode(""+bandeira.getId());
+        for (IBandeira bandeira : iban) {
+            if (graph.getNode("" + bandeira.getId()) == null)
+            {
+                Node n = graph.addNode("" + bandeira.getId());
+                n.addAttribute("ui.class", "bandeira");
+            }
         }
     }
 
@@ -108,14 +113,20 @@ public class InterfaceGraficaJogo extends Application {
 
     private String styleSheet() {
         return "node { " +
-                "fill-color: red; " +
-                "text-alignment: at-right; " +
-                "text-size: 12px; " +
-                "text-color: white; " +
+                "   fill-color: red; " +
+                "   text-alignment: at-right; " +
+                "   text-size: 12px; " +
+                "   text-color: white; " +
+                "}" +
+                "node.localizacao { " +
+                "   fill-color: red; " +
+                "}" +
+                "node.bandeira { " +
+                "   fill-color: blue; " +
                 "}" +
                 "edge { " +
-                "fill-color: grey; " +
-                "size: 2px; " +
+                "   fill-color: grey; " +
+                "   size: 2px; " +
                 "}";
     }
 
