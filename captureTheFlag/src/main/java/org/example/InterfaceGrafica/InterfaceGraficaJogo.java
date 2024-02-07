@@ -3,20 +3,26 @@ package org.example.InterfaceGrafica;
 import java.text.ParseException;
 import java.util.Iterator;
 
+import javafx.animation.PauseTransition;
+import javafx.scene.control.Button;
+import javafx.util.Duration;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.implementation.Jogo;
 import org.example.api.interfaces.*;
 import org.example.collections.implementation.ArrayOrderedList;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class InterfaceGraficaJogo extends Application {
 
     private DataManager dataManager;
-    private Graph graph;
+    public Graph graph;
+
+    private Button btnProximoTurno;
+    private int turnoAtual = 0;
+    private boolean jogoEmAndamento = true;
 
     public InterfaceGraficaJogo(DataManager dataManager, int quemComeca) {
         this.dataManager = dataManager;
@@ -26,7 +32,6 @@ public class InterfaceGraficaJogo extends Application {
     public void start(Stage stage) throws NotLocalInstanceException, ParseException {
 
         graph = new SingleGraph("Jogo");
-
         graph.setAttribute("ui.stylesheet", styleSheet());
 
         graph = new SingleGraph("Jogo");
@@ -34,15 +39,48 @@ public class InterfaceGraficaJogo extends Application {
 
         desenharJanela();
 
-        Jogo.partida(this, dataManager.mapa.gerarNumeroRandom(1, 2), dataManager.jogador1,
-                dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
+        Jogo.partida(this, dataManager.mapa.gerarNumeroRandom(1, 2), dataManager.jogador1, dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
 
         graph.display();
     }
 
+    /**
+     * desenhar a janela com as localizacoes/bandeiras (nodes), rotas (arestas) e as legendas
+     */
     public void desenharJanela() {
         adicionarNosLocalizacaoEBandeira();
         desenharArestas(dataManager);
+        atualizarBots(graph);
+        adicionarLegenda();
+    }
+
+    /**
+     * adicionar legenda ao mapa (localizacao ou bandeira)
+     */
+    private void adicionarLegenda()
+    {
+        // Defina a coordenada y comum para todos os nós de legenda.
+        double yCoord = -1;  // Substitua com o valor de y desejado para alinhamento horizontal.
+
+        // Cria um nó para a legenda de localização.
+        Node nodeLocalizacao = graph.addNode("LegendaLocalizacao");
+        nodeLocalizacao.addAttribute("ui.label", "Localizacao - Vermelho");
+        nodeLocalizacao.addAttribute("ui.style", "fill-color: red; size: 15px;"); // Tamanho do nó para visibilidade na legenda.
+        nodeLocalizacao.addAttribute("xy", 1, yCoord); // Posição x será 1, y é o mesmo para todos.
+        nodeLocalizacao.addAttribute("ui.fixed", true);
+
+        // Cria um nó para a legenda de bandeira.
+        Node nodeBandeira = graph.addNode("LegendaBandeira");
+        nodeBandeira.addAttribute("ui.label", "Bandeira - Azul");
+        nodeBandeira.addAttribute("ui.style", "fill-color: blue; size: 15px;");
+        nodeBandeira.addAttribute("xy", 3, yCoord); // Posição x é incrementada para alinhar horizontalmente.
+        nodeBandeira.addAttribute("ui.fixed", true);
+    }
+
+    public void atualizarJanela()
+    {
+        //desenharJanela();
+        //graph.display();
         atualizarBots(graph);
     }
 
@@ -57,6 +95,7 @@ public class InterfaceGraficaJogo extends Application {
             {
                 Node n = graph.addNode(""+localizacao.getId());
                 n.addAttribute("ui.class", "localizacao");
+                n.addAttribute("ui.label", localizacao.getNome()); // Adicionando o rótulo
             }
         }
 
@@ -65,6 +104,7 @@ public class InterfaceGraficaJogo extends Application {
             {
                 Node n = graph.addNode("" + bandeira.getId());
                 n.addAttribute("ui.class", "bandeira");
+                n.addAttribute("ui.label", bandeira.getNome()); // Adicionando o rótulo
             }
         }
     }
@@ -96,27 +136,45 @@ public class InterfaceGraficaJogo extends Application {
 
         for (IBot bot1 : dataManager.jogador1.getBotsJogador())
         {
-            node = graph.getNode(this.getLocalizacaoBot(bot1));
+            String localizacaoId = getLocalizacaoBot(bot1);
+            node = graph.getNode(localizacaoId);
 
-            if (graph.getNode(this.getLocalizacaoBot(bot1)) != null)
-                node.setAttribute("ui.label", bot1.getNome());
+            if (node != null)
+            {
+                String nomeLocalizacao = getNomeLocalizacao(Integer.parseInt(localizacaoId));
+
+                // Atualizar os atributos do nó
+                node.changeAttribute("ui.label", bot1.getNome() + "/" + nomeLocalizacao);
+                node.changeAttribute("ui.class", "bot1"); // Atualizar a classe do nó se necessário
+            }
         }
 
         for (IBot bot2 : dataManager.jogador2.getBotsJogador())
         {
-            node = graph.getNode(this.getLocalizacaoBot(bot2));
+            String localizacaoId = getLocalizacaoBot(bot2);
+            node = graph.getNode(localizacaoId);
 
             if (node != null)
-                node.setAttribute("ui.label", bot2.getNome());
+            {
+                String nomeLocalizacao = getNomeLocalizacao(Integer.parseInt(localizacaoId));
+
+                // Atualizar os atributos do nó
+                node.changeAttribute("ui.label", bot2.getNome() + "/" + nomeLocalizacao);
+                node.changeAttribute("ui.class", "bot2"); // Atualizar a classe do nó se necessário
+            }
         }
+
+        // Atualizar a visualização do GraphStream
+        graph.addAttribute("ui.refresh"); // Isso força o GraphStream a atualizar a visualização
     }
 
     private String styleSheet() {
         return "node { " +
-                "   fill-color: red; " +
                 "   text-alignment: at-right; " +
                 "   text-size: 12px; " +
-                "   text-color: white; " +
+                "   text-color: black; " +
+                "   text-background-mode: plain; " + // Isso pode ajudar a tornar o texto mais legível
+                "   text-background-color: white; " + // Fundo do texto para contraste
                 "}" +
                 "node.localizacao { " +
                 "   fill-color: red; " +
@@ -159,27 +217,22 @@ public class InterfaceGraficaJogo extends Application {
     private String getNomeLocalizacao(int id) {
 
         String name = null;
-        ILocalizacao localizacao = null;
-        IBandeira bandeira = null;
 
-        Iterator<ILocalizacao> il = dataManager.grafo.getLocalizacoes();
-        Iterator<IBandeira> ib = dataManager.grafo.getBandeiras();
+        ArrayOrderedList<ILocalizacao> il = dataManager.raiz.getListaLocalizacoes();
+        ArrayOrderedList<IBandeira> ib = dataManager.raiz.getListaBandeiras();
 
-        while (il.hasNext()) {
-            localizacao = il.next();
-            if (localizacao.getId() == id)
-                name = localizacao.getNome();
-
+        for (ILocalizacao loc : il)
+        {
+            if (loc.getId() == id)
+                name = loc.getNome();
         }
 
-        while (ib.hasNext()) {
-            bandeira = ib.next();
-            if (bandeira.getId() == id)
-                name = bandeira.getNome();
-
+        for (IBandeira ban : ib)
+        {
+            if (ban.getId() == id)
+                name = ban.getNome();
         }
 
         return name;
     }
-
 }

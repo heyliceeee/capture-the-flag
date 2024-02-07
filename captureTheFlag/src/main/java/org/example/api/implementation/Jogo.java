@@ -1,5 +1,6 @@
 package org.example.api.implementation;
 
+import javafx.application.Platform;
 import org.example.InterfaceGrafica.InterfaceGraficaJogo;
 import org.example.api.exceptions.NotLocalInstanceException;
 import org.example.api.interfaces.*;
@@ -8,7 +9,13 @@ import org.example.collections.implementation.ArrayOrderedList;
 import java.text.ParseException;
 import java.util.Iterator;
 
-public class Jogo {
+public class Jogo
+{
+    static int turno = 1; // iniciar com o primeiro turno
+    static int indiceBotJogador1 = 0; // indice do bot do jogador 1
+    static int indiceBotJogador2 = 0; // indice do bot do jogador 2
+
+
 
     public static void partida(InterfaceGraficaJogo ui, int quemComeca, IJogador jogador1, IJogador jogador2, RouteNetwork<ILocal> grafo, IRaiz raiz, IRota rota) throws NotLocalInstanceException, ParseException {
         IJogador jogadorComeca = (quemComeca == 1) ? jogador1 : jogador2;// obter o jogador que começa
@@ -16,49 +23,75 @@ public class Jogo {
         ArrayOrderedList<IBot> botsJogador1 = jogador1.getBotsJogador();
         ArrayOrderedList<IBot> botsJogador2 = jogador2.getBotsJogador();
 
-        int turno = 1; // iniciar com o primeiro turno
-        int indiceBotJogador1 = 0; // indice do bot do jogador 1
-        int indiceBotJogador2 = 0; // indice do bot do jogador 2
-
         setSpawn(botsJogador1, botsJogador2, jogador1, jogador2);// definir que aonde cada bot comeca (na sua bandeira)
 
         System.out.println("\n\n\n\n\n");
 
-        while (true)// loop infinito até que o jogo termine
+        new Thread(() -> // Executar em uma nova thread para não bloquear a UI
         {
-            System.out.println("\n\nTurno " + turno + "\n");
-
-            IBot botAtual = null;// Determinar qual bot deve jogar neste turno
-
-            if (turno % 4 == 1 || turno % 4 == 3) // o primeiro jogador joga
+            while (true)
             {
-                botAtual = jogadorComeca.getBotsJogador().getElementAt(indiceBotJogador1); // Bot a jogar do jogador atual
-                indiceBotJogador1 = (indiceBotJogador1 + 1) % jogadorComeca.getBotsJogador().size(); // Avançar para o próximo bot do jogador atual
+                System.out.println("\n\nTurno " + turno + "\n");
+
+                IBot botAtual = null;// Determinar qual bot deve jogar neste turno
+
+                if (turno % 4 == 1 || turno % 4 == 3) // o primeiro jogador joga
+                {
+                    botAtual = jogadorComeca.getBotsJogador().getElementAt(indiceBotJogador1); // Bot a jogar do jogador atual
+                    indiceBotJogador1 = (indiceBotJogador1 + 1) % jogadorComeca.getBotsJogador().size(); // Avançar para o próximo bot do jogador atual
+                }
+                else // o segundo jogador joga novamente
+                {
+                    botAtual = (jogadorComeca == jogador1) ? jogador2.getBotsJogador().getElementAt(indiceBotJogador2) : jogador1.getBotsJogador().getElementAt(indiceBotJogador2); // Bot a jogar do jogador oposto
+                    indiceBotJogador2 = (indiceBotJogador2 + 1) % jogador2.getBotsJogador().size(); // Avançar para o próximo bot do jogador oposto
+                }
+
+                try
+                {
+                    movimentarBot(jogador1, jogador2, botAtual, grafo, raiz, rota);
+                }
+                catch (NotLocalInstanceException e)
+                {
+                    throw new RuntimeException(e);
+                }
+                catch (ParseException e)
+                {
+                    throw new RuntimeException(e);
+                }
+
+                if (verificaVitoria(jogador1, jogador2, botAtual)) // Verificar se o bot atual alcançou o campo do inimigo
+                {
+                    System.out.println("\n" + botAtual.getNome() + " venceu!");
+                    break; // Encerrar o loop, o jogo terminou
+                }
+
+                if(turno == Mapa.arestasList.size()) //verificar se e empate, visto que pode noa haver caminhos para a bandeira
+                {
+                    System.out.println("\n empate!");
+                    break; // Encerrar o loop, o jogo terminou
+                }
+
+
+
+                Platform.runLater(() ->
+                {
+                    ui.atualizarJanela();// Atualizar o grafo aqui
+                });
+
+                /*try
+                {
+                    Thread.sleep(100); // Esperar 1 segundo
+                }
+                catch (InterruptedException e)
+                {
+                    System.out.println(e.getMessage());
+                }*/
+
+                //ui.atualizarBotsTurno();
+                turno++; // Avançar para o próximo turno
             }
-            else // o segundo jogador joga novamente
-            {
-                botAtual = (jogadorComeca == jogador1) ? jogador2.getBotsJogador().getElementAt(indiceBotJogador2) : jogador1.getBotsJogador().getElementAt(indiceBotJogador2); // Bot a jogar do jogador oposto
-                indiceBotJogador2 = (indiceBotJogador2 + 1) % jogador2.getBotsJogador().size(); // Avançar para o próximo bot do jogador oposto
-            }
 
-            movimentarBot(jogador1, jogador2, botAtual, grafo, raiz, rota);
-
-            if (verificaVitoria(jogador1, jogador2, botAtual)) // Verificar se o bot atual alcançou o campo do inimigo
-            {
-                System.out.println("\n" + botAtual.getNome() + " venceu!");
-                break; // Encerrar o loop, o jogo terminou
-            }
-
-            if(turno == (botsJogador1.size() + botsJogador2.size()) * Mapa.arestasList.size()) //verificar se e empate, visto que pode noa haver caminhos para a bandeira
-            {
-                System.out.println("\n empate!");
-                break; // Encerrar o loop, o jogo terminou
-            }
-
-
-            ui.desenharJanela();
-            turno++; // Avançar para o próximo turno
-        }
+        }).start();
     }
 
     /**
