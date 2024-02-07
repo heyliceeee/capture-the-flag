@@ -27,7 +27,7 @@
 
 ### Jogo termina
  - ✅ quando um dos bots chega ao campo do inimigo
-
+  
 ___
 ## 🧩 Interfaces
 ### Menu Inicial
@@ -52,9 +52,18 @@ ___
 ![Escolher o algortimo para cada bot](https://media.discordapp.net/attachments/1167228808735228016/1198922296094621706/image.png?ex=65c9e4e6&is=65b76fe6&hm=d64f1eecff8d2bba51291920e67dd5b3423f07362a9f05fa0196a90ae5eb6b21&=&format=webp&quality=lossless)
 <br></br>
 
+### Grafo
+![Grafo](https://media.discordapp.net/attachments/697858645559476265/1204752096235094037/image.png?ex=65d5dfd2&is=65c36ad2&hm=43c1a203a729203faaa24d9f6cda805e4b80440864c8940cf0fb6429ff2ebc23&=&format=webp&quality=lossless)
+<br></br>
+
 ### Partida
 ![Partida](https://media.discordapp.net/attachments/1167228808735228016/1199498565639213169/image.png?ex=65cbfd97&is=65b98897&hm=65ce749e4991d29d24b1e11ceea9c260c02d421ecbcf7b0ae4c7e45da1660684&=&format=webp&quality=lossless)
 <br></br>
+
+___
+## ➕ Extras
+- 🪲 Testes Unitários
+- 🖼️ Interface Gráfica && Visualização do Grafo
 
 ___
 ## 🤝 Contribuições
