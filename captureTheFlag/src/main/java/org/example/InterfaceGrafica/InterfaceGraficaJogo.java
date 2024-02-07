@@ -37,7 +37,7 @@ public class InterfaceGraficaJogo extends Application {
         graph = new SingleGraph("Jogo");
         graph.setAttribute("ui.stylesheet", styleSheet());
 
-        desenharJanela();
+        //desenharJanela();
 
         Jogo.partida(this, dataManager.mapa.gerarNumeroRandom(1, 2), dataManager.jogador1, dataManager.jogador2, dataManager.grafo, dataManager.raiz, dataManager.rota);
 
@@ -63,18 +63,26 @@ public class InterfaceGraficaJogo extends Application {
         double yCoord = -1;  // Substitua com o valor de y desejado para alinhamento horizontal.
 
         // Cria um nó para a legenda de localização.
-        Node nodeLocalizacao = graph.addNode("LegendaLocalizacao");
-        nodeLocalizacao.addAttribute("ui.label", "Localizacao - Vermelho");
-        nodeLocalizacao.addAttribute("ui.style", "fill-color: red; size: 15px;"); // Tamanho do nó para visibilidade na legenda.
-        nodeLocalizacao.addAttribute("xy", 1, yCoord); // Posição x será 1, y é o mesmo para todos.
-        nodeLocalizacao.addAttribute("ui.fixed", true);
+
+        if(graph.getNode("LegendaLocalizacao") == null)
+        {
+            Node nodeLocalizacao = graph.addNode("LegendaLocalizacao");
+            nodeLocalizacao.addAttribute("ui.label", "Localizacao - Vermelho");
+            nodeLocalizacao.addAttribute("ui.style", "fill-color: red; size: 15px;"); // Tamanho do nó para visibilidade na legenda.
+            nodeLocalizacao.addAttribute("xy", 1, yCoord); // Posição x será 1, y é o mesmo para todos.
+            nodeLocalizacao.addAttribute("ui.fixed", true);
+        }
+
 
         // Cria um nó para a legenda de bandeira.
-        Node nodeBandeira = graph.addNode("LegendaBandeira");
-        nodeBandeira.addAttribute("ui.label", "Bandeira - Azul");
-        nodeBandeira.addAttribute("ui.style", "fill-color: blue; size: 15px;");
-        nodeBandeira.addAttribute("xy", 3, yCoord); // Posição x é incrementada para alinhar horizontalmente.
-        nodeBandeira.addAttribute("ui.fixed", true);
+        if(graph.getNode("LegendaBandeira") == null)
+        {
+            Node nodeBandeira = graph.addNode("LegendaBandeira");
+            nodeBandeira.addAttribute("ui.label", "Bandeira - Azul");
+            nodeBandeira.addAttribute("ui.style", "fill-color: blue; size: 15px;");
+            nodeBandeira.addAttribute("xy", 3, yCoord); // Posição x é incrementada para alinhar horizontalmente.
+            nodeBandeira.addAttribute("ui.fixed", true);
+        }
     }
 
     public void atualizarJanela()
@@ -144,8 +152,8 @@ public class InterfaceGraficaJogo extends Application {
                 String nomeLocalizacao = getNomeLocalizacao(Integer.parseInt(localizacaoId));
 
                 // Atualizar os atributos do nó
-                node.changeAttribute("ui.label", bot1.getNome() + "/" + nomeLocalizacao);
-                node.changeAttribute("ui.class", "bot1"); // Atualizar a classe do nó se necessário
+                node.addAttribute("ui.label", bot1.getNome() + "/" + nomeLocalizacao);
+                node.addAttribute("ui.class", "bot1"); // Atualizar a classe do nó se necessário
             }
         }
 
@@ -159,8 +167,8 @@ public class InterfaceGraficaJogo extends Application {
                 String nomeLocalizacao = getNomeLocalizacao(Integer.parseInt(localizacaoId));
 
                 // Atualizar os atributos do nó
-                node.changeAttribute("ui.label", bot2.getNome() + "/" + nomeLocalizacao);
-                node.changeAttribute("ui.class", "bot2"); // Atualizar a classe do nó se necessário
+                node.addAttribute("ui.label", bot2.getNome() + "/" + nomeLocalizacao);
+                node.addAttribute("ui.class", "bot2"); // Atualizar a classe do nó se necessário
             }
         }
 
